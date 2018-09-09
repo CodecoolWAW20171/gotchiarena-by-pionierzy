@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="base :: common_header(~{::title}, ~{})">
+    <title>Tamagotchi Arena - Login</title>
+</head>
+<body>
+<div class="container">
+
+    <div th:insert="~{base :: header}"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-6">
+                <form class="form-group" method="post" th:action="@{/login}">
+
+                    <h3 class="display-4 text-muted">Please sign in</h3>
+                    <div th:if="${param.error}" class="alert alert-warning">Wrong username or password</div>
+                    <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
+                    <input type="text" class="input-block-level" placeholder="User name"
+                           id="username" name="username" autofocus>
+                    <input type="password" class="input-block-level" placeholder="Password"
+                           id="password" name="password">
+                    <button class="btn btn-primary" type="submit">Log in</button>
+
+                </form>
+                <hr>
+                <p class="text-info">
+                    <small>Log in as <strong>user/password</strong><br></small>
+                </p>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+    <div th:insert="~{base :: footer}"></div>
+</div>
+</body>
+</html>
