@@ -5,6 +5,11 @@
     <title>Truth about spring</title>
 </head>
 <body>
-<p th:text="'You want the truth? ' + ${whatisspring}" />
+<p th:action="@{/login}" th:text="'You want the truth? ' + ${whatisspring}" />
+<form method="post">
+    <input type="text" name="username" id="username">
+    <input name="password" id="password">
+    <button type="submit">
+</form>
 </body>
 </html>
