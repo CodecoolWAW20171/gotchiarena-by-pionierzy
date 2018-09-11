@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResourceLocations("/webjars/")
                 .resourceChain(false)
                 .addResolver(new WebJarsResourceResolver());
-        registry.addResourceHandler("/resources/**")
+        registry.addResourceHandler("/resources/**", "/public/**")
                 .addResourceLocations("classpath:/static/")
                 .resourceChain(false);
 //                .setCachePeriod(31556926);

@@ -6,17 +6,17 @@ import java.util.List;
 public class Player {
     private final long id;
     private final String name;
-    private final List<Tamagotchi> tamagotchiList;
+    private final List<Gotchi> gotchiList;
 
 
     public Player(long id, String name) {
         this.id = id;
         this.name = name;
-        this.tamagotchiList = new ArrayList<>();
+        this.gotchiList = new ArrayList<>();
     }
 
-    public void addTamagotchi(Tamagotchi tamagotchi) {
-        tamagotchiList.add(tamagotchi);
+    public void addTamagotchi(Gotchi gotchi) {
+        gotchiList.add(gotchi);
     }
 
     public String getName() {

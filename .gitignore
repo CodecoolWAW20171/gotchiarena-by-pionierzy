@@ -24,3 +24,7 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+
+# Bootstrap
+/src/main/resources/static/bootstrap
