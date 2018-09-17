@@ -24,10 +24,7 @@
 /dist/
 /nbdist/
 /.nb-gradle/
-<<<<<<< HEAD
-=======
 
 
 # Bootstrap
 /src/main/resources/static/bootstrap
->>>>>>> webSocket
