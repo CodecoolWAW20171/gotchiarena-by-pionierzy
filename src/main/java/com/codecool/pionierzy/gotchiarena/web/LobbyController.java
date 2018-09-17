@@ -20,8 +20,11 @@ import java.util.List;
 @Controller
 public class LobbyController {
 
-    @Autowired
-    private LobbyService lobbyService;
+    private final LobbyService lobbyService;
+
+    public LobbyController(LobbyService lobbyService) {
+        this.lobbyService = lobbyService;
+    }
 
     @SubscribeMapping("/rooms")
     public List<Room> getRooms() {
