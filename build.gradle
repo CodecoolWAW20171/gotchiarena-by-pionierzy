@@ -30,13 +30,13 @@ ext {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-actuator')
+//    compile('org.springframework.boot:spring-boot-starter-actuator')
     compile('org.springframework.boot:spring-boot-starter-jdbc')
     compile('org.springframework.boot:spring-boot-starter-security')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-websocket')
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile('org.springframework.session:spring-session-jdbc')
+//    compile('org.springframework.session:spring-session-jdbc')
     compile('org.webjars:webjars-locator-core')
     compile("org.webjars:sockjs-client:${sockJsVersion}")
     compile("org.webjars:stomp-websocket:${stompVersion}")

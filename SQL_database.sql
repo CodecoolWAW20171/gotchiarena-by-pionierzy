@@ -1,9 +1,11 @@
+DROP TABLE IF EXISTS accounts;
 CREATE TABLE accounts (
     id serial NOT NULL PRIMARY KEY,
     username text,
     password text
 );
 
+DROP TABLE IF EXISTS pokemon;
 CREATE TABLE pokemon (
     id serial NOT NULL PRIMARY KEY,
     user_id integer,
@@ -11,8 +13,6 @@ CREATE TABLE pokemon (
     speed integer,
     defense integer,
     attack integer
-
-
 );
 
 
