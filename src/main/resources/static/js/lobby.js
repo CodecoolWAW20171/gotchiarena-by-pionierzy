@@ -109,9 +109,12 @@ let lobby = {
                     `<td>${room.name}</td>`,
                     `<td>${room.count}/2</td>`,
                     `<td>${room.owner.name}</td>`,
-                    `<button id="" class="btn-flat">+</button>`
+                    `<button id="${room.id}" class="btn-flat" disabled>+</button>`
                 ].join("");
                 tr.innerHTML = row;
+                if (room.count < 2) {
+                    tr.getElementsByTagName("button")[0].removeAttribute("disabled");
+                }
                 tbody.appendChild(tr);
             });
         }

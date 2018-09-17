@@ -33,7 +33,7 @@ public class LobbyController {
     @MessageMapping("/add-room")
     @SendTo("/topic/new-room")
     public Room addRoom(Message message, Principal principal) {
-        System.out.println(message);
+        System.out.println(principal);
         return null;
     }
 }

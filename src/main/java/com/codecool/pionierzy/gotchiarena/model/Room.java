@@ -1,17 +1,23 @@
 package com.codecool.pionierzy.gotchiarena.model;
 
+import java.util.UUID;
+
 public class Room {
 
-    private final long id;
+    private final UUID id;
     private final String name;
     private final Player owner;
     private Player opponent;
 
 
     public Room(String name, Player owner) {
-        this.id = 1;
+        this.id = UUID.randomUUID();
         this.name = name;
         this.owner = owner;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getName() {
