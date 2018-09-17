@@ -1,0 +1,39 @@
+$l5: #ffffff;
+$l3: #adadb1;
+
+$l4: #adadb1;
+$d2: #42424d;
+$d3: #373740;
+$bg: #33333d;
+$bg2: #3C3C46;
+$d5: #27272f;
+
+$green: #1eb980;
+$dark-green: #045d56;
+$orange: #ff6859;
+$yellow: #ffcf44;
+$purple: #b15dff;
+$blue: #72deff;
+$error: #B00020;
+
+$p1: $green;
+$arcadia: $green;
+
+%theme {color: $l5; background-color: $bg;}
+%theme-2 {color: $l5; background-color: $d3;}
+
+%theme-l5 {color:#000; background-color: $l5;}
+%theme-d5 {color:#fff; background-color: $d5;}
+%theme-b1 {color:#000; background-color: $green;}
+%theme-b2 {color:#fff; background-color: $dark-green;}
+%disabled {color: #fff; background-color: $d2;}
+%flat {color: $green; background-color: transparent;}
+%flat-hover {color: $blue; background-color: transparent;}
+%flat-disabled {color: $d5; background-color: transparent;}
+
+%hover {color: $l5; background-color: $d3;}
+%active {color: $l5; background-color: transparent;}
+%inactive {color: $l3; background-color: transparent;}
+
+$active: $l5;
+$inactive: $l3;

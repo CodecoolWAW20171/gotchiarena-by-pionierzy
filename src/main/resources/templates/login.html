@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, ~{::header}, ~{::section}, ~{}, ~{})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Gotchi Arena - Login</title>
+</head>
+<body>
+<header class="text-center py-2">
+    <a th:href="@{/}">
+        <img src="/img/title_ver.svg" th:src="@{/public/img/title_ver.svg}"
+             width="300" height="" alt="Gotchi Arena">
+    </a>
+</header>
+<section class="container">
+
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-md-5">
+            <form class="form-group" method="post" th:action="@{/login}">
+
+                <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
+
+                <h3 class="my-4">Log in to fight other players</h3>
+
+                <div class="field-wrap">
+                    <div class="input-field">
+                        <input type="text" th:class="${param.error}? 'inp-invalid'" placeholder="username"
+                               id="username" name="username" autocomplete="off" required autofocus>
+                        <label for="username">username</label>
+                        <div class="input-bar"></div>
+                    </div>
+                    <div class="helper">
+                        <div th:if="${param.error}" class="error">Wrong username or password</div>
+                    </div>
+                </div>
+
+                <div class="field-wrap">
+                    <div class="input-field">
+                        <input type="password" class="" placeholder="password"
+                               id="password" name="password">
+                        <label for="password">password</label>
+                        <div class="input-bar"></div>
+                    </div>
+                    <div class="helper"></div>
+                </div>
+
+                <button class="btn-submit" type="submit">Log in</button>
+
+            </form>
+            <hr>
+            <p class="text-info">
+                <small>Log in as <strong>user/password</strong><br></small>
+            </p>
+        </div>
+        <div class="col"></div>
+    </div>
+</section>
+</body>
+</html>

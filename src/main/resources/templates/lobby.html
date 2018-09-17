@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, _, ~{::section}, ~{}, ~{::script})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Gotchi Arena - Lobby</title>
+</head>
+<body>
+
+<section class="container">
+
+    <div class="list">
+
+        <div id="spinner">
+            <div class="spinner"></div>
+        </div>
+
+        <form class="mb-4 clearfix">
+            <button id="addRoom" class="btn-submit">
+                + New room
+            </button>
+        </form>
+
+        <table id="rooms">
+            <thead>
+            <tr>
+                <th>Room name</th>
+                <th>Players</th>
+                <th>Owner</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</section>
+
+
+<!--<script src="/webjars/jquery/jquery.min.js" defer></script>-->
+<script src="/webjars/sockjs-client/sockjs.min.js" defer></script>
+<script src="/webjars/stomp-websocket/stomp.min.js" defer></script>
+
+<script src="/resources/js/lobby.js" defer></script>
+
+</body>
+</html>
