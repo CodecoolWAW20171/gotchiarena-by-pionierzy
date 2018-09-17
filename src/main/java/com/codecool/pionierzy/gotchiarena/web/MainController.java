@@ -10,13 +10,13 @@ import java.security.Principal;
 public class MainController {
 
     @GetMapping("/")
-    public String index(Principal principal) {
-        return principal != null ? "redirect:/lobby" : "redirect:/login";
+    public String index() {
+        return "redirect:/lobby";
     }
 
     @RequestMapping("/login")
-    public String login() {
-        return "login";
+    public String login(Principal principal) {
+        return principal != null ? "redirect:/lobby" : "login";
     }
 
     @RequestMapping("/lobby")

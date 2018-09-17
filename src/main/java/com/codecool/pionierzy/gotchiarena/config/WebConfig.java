@@ -1,6 +1,8 @@
 package com.codecool.pionierzy.gotchiarena.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -24,7 +26,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .addResolver(new WebJarsResourceResolver());
         registry.addResourceHandler("/resources/**", "/public/**")
                 .addResourceLocations("classpath:/static/")
-                .resourceChain(false);
+                .resourceChain(false);   // true for production
 //                .setCachePeriod(31556926);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
