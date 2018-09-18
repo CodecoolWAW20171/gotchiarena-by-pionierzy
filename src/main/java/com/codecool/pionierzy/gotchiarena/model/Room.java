@@ -6,11 +6,15 @@ public class Room {
 
     private final UUID id;
     private final String name;
-    private final Player owner;
-    private Player opponent;
+
+    // Storing users here seems quite unsafe (potentially exposed user data
+    // since this is indirectly sent to users - see getOwner(), getOpponent())
+    // Maybe don't send this data structure and define a new one
+    private final User owner;
+    private User opponent;
 
 
-    public Room(String name, Player owner) {
+    public Room(String name, User owner) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.owner = owner;
@@ -24,19 +28,28 @@ public class Room {
         return name;
     }
 
-    public Player getOwner() {
-        return owner;
+    public String getOwner() {
+        return owner.getUsername();
+    }
+
+    public String getOpponent() {
+        return opponent != null ? opponent.getUsername() : null;
     }
 
     public int getCount() {
         return opponent != null ? 2 : 1;
     }
 
-    public boolean joinRoom(Player player) {
-        if (opponent == null && !owner.equals(player)) {
-            opponent = player;
+    public boolean joinRoom(User user) {
+        if (opponent == null && !owner.equals(user)) {
+            opponent = user;
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Room: %s (%d/2). Owner: %s", name, getCount(), owner.getUsername());
     }
 }

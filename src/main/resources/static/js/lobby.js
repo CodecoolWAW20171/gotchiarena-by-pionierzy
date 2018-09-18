@@ -92,6 +92,9 @@ let lobbyService = {
     },
     addRoom(room) {
         return this.client.send("/app/add-room", JSON.stringify(room));
+    },
+    fetchNewRoom() {
+        return this.client.subscribe("/topic/add-room");
     }
 };
 
@@ -108,7 +111,9 @@ let lobby = {
                 let row = [
                     `<td>${room.name}</td>`,
                     `<td>${room.count}/2</td>`,
-                    `<td>${room.owner.name}</td>`,
+                    `<td>${room.owner}</td>`,
+                    `<td>vs</td>`,
+                    `<td>${room.opponent ? room.opponent : "-"}</td>`,
                     `<button id="${room.id}" class="btn-flat" disabled>+</button>`
                 ].join("");
                 tr.innerHTML = row;
@@ -136,6 +141,7 @@ let lobby = {
         lobby.loadRooms(rooms);
         lobby.spinner.hide();
         lobby.table.style.display = "table";
+        lobbyService.fetchNewRoom();
     }, function () {
         showSnackbar("Could not connect to server.");
     });

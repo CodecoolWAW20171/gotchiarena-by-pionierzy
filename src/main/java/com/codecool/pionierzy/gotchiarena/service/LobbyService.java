@@ -9,7 +9,7 @@ public interface LobbyService {
 
     List<Room> getRooms();
 
-    boolean addRoom(Room room);
+    Room addRoom(String name, String username);
 /*
     boolean deleteRoom(String room);
 
