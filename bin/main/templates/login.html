@@ -54,13 +54,13 @@
 
 
 
-            <form class="form-group register" th:object="${user}" enctype="utf8" method="post" action="/">
+            <form class="form-group register" method="post" th:action="@{/register}">
                 <h3 class="my-4">Register to fight other players</h3>
 
                 <div class="field-wrap">
                     <div class="input-field">
                         <input type="text" th:class="${param.error}? 'inp-invalid'" placeholder="username"
-                               id="usernamer" name="username" autocomplete="off" required autofocus th:field="*{username}">
+                               id="usernamer" name="username" autocomplete="off" required autofocus>
                         <label for="username">username</label>
                         <div class="input-bar"></div>
                     </div>
@@ -72,7 +72,7 @@
                 <div class="field-wrap">
                     <div class="input-field">
                         <input type="password" class="" placeholder="password"
-                               id="passwordr" name="password" th:field="*{password}">
+                               id="passwordr" name="password">
                         <label for="password">password</label>
                         <div class="input-bar"></div>
                     </div>
