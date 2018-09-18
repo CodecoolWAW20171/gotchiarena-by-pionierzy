@@ -4,6 +4,7 @@ import com.codecool.pionierzy.gotchiarena.model.Player;
 import com.codecool.pionierzy.gotchiarena.model.Room;
 import com.codecool.pionierzy.gotchiarena.service.LobbyService;
 import com.codecool.pionierzy.gotchiarena.service.LobbyServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -19,7 +20,11 @@ import java.util.List;
 @Controller
 public class LobbyController {
 
-    private final LobbyService lobbyService = new LobbyServiceImpl();
+    private final LobbyService lobbyService;
+
+    public LobbyController(LobbyService lobbyService) {
+        this.lobbyService = lobbyService;
+    }
 
     @SubscribeMapping("/rooms")
     public List<Room> getRooms() {
