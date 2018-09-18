@@ -33,6 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/public/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/create_gotchi").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

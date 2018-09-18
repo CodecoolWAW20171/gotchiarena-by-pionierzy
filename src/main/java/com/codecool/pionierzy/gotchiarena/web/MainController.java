@@ -23,4 +23,9 @@ public class MainController {
     public String lobby() {
         return "lobby";
     }
+
+    @RequestMapping("/create_gotchi")
+    public String createGotchi() {
+        return "create_gotchi";
+    }
 }
