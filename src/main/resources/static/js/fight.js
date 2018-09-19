@@ -21,13 +21,13 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/message', function (logs) {
-            console.log("logs:");
-            console.log(logs);
+        stompClient.subscribe('/topic/message', function (log) {
+            console.log("log:");
+            console.log(log);
             console.log("-----------")
-            console.log(logs.body);
+            console.log(log.body);
             console.log("-----------")
-            showLogs(JSON.parse(logs.body).attack);
+            showLogs(JSON.parse(log.body).attack);
         });
     });
 }

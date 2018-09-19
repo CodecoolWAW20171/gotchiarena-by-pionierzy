@@ -54,14 +54,7 @@ public class LobbyController {
         return "room";
     }
 
-    @MessageMapping("/attack")
-    @SendTo("/topic/message")
-    public String logs(String message) throws Exception {
-        Thread.sleep(500); // simulated delay
-        return message;
-    }
-
-//    TEST
+//    TEST: creating room and user inside
     @GetMapping("/testing")
     public String createRoom(){
         lobbyService.addRoom("GO", "Andrzej");
