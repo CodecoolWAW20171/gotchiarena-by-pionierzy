@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -24,6 +25,13 @@ public class User {
 
     @Transient
     private String confirmPassword;
+
+    public User() {
+    }
+
+    public User(String username) {
+        this.username = username;
+    }
 
     public Long getId() {
         return id;
@@ -47,5 +55,19 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof User)) return false;
+        User other = (User) obj;
+        if (!other.username.equals(this.username)) return false;
+        return other.id.equals(this.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username);
     }
 }
