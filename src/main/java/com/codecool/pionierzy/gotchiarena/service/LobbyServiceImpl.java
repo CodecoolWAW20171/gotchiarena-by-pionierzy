@@ -32,6 +32,12 @@ public class LobbyServiceImpl implements LobbyService {
     }
 
     @Override
+    public Room getOneRoom(String idString){
+        Long id = Long.valueOf(idString);
+        return roomRepository.findRoomById(id);
+    }
+
+    @Override
     public Room addRoom(String name, String username) {
         if (roomRepository.findRoomByName(name) != null) return null;
         User owner = userRepository.findByUsername(username);

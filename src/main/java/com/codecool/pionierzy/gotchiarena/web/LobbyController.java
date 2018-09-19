@@ -49,19 +49,16 @@ public class LobbyController {
     }
 
     @RequestMapping(value = "/room/{roomId}", method = {RequestMethod.GET, RequestMethod.POST})
-    public String room(@PathVariable String roomId, Principal principal, Model model,
-                       @RequestParam(value="test",required=false) String test){
-        Room room = lobbyService.getRoomsMap().get(roomId);
+    public String room(@PathVariable String roomId, Principal principal, Model model){
+        Room room = lobbyService.getOneRoom(roomId);
         model.addAttribute("r", room);
-        System.out.println("request at room/id");
-        model.addAttribute("test", test);
+        System.out.println("request to the room/"+roomId);
+        if (principal.getName().equals(room.getOwnerName())){
+            model.addAttribute("principal", room.getOwnerName());
+        }
+        else if (principal.getName().equals(room.getOpponentName())){
+            model.addAttribute("principal", room.getOpponentName());
+        }
         return "room";
     }
-
-//    TEST: creating room and user inside
-//    @GetMapping("/testing")
-//    public String createRoom(){
-//        lobbyService.addRoom("GO", "Andrzej");
-//        return "redirect:/login";
-//    }
 }

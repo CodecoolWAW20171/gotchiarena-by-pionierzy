@@ -11,6 +11,8 @@ public interface LobbyService {
 
     List<Room> getRooms();
 
+    Room getOneRoom(String id);
+
     Room addRoom(String name, String username);
 
     Room joinRoom(Long id, String username);
