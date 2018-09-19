@@ -1,4 +1,4 @@
-package com.codecool.pionierzy.gotchiarena.service;
+package com.codecool.pionierzy.gotchiarena.service.FightServices;
 
 public enum RoundAction {
     PRIMARY_ATTACK,
