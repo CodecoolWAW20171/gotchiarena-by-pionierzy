@@ -55,9 +55,9 @@ public class LobbyController {
     }
 
 //    TEST: creating room and user inside
-    @GetMapping("/testing")
-    public String createRoom(){
-        lobbyService.addRoom("GO", "Andrzej");
-        return "redirect:/login";
-    }
+//    @GetMapping("/testing")
+//    public String createRoom(){
+//        lobbyService.addRoom("GO", "Andrzej");
+//        return "redirect:/login";
+//    }
 }
