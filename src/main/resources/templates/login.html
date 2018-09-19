@@ -18,8 +18,8 @@
         <div class="col"></div>
         <div class="col-md-5">
 
-            <div class="toggle login">
-                <form class="form-group clearfix" met   hod="post" th:action="@{/login}">
+            <div class="toggle">
+                <form class="form-group clearfix" method="post" th:action="@{/login}">
 
                     <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
 
@@ -57,20 +57,18 @@
             </div>
 
 
-            <div class="toggle register">
+            <div class="toggle hidden">
                 <form class="form-group clearfix" method="post" th:action="@{/register}">
                     <h3 class="my-4">Register to fight other players</h3>
 
                     <div class="field-wrap">
                         <div class="input-field">
-                            <input type="text" th:class="${param.error}? 'inp-invalid'" placeholder="username"
+                            <input type="text" class="" placeholder="username"
                                    id="usernamer" name="username" autocomplete="off" required autofocus>
                             <label for="username">username</label>
                             <div class="input-bar"></div>
                         </div>
-                        <div class="helper">
-                            <div th:if="${param.error}" class="error">Wrong username or password</div>
-                        </div>
+                        <div class="helper"></div>
                     </div>
 
                     <div class="field-wrap">
