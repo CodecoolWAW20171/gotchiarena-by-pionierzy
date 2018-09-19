@@ -14,6 +14,7 @@ import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import java.security.Principal;
 import java.util.List;
@@ -48,9 +49,16 @@ public class LobbyController {
                        @RequestParam(value="test",required=false) String test){
         Room room = lobbyService.getRoomsMap().get(roomId);
         model.addAttribute("r", room);
-        System.out.println("1");
+        System.out.println("request at room/id");
         model.addAttribute("test", test);
         return "room";
+    }
+
+    @MessageMapping("/attack")
+    @SendTo("/topic/message")
+    public String logs(String message) throws Exception {
+        Thread.sleep(500); // simulated delay
+        return message;
     }
 
 //    TEST

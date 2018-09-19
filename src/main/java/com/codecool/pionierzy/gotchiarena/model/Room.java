@@ -27,9 +27,12 @@ public class Room {
         User user = new User();
         user.setUsername("Andrzej");
         this.owner = user;
-        //opponent
 
-        System.out.println(id.toString());
+        User user1 = new User();
+        user1.setUsername("Roman");
+        this.opponent = user1;
+
+        System.out.println("id room: "+id.toString());
     }
 
     public String getId() {

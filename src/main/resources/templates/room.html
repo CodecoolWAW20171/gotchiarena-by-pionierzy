@@ -8,10 +8,48 @@
 <body>
 <section>
 <p>OK</p>
-    <p th:text=" 'User: ' + ${r.getOwner()}"></p>
-    <p th:text="${test}"></p>
+    <p th:text=" 'User1: ' + ${r.getOwner()}"></p>
+    <p th:text=" 'User2: ' + ${r.getOpponent()}"></p>
+    <p th:text=" 'From form: ' + ${test}"></p>
+
+    <div>
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="connect">WebSocket connection:</label>
+                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline">
+                <!--<input type="text" id="name" class="form-control" placeholder="Your name here...">-->
+                <button id="send" name="attack" class="btn btn-default" type="submit" value="attack1">Attack</button>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Logs:</th>
+                </tr>
+                </thead>
+                <tbody id="logs">
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </section>
-<script></script>
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/public/js/fight.js"></script>
 </body>
 </html>
