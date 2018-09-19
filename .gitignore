@@ -17,6 +17,8 @@
 *.iml
 *.ipr
 /out/
+/bin
+/lib
 
 ### NetBeans ###
 /nbproject/private/
@@ -28,3 +30,5 @@
 
 # Bootstrap
 /src/main/resources/static/bootstrap
+
+/lib/

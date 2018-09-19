@@ -13,10 +13,9 @@ public interface LobbyService {
 
     Room addRoom(String name, String username);
 
-    ConcurrentMap<UUID, Room> getRoomsMap();
-/*
-    boolean deleteRoom(String room);
+    Room joinRoom(Long id, String username);
 
-    boolean joinRoom(String room, String user);
-    */
+    void deleteRoom(String name);
+
+    void deleteAllRooms();
 }

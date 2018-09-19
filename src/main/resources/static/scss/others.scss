@@ -80,3 +80,8 @@ $snack-timeout: 2.5s;
   from {bottom: $snack-bottom; opacity: 1;}
   to {bottom: 0; opacity: 0;}
 }
+
+// Utils
+.hidden {
+  display: none;
+}

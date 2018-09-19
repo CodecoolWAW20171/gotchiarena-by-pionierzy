@@ -1,27 +1,39 @@
 package com.codecool.pionierzy.gotchiarena.model;
 
-import java.util.UUID;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.util.Objects;
 
+@Entity
+@Table(name = "rooms")
 public class Room {
 
-    private final UUID id;
-    private final String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
 
-    // Storing users here seems quite unsafe (potentially exposed user data
-    // since this is indirectly sent to users - see getOwner(), getOpponent())
-    // Maybe don't send this data structure and define a new one
-    private final User owner;
+    @Column(name = "name", unique = true, nullable = false)
+    @NotEmpty(message = "Please provide a room name")
+    private String name;
+
+    @JoinColumn(name = "owner", nullable = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    private User owner;
+
+    @JoinColumn(name = "opponent")
+    @OneToOne(fetch = FetchType.EAGER)
     private User opponent;
 
+    public Room() {}
 
     public Room(String name, User owner) {
-        this.id = UUID.randomUUID();
         this.name = name;
         this.owner = owner;
     }
 
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
@@ -29,11 +41,11 @@ public class Room {
         return name;
     }
 
-    public String getOwner() {
+    public String getOwnerName() {
         return owner.getUsername();
     }
 
-    public String getOpponent() {
+    public String getOpponentName() {
         return opponent != null ? opponent.getUsername() : null;
     }
 
@@ -47,6 +59,20 @@ public class Room {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Room)) return false;
+        Room room = (Room) o;
+        return Objects.equals(id, room.id) &&
+                Objects.equals(name, room.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     @Override

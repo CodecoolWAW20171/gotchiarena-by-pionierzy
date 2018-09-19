@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{base :: layout(~{::title}, ~{::header}, ~{::section}, ~{}, ~{})}"
+<html th:replace="~{base :: layout(~{::title}, ~{::header}, ~{::section}, ~{}, ~{::script})}"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -18,80 +18,96 @@
         <div class="col"></div>
         <div class="col-md-5">
 
-            <form class="form-group login" method="post" th:action="@{/login}">
+            <div class="toggle">
+                <form class="form-group clearfix" method="post" th:action="@{/login}">
 
-                <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
+                    <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
 
-                <h3 class="my-4">Log in to fight other players</h3>
+                    <h3 class="my-4">Log in to fight other players</h3>
 
-                <div class="field-wrap">
-                    <div class="input-field">
-                        <input type="text" th:class="${param.error}? 'inp-invalid'" placeholder="username"
-                               id="username" name="username" autocomplete="off" required autofocus>
-                        <label for="username">username</label>
-                        <div class="input-bar"></div>
+                    <div class="field-wrap">
+                        <div class="input-field">
+                            <input type="text" th:class="${param.error}? 'inp-invalid'" placeholder="username"
+                                   id="username" name="username" autocomplete="off" required autofocus>
+                            <label for="username">username</label>
+                            <div class="input-bar"></div>
+                        </div>
+                        <div class="helper">
+                            <div th:if="${param.error}" class="error">Wrong username or password</div>
+                        </div>
                     </div>
-                    <div class="helper">
-                        <div th:if="${param.error}" class="error">Wrong username or password</div>
+
+                    <div class="field-wrap">
+                        <div class="input-field">
+                            <input type="password" class="" placeholder="password"
+                                   id="password" name="password">
+                            <label for="password">password</label>
+                            <div class="input-bar"></div>
+                        </div>
+                        <div class="helper"></div>
                     </div>
-                </div>
 
-                <div class="field-wrap">
-                    <div class="input-field">
-                        <input type="password" class="" placeholder="password"
-                               id="password" name="password">
-                        <label for="password">password</label>
-                        <div class="input-bar"></div>
+                    <button class="btn-submit" type="submit">Log in</button>
+                </form>
+
+                <hr>
+                <p class="text-info">
+                    <small>Not registered? <a href="#" class="message">Create an account</a></small>
+                </p>
+            </div>
+
+
+            <div class="toggle hidden">
+                <form class="form-group clearfix" th:object="${user}" method="post" th:action="@{/register}">
+                    <h3 class="my-4">Register to fight other players</h3>
+
+                    <div class="field-wrap">
+                        <div class="input-field">
+                            <input type="text" th:field="*{username}" class="" placeholder="username"
+                                   id="usernamer" name="username" autocomplete="off" required autofocus>
+                            <label for="username">username</label>
+                            <div class="input-bar"></div>
+                        </div>
+                        <div class="helper"></div>
                     </div>
-                    <div class="helper"></div>
-                </div>
 
-                <button class="btn-submit" type="submit">Log in</button>
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
-
-            </form>
-
-
-
-
-            <form class="form-group register" method="post" th:action="@{/register}">
-                <h3 class="my-4">Register to fight other players</h3>
-
-                <div class="field-wrap">
-                    <div class="input-field">
-                        <input type="text" th:class="${param.error}? 'inp-invalid'" placeholder="username"
-                               id="usernamer" name="username" autocomplete="off" required autofocus>
-                        <label for="username">username</label>
-                        <div class="input-bar"></div>
+                    <div class="field-wrap">
+                        <div class="input-field">
+                            <input type="password" th:field="*{password}" class="" placeholder="password"
+                                   id="passwordr" name="password">
+                            <label for="password">password</label>
+                            <div class="input-bar"></div>
+                        </div>
+                        <div class="helper"></div>
                     </div>
-                    <div class="helper">
-                        <div th:if="${param.error}" class="error">Wrong username or password</div>
+
+
+                    <div class="field-wrap">
+                        <div class="input-field">
+                            <input type="password" class="" placeholder="repeat password"
+                                   id="repassword" name="repassword">
+                            <label for="repassword">repeat password</label>
+                            <div class="input-bar"></div>
+                        </div>
+                        <div class="helper"></div>
                     </div>
-                </div>
 
-                <div class="field-wrap">
-                    <div class="input-field">
-                        <input type="password" class="" placeholder="password"
-                               id="passwordr" name="password">
-                        <label for="password">password</label>
-                        <div class="input-bar"></div>
-                    </div>
-                    <div class="helper"></div>
-                </div>
+                    <button class="btn-submit" type="submit">Register</button>
+                </form>
 
-
-                <button class="btn-submit" type="submit">Register</button>
-                <p class="message">Already registered? <a href="#">Sign In</a></p>
-            </form>
-
+                <hr>
+                <p class="text-info">
+                    <small>Already registered? <a href="#" class="message">Sign in</a></small>
+                </p>
+            </div>
 
 
         </div>
         <div class="col"></div>
     </div>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" defer></script>
-    <script src="/public/js/login.js" defer></script>
 </section>
 
+<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+<script th:src="@{/public/js/login.js}" defer></script>
 </body>
 </html>

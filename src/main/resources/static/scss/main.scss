@@ -78,6 +78,9 @@ body {
     td:first-child, th:first-child {
       border-right: 1px solid $l3;
     }
+    td:not(:first-child), th:not(:first-child) {
+      text-align: center;
+    }
   }
 
 }
