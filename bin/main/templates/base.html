@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html th:fragment="layout(title, header, content, links, scripts)" lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="common_header(title, links)">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Replaceable title-->
+    <title th:replace="${title}">Gotchi Arena</title>
+
+    <!--Common links-->
+    <link rel="stylesheet" type="text/css" th:href="@{/public/css/main.css}">
+
+    <!--Per page placeholder for additional links-->
+    <th:block th:replace="${links}"/>
+
+</head>
+<body>
+
+<div class="wrapper">
+
+    <div class="content">
+
+        <header th:replace="${header}" class="p-2 mb-4">
+            <a th:href="@{/}">
+                <img src="/img/title_hor.svg" th:src="@{/public/img/title_hor.svg}"
+                     width="" height="35" alt="Gotchi Arena">
+            </a>
+        </header>
+
+        <div th:replace="${content}"></div>
+
+    </div>
+
+    <div id="snackbar"></div>
+
+    <footer th:fragment="footer">
+        <p class="copyright">&copy; 2018 Pionierzy. All rights reserved.</p>
+    </footer>
+
+</div>
+
+<th:block th:replace="${scripts}"/>
+
+</body>
+</html>
