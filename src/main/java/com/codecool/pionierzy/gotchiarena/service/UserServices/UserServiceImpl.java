@@ -1,4 +1,4 @@
-package com.codecool.pionierzy.gotchiarena.service;
+package com.codecool.pionierzy.gotchiarena.service.UserServices;
 
 import com.codecool.pionierzy.gotchiarena.dao.UserRepository;
 import com.codecool.pionierzy.gotchiarena.model.User;
