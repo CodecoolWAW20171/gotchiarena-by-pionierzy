@@ -79,26 +79,25 @@
                     <div class="helper"></div>
                 </div>
 
-                <!--<div class="field-wrap">-->
-                    <!--<div class="input-field">-->
-                        <!--<input type="password" class="" placeholder="email address"-->
-                               <!--id="email" name="email">-->
-                        <!--<label for="email">e-mail adress</label>-->
-                        <!--<div class="input-bar"></div>-->
-                    <!--</div>-->
-                    <!--<div class="helper"></div>-->
-                <!--</div>-->
 
                 <button class="btn-submit" type="submit">Register</button>
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
             </form>
 
 
+            <!--TEST-->
+            <form class="form-group register" method="post" th:action="@{/room/a}">
+                <div class="input-field">
+                    <input type="text" th:class="${param.error}? 'inp-invalid'"
+                           id="test" name="test" autocomplete="off" required autofocus>
+                    <label for="test">test</label>
+                    <div class="input-bar"></div>
+                </div>
+                <button class="btn-submit" type="submit">Test</button>
+            </form>
+            <!--TEST-->
 
-            <!--<hr>-->
-            <!--<p class="text-info">-->
-                <!--<small>Log in as <strong>user/password</strong><br></small>-->
-            <!--</p>-->
+
         </div>
         <div class="col"></div>
     </div>

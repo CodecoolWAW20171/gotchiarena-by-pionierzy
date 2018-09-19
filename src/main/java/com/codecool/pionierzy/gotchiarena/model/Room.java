@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Room {
 
-    private final UUID id;
+    private final String id;
     private final String name;
 
     // Storing users here seems quite unsafe (potentially exposed user data
@@ -14,13 +14,25 @@ public class Room {
     private User opponent;
 
 
-    public Room(String name, User owner) {
-        this.id = UUID.randomUUID();
+//    public Room(String name, User owner) {
+//        this.id = UUID.randomUUID();
+//        this.name = name;
+//        this.owner = owner;
+//    }
+
+    //CONSTRUCTOR FOR TESTING:
+    public Room(String name, String id) {
+        this.id = id;
         this.name = name;
-        this.owner = owner;
+        User user = new User();
+        user.setUsername("Andrzej");
+        this.owner = user;
+        //opponent
+
+        System.out.println(id.toString());
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 

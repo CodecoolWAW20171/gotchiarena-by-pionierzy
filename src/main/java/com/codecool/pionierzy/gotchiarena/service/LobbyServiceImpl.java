@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -33,12 +34,18 @@ public class LobbyServiceImpl implements LobbyService {
 
     @Override
     public Room addRoom(String name, String username) {
-        if (rooms.containsKey(name)) return null;
-        User owner = userRepository.findByUsername(username);
-        if (owner == null) return null;
-        Room room = new Room(name, owner);
-        rooms.put(name, room);
+        //if (rooms.containsKey(name)) return null;
+//        User owner = userRepository.findByUsername(username);
+//        if (owner == null) return null;
+//        Room room = new Room(name, owner);
+        Room room = new Room(name, "a");
+        rooms.put(room.getId(), room);
         return room;
+    }
+
+    @Override
+    public ConcurrentMap<String, Room> getRoomsMap(){
+        return rooms;
     }
 
 }

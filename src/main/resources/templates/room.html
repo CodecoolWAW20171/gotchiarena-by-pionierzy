@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, _, ~{::section}, ~{}, ~{::script})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head class="text-center py-2">
+    <meta charset="UTF-8">
+    <title>Fight</title>
+</head>
+<body>
+<section>
+<p>OK</p>
+<p th:text="${r.getOwner()}"></p>
+
+</section>
+<script></script>
+</body>
+</html>
