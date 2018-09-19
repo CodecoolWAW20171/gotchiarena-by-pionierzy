@@ -1,36 +1,9 @@
-class Spinner {
-    constructor(id) {
-        this.spinner = document.getElementById(id);
-    }
-
-    show() {
-        if (this.spinner) this.spinner.style.display = "block";
-    }
-
-    hide() {
-        if (this.spinner) this.spinner.style.display = "none";
-    }
-}
-
-function showSnackbar(msg) {
-    let snackbar = document.getElementById("snackbar");
-    if (snackbar) {
-        snackbar.textContent = msg;
-        snackbar.style.display = "block";
-        window.setTimeout(() => {
-            snackbar.classList.add("show");
-        }, 5);
-        setTimeout(() => {
-            snackbar.classList.remove("show");
-            window.setTimeout(() => {
-                snackbar.style.display = "none";
-                snackbar.textContent = null;
-            }, 5);
-        }, 3000);
-    }
-}
-
+/** Wrapper class to create Stomp over SockJS client */
 class WrappedSocket {
+    /**
+     * Create new client
+     * @param url server endpoint prefix
+     */
     constructor(url) {
         this.client = Stomp.over(new SockJS(url));
     }
@@ -53,18 +26,6 @@ class WrappedSocket {
         this.client.disconnect();
     }
 
-    subscribeSingle(destination) {
-        return new Promise((resolve, reject) => {
-            if (!this.client) {
-                reject("Client not created.");
-            } else {
-                this.client.subscribe(destination, function (message) {
-                    resolve(JSON.parse(message.body));
-                });
-            }
-        });
-    }
-
     subscribe(destination) {
         return new Promise((resolve, reject) => {
             if (!this.client) {
@@ -82,70 +43,102 @@ class WrappedSocket {
     }
 }
 
+/** Service object for connecting to server endpoints */
 let lobbyService = {
     client: new WrappedSocket("/lobby"),
+    username: null,
     connect() {
-        return this.client.connect();
+        return this.client.connect().then(function (frame) {
+            return frame.headers["user-name"];
+        });
     },
     loadRooms() {
-        return this.client.subscribeSingle("/app/rooms");
+        return this.client.subscribe("/app/rooms");
     },
     addRoom(room) {
         return this.client.send("/app/add-room", JSON.stringify(room));
     },
     fetchNewRoom() {
         return this.client.subscribe("/topic/add-room");
+    },
+    joinRoom(room) {
+        return this.client.send("/app/update-room", JSON.stringify(room));
+    },
+    fetchRoomUpdate() {
+        return this.client.subscribe("/topic/update-room");
+    },
+    getGotchis() {
+        return this.client.subscribe("/app/gotchis");
     }
 };
 
-let lobby = {
-    service: lobbyService,
+/** Object for updating display */
+let lobbyDisplay = {
     table: document.getElementById("rooms"),
+    tbody: document.getElementById("rooms-list"),
     spinner: new Spinner("spinner"),
-    loadRooms(rooms) {
-        let tbody = this.table.getElementsByTagName("tbody");
-        if (tbody) {
-            tbody = tbody[0];
-            rooms.forEach(function (room) {
-                let tr = document.createElement("tr");
-                let row = [
-                    `<td>${room.name}</td>`,
-                    `<td>${room.count}/2</td>`,
-                    `<td>${room.owner}</td>`,
-                    `<td>vs</td>`,
-                    `<td>${room.opponent ? room.opponent : "-"}</td>`,
-                    `<button id="${room.id}" class="btn-flat" disabled>+</button>`
-                ].join("");
-                tr.innerHTML = row;
-                if (room.count < 2) {
-                    tr.getElementsByTagName("button")[0].removeAttribute("disabled");
-                }
-                tbody.appendChild(tr);
+    init() {
+        document.querySelectorAll("form").forEach(elem =>
+            elem.addEventListener("submit", evt => evt.preventDefault()));
+
+        document.getElementById("addRoom").addEventListener("click", () => {
+            let room = {name: "Adding test..."};
+            lobbyService.addRoom(room);
+        });
+    },
+    showRooms(rooms) {
+        rooms.forEach(this.addRoomToList, this);
+        this.spinner.hide();
+        this.table.style.display = "table";
+    },
+    generateRow(room) {
+        let isDisabled = (room.count > 1) ||
+            (room.ownerName === lobbyService.username) || (room.opponentName === lobbyService.username);
+        return [
+            `<td>${room.name}</td>`,
+            `<td>${room.count}/2</td>`,
+            `<td>${room.ownerName}</td>`,
+            `<td>vs</td>`,
+            `<td>${room.opponentName ? room.opponentName : "-"}</td>`,
+            `<td><button id="join-${room.id}" class="btn-flat" ${isDisabled ? "disabled" : ""}>+</button></td>`
+        ].join("");
+    },
+    addRoomToList(room) {
+        let tr = document.createElement("tr");
+        tr.setAttribute("id", "room-" + room.id);
+        tr.innerHTML = this.generateRow(room);
+        tr.getElementsByTagName("button")[0].addEventListener("click", () => {
+            lobbyService.joinRoom({"id": room.id});
+        });
+        this.tbody.appendChild(tr);
+    },
+    updateRoomInList(room) {
+        let tr = document.getElementById("room-" + room.id);
+        if (tr) {
+            tr.innerHTML = this.generateRow(room);
+            tr.getElementsByTagName("button")[0].addEventListener("click", () => {
+                lobbyService.joinRoom({"id": room.id});
             });
         }
     }
 };
 
 (function () {
-    document.querySelectorAll("form").forEach(elem =>
-        elem.addEventListener("submit", evt => evt.preventDefault()));
-
-    document.getElementById("addRoom").addEventListener("click", () => {
-        let room = {name: "Adding test..."};
-        lobbyService.addRoom(room);
-    });
-
-    lobbyService.connect().then(function () {
+    lobbyService.connect().then(function (username) {
+        lobbyService.username = username;
         return lobbyService.loadRooms();
     }).then(function (rooms) {
-        lobby.loadRooms(rooms);
-        lobby.spinner.hide();
-        lobby.table.style.display = "table";
-        lobbyService.fetchNewRoom();
+        lobbyDisplay.init();
+        lobbyDisplay.showRooms(rooms);
+        lobbyService.fetchNewRoom().then(function (room) {
+            lobbyDisplay.addRoomToList(room);
+        });
+        lobbyService.fetchRoomUpdate().then(function (room) {
+            lobbyDisplay.updateRoomInList(room);
+        });
     }, function () {
-        showSnackbar("Could not connect to server.");
+        utils.showSnackBar("Could not connect to server.");
     });
 })();
-
 
 

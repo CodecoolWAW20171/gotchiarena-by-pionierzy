@@ -10,9 +10,10 @@ public interface LobbyService {
     List<Room> getRooms();
 
     Room addRoom(String name, String username);
-/*
-    boolean deleteRoom(String room);
 
-    boolean joinRoom(String room, String user);
-    */
+    Room joinRoom(Long id, String username);
+
+    void deleteRoom(String name);
+
+    void deleteAllRooms();
 }
