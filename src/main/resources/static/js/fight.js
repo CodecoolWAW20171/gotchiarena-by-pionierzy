@@ -16,7 +16,7 @@ function setConnected(connected) {
 }
 
 function connect() {
-    var socket = new SockJS('/room/a/info');
+    var socket = new SockJS('/room/info');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);

@@ -19,7 +19,7 @@ public class LobbyServiceImpl implements LobbyService {
     private final UserRepository userRepository;
 
     // Not sure if it has to be thread safe
-    private final ConcurrentMap<String, Room> rooms;
+    private final ConcurrentMap<UUID, Room> rooms;
 
     @Autowired
     public LobbyServiceImpl(UserRepository userRepository) {
@@ -34,17 +34,16 @@ public class LobbyServiceImpl implements LobbyService {
 
     @Override
     public Room addRoom(String name, String username) {
-        //if (rooms.containsKey(name)) return null;
-//        User owner = userRepository.findByUsername(username);
-//        if (owner == null) return null;
-//        Room room = new Room(name, owner);
-        Room room = new Room(name, "a");
+        if (rooms.containsKey(name)) return null;
+        User owner = userRepository.findByUsername(username);
+        if (owner == null) return null;
+        Room room = new Room(name, owner);
         rooms.put(room.getId(), room);
         return room;
     }
 
     @Override
-    public ConcurrentMap<String, Room> getRoomsMap(){
+    public ConcurrentMap<UUID, Room> getRoomsMap(){
         return rooms;
     }
 

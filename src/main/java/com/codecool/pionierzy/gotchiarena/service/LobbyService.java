@@ -13,7 +13,7 @@ public interface LobbyService {
 
     Room addRoom(String name, String username);
 
-    ConcurrentMap<String, Room> getRoomsMap();
+    ConcurrentMap<UUID, Room> getRoomsMap();
 /*
     boolean deleteRoom(String room);
 
