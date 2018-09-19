@@ -36,6 +36,11 @@ public class MainController {
         return "lobby";
     }
 
+    @RequestMapping("/create_gotchi")
+    public String create_gotchi() {
+        return "create_gotchi";
+    }
+
 
     // Only for testing !!!
     private void addTestUser(String username) {

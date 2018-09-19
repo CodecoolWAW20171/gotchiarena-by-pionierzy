@@ -32,7 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/public/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/create_gotchi").permitAll()
 
                 .anyRequest().authenticated()
                 .and()

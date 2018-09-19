@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
-@Table(name = "pokemon")
+@Table(name = "gotchi")
 public class Gotchi {
 
     @Id
