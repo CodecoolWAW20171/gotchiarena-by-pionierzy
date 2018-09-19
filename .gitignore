@@ -17,6 +17,8 @@
 *.iml
 *.ipr
 /out/
+/bin
+/lib
 
 ### NetBeans ###
 /nbproject/private/
