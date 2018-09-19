@@ -25,6 +25,14 @@ public class Room {
     @OneToOne(fetch = FetchType.EAGER)
     private User opponent;
 
+    @JoinColumn(name = "ownerGotchi")
+    @OneToOne(fetch = FetchType.EAGER)
+    private Gotchi ownerGotchi;
+
+    @JoinColumn(name = "opponentGotchi")
+    @OneToOne(fetch = FetchType.EAGER)
+    private Gotchi opponentGotchi;
+
     public Room() {}
 
     public Room(String name, User owner) {
