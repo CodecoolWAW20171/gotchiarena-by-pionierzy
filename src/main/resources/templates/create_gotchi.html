@@ -30,7 +30,14 @@
                         <label for="gotchiName">Gotchi name</label>
                         <div class="input-bar"></div>
                     </div>
-
+                </div>
+                <div class="field-wrap">
+                    <div class="input-field">
+                        <input type="number" th:class="${param.error}? 'inp-invalid'"
+                               id="health" name="gotchiName" autocomplete="off" required autofocus>
+                        <label for="gotchiName">Gotchi name</label>
+                        <div class="input-bar"></div>
+                    </div>
                 </div>
 
                 <button class="btn-submit" type="submit">Create</button>
