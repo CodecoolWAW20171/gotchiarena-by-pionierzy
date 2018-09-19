@@ -1,8 +1,7 @@
-package com.codecool.pionierzy.gotchiarena.model;
+package com.codecool.pionierzy.gotchiarena.service.message;
 
-public class RoomRequest {
+public class RoomByNameRequest {
     private String name;
-
 
     public void setName(String name) {
         this.name = name;
