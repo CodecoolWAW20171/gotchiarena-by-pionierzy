@@ -11,11 +11,11 @@ public class FightServiceImpl implements FightService {
     private Map<AttackType, AttackType> strongAgainst;
     private Map<AttackType, AttackType> weakAgainst;
 
-    private HashMap<Room, RoundMessage> roomMap;
+    private HashMap<Room, RoundMessage> roomRoundMessageMap;
 
     public FightServiceImpl() {
-        strongAgainst = new HashMap<AttackType, AttackType>();
-        weakAgainst = new HashMap<AttackType, AttackType>();
+        strongAgainst = new HashMap<>();
+        weakAgainst = new HashMap<>();
 
         strongAgainst.put(AttackType.LIGHTNING, AttackType.PLANT);
         strongAgainst.put(AttackType.PLANT, AttackType.EARTH);
@@ -37,8 +37,10 @@ public class FightServiceImpl implements FightService {
 
     @Override
     public void resolveRound(Room room) {
+
+        RoundMessage roundMessage = this.roomRoundMessageMap.get(room);
         //after round we want to get a clear round
-        this.roomMap.put(room, new RoundMessage());
+        this.roomRoundMessageMap.put(room, new RoundMessage());
     }
 
     @Override
@@ -47,6 +49,6 @@ public class FightServiceImpl implements FightService {
     }
 
     public void startGame(Room room) {
-        roomMap.put(room, new RoundMessage());
+        roomRoundMessageMap.put(room, new RoundMessage());
     }
 }

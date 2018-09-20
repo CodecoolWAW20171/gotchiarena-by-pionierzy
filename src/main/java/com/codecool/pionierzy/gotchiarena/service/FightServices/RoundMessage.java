@@ -12,4 +12,20 @@ public class RoundMessage {
         ownerAction = null;
         opponentAction = null;
     }
+
+    public RoundAction getOwnerAction() {
+        return ownerAction;
+    }
+
+    public void setOwnerAction(RoundAction ownerAction) {
+        this.ownerAction = ownerAction;
+    }
+
+    public RoundAction getOpponentAction() {
+        return opponentAction;
+    }
+
+    public void setOpponentAction(RoundAction opponentAction) {
+        this.opponentAction = opponentAction;
+    }
 }
