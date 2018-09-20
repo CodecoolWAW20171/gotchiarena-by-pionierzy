@@ -5,6 +5,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 @Entity
 @Table(name = "gotchi")
@@ -165,10 +166,9 @@ public class Gotchi {
     public void attackDefender(Gotchi gotchi, AttackType type) {
         AttackType opponentType = gotchi.getType();
         if (opponentType == strongAgainst.get(type)) {
-            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * STRONG_MODIFIER ) return;
+            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * STRONG_MODIFIER) return;
             gotchi.setHealth(gotchi.getHealth() - attack * STRONG_MODIFIER + (gotchi.getDefence() * 2));
-        }
-        else if (opponentType == weakAgainst.get(type)) {
+        } else if (opponentType == weakAgainst.get(type)) {
             if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * WEAK_MODIFIER) return;
             gotchi.setHealth(gotchi.getHealth() - attack * WEAK_MODIFIER + (gotchi.getDefence() * 2));
         } else {
@@ -176,5 +176,15 @@ public class Gotchi {
             gotchi.setHealth(gotchi.getHealth() - attack + (gotchi.getDefence() * 2));
         }
     }
-    
+
+    public void attackEvader(Gotchi gotchi, AttackType type) {
+        if (this.speed * randomModifier() - gotchi.getSpeed() * randomModifier() > 0) {
+            attack(gotchi, type);
+        }
+    }
+
+    private double randomModifier() {
+        Random random = new Random();
+        return 0.75 + 0.5 * random.nextDouble();
+    }
 }
