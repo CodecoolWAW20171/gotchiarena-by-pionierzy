@@ -1,7 +1,5 @@
-var owner = null;
-var opponent = null;
-
 var stompClient = null;
+var roomId = $("#roomId").val();
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -21,7 +19,7 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/message', function (log) {
+        stompClient.subscribe('/topic/message/'+roomId, function (log) {
             console.log("log:");
             console.log(log);
             console.log("-----------");
@@ -41,7 +39,7 @@ function disconnect() {
 }
 
 function sendAttack() {
-    stompClient.send("/app/attack", {}, JSON.stringify({'data': $("#send").val()}));
+    stompClient.send("/app/room/action/"+roomId, {}, JSON.stringify({'data': $("#send").val()}));
 }
 
 function showLogs(message) {

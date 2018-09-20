@@ -10,6 +10,7 @@
 <p>OK</p>
     <p th:text=" 'Owner: ' + ${r.getOwnerName()}"></p>
     <p th:text=" 'Opponent: ' + ${r.getOpponentName()}"></p>
+    <input id="roomId" th:value="${r.getId()}" style="display: none"></input>
 
     <div>
         <!--CONNECT AND DISCONNECT BUTTONS: -->
