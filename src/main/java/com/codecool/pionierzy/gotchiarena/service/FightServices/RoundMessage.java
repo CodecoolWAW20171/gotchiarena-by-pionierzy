@@ -7,4 +7,9 @@ public class RoundMessage {
     private RoundAction ownerAction;
 
     private RoundAction opponentAction;
+
+    public RoundMessage() {
+        ownerAction = null;
+        opponentAction = null;
+    }
 }

@@ -1,10 +1,13 @@
 package com.codecool.pionierzy.gotchiarena.service.FightServices;
 
 import com.codecool.pionierzy.gotchiarena.model.Gotchi;
+import com.codecool.pionierzy.gotchiarena.model.Room;
+
+import java.util.HashMap;
 
 public class FightServiceImpl implements FightService {
 
-    private RoundMessage roundMessage;
+    private HashMap<Room, RoundMessage> roomMap;
 
     @Override
     public void receiveAction(Gotchi gotchi) {
@@ -12,14 +15,18 @@ public class FightServiceImpl implements FightService {
     }
 
     @Override
-    public void resolveRound() {
+    public void resolveRound(Room room) {
 
         //after round we want to get a clear round
-        this.roundMessage = new RoundMessage();
+        this.roomMap.put(room, new RoundMessage());
     }
 
     @Override
-    public RoundMessage sendResults() {
+    public RoundMessage sendResults(Room room) {
         return null;
+    }
+
+    public void startGame(Room room) {
+        roomMap.put(room, new RoundMessage());
     }
 }

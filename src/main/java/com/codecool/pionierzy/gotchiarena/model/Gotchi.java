@@ -34,11 +34,11 @@ public class Gotchi {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", updatable = false, unique = true, nullable = false)
-    private GotchiType type;
+    private AttackType type;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "secondaryAttack", updatable = false, unique = true, nullable = false)
-    private GotchiType secondaryAttack;
+    private AttackType secondaryAttack;
 
 
 
@@ -113,19 +113,19 @@ public class Gotchi {
         this.health = health;
     }
 
-    public GotchiType getType() {
+    public AttackType getType() {
         return type;
     }
 
-    public void setType(GotchiType type) {
+    public void setType(AttackType type) {
         this.type = type;
     }
 
-    public GotchiType getSecondaryAttack() {
+    public AttackType getSecondaryAttack() {
         return secondaryAttack;
     }
 
-    public void setSecondaryAttack(GotchiType secondaryAttack) {
+    public void setSecondaryAttack(AttackType secondaryAttack) {
         this.secondaryAttack = secondaryAttack;
     }
 }
