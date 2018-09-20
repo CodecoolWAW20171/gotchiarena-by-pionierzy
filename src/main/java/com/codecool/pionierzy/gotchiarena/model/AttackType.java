@@ -1,6 +1,6 @@
 package com.codecool.pionierzy.gotchiarena.model;
 
-public enum GotchiType {
+public enum AttackType {
     FIRE,
     WATER,
     ICE,
