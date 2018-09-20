@@ -100,7 +100,8 @@ let lobbyDisplay = {
             `<td>${room.ownerName}</td>`,
             `<td>vs</td>`,
             `<td>${room.opponentName ? room.opponentName : "-"}</td>`,
-            `<td><button id="join-${room.id}" class="btn-flat" ${isDisabled ? "disabled" : ""}>+</button></td>`
+            `<td><button id="join-${room.id}" class="btn-flat" ${isDisabled ? "disabled" : ""}>+</button></td>`,
+            `<td><a href="/room/${room.id}">TEST VIEW</a> </td>`
         ].join("");
     },
     addRoomToList(room) {

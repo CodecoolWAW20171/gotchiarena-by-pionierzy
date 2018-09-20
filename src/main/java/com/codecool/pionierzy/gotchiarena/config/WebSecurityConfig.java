@@ -1,8 +1,7 @@
 package com.codecool.pionierzy.gotchiarena.config;
 
-import com.codecool.pionierzy.gotchiarena.service.UserDetailsServiceImpl;
+import com.codecool.pionierzy.gotchiarena.service.UserServices.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,8 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import javax.sql.DataSource;
 
 
 @Configuration
@@ -22,16 +19,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    private final DataSource dataSource;
-
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
-
     @Autowired
-    public WebSecurityConfig(BCryptPasswordEncoder passwordEncoder, UserDetailsServiceImpl userDetailsService, DataSource datasource) {
+    public WebSecurityConfig(BCryptPasswordEncoder passwordEncoder, UserDetailsServiceImpl userDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
-        this.dataSource = datasource;
     }
 
 
@@ -39,10 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/testing").permitAll()
+                .antMatchers("/room/**").permitAll()
                 .antMatchers("/public/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -61,10 +52,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder);
-        auth.
-                jdbcAuthentication()
-                .usersByUsernameQuery(this.usersQuery)
-                .dataSource(this.dataSource)
-                .passwordEncoder(this.passwordEncoder);
     }
 }
