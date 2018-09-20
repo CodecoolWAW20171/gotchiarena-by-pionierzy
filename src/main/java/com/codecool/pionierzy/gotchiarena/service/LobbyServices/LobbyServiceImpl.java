@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 
 
 @Service
@@ -25,6 +29,12 @@ public class LobbyServiceImpl implements LobbyService {
     @Override
     public List<Room> getRooms() {
         return roomRepository.findAll();
+    }
+
+    @Override
+    public Room getOneRoom(String idString){
+        Long id = Long.valueOf(idString);
+        return roomRepository.findRoomById(id);
     }
 
     @Override
