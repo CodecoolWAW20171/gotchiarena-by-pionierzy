@@ -16,17 +16,25 @@ public class FightServiceImpl implements FightService {
     private HashMap<Room, RoundMessage> roomRoundMessageMap = new HashMap<Room, RoundMessage>();
 
     @Override
-    public void receiveAction(Room room, User user, RoundAction action) {
+    public boolean receiveAction(Room room, User user, RoundAction action) {
         RoundMessage roundMessage = this.roomRoundMessageMap.get(room);
         if (user.equals(room.getOwner())) {
             roundMessage.setOwnerAction(action);
+            System.out.println("set owner action");
+            System.out.println(roundMessage.getOwnerAction());
         }
         else {
             roundMessage.setOpponentAction(action);
+            System.out.println("set opp action");
+            System.out.println(roundMessage.getOpponentAction());
         }
         if (roundMessage.getOwnerAction() != null && roundMessage.getOpponentAction() != null) {
             resolveRound(room, roundMessage);
+            System.out.println("BOTH");
+            return true;
         }
+        System.out.println("ONE");
+        return false;
     }
 
     @Override
@@ -39,17 +47,24 @@ public class FightServiceImpl implements FightService {
             }
         }
 
-        //after round we want to get a clear round
-        this.roomRoundMessageMap.put(room, new RoundMessage());
     }
 
     @Override
     public RoundMessage sendResults(Room room) {
+        System.out.println("Preparing message...");
+        System.out.println(roomRoundMessageMap.get(room).getOwnerAction());
+        System.out.println(roomRoundMessageMap.get(room).getOpponentAction());
         return roomRoundMessageMap.get(room);
     }
 
     @Override
     public void startGame(Room room) {
+        System.out.println("START");
         roomRoundMessageMap.put(room, new RoundMessage());
+    }
+
+    @Override
+    public HashMap<Room, RoundMessage> getMap(){
+        return roomRoundMessageMap;
     }
 }
