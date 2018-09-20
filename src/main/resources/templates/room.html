@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, _, ~{::section}, ~{}, ~{::script})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head class="text-center py-2">
+    <meta charset="UTF-8">
+    <title>Fight</title>
+</head>
+<body>
+<section>
+<p>OK</p>
+    <p th:text=" 'Owner: ' + ${r.getOwnerName()}"></p>
+    <p th:text=" 'Opponent: ' + ${r.getOpponentName()}"></p>
+
+    <div>
+        <!--CONNECT AND DISCONNECT BUTTONS: -->
+        <!--<div class="col-md-6">-->
+            <!--<form class="form-inline">-->
+                <!--<div class="form-group">-->
+                    <!--<label for="connect">WebSocket connection:</label>-->
+                    <!--<button id="connect" class="btn btn-default" type="submit">Connect</button>-->
+                    <!--<button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect-->
+                    <!--</button>-->
+                <!--</div>-->
+            <!--</form>-->
+        <!--</div>-->
+        <div class="col-md-6">
+            <div th:if="${principal}">
+                <form class="form-inline">
+                    <button id="send" name="attack" class="btn btn-default" type="submit"
+                            th:value="'attack: attack1, '+
+                                      'user: '+ ${principal}"
+                            th:text="${principal}+' ATTACK'">Attack</button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Logs:</th>
+                </tr>
+                </thead>
+                <tbody id="logs">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/public/js/fight.js"></script>
+</body>
+</html>
