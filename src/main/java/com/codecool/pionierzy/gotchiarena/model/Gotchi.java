@@ -2,11 +2,19 @@ package com.codecool.pionierzy.gotchiarena.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity
 @Table(name = "gotchi")
 public class Gotchi {
+
+    private static Map<AttackType, AttackType> strongAgainst;
+    private static Map<AttackType, AttackType> weakAgainst;
+
+    private static final double STRONG_MODIFIER = 1.25;
+    private static final double WEAK_MODIFIER = 0.75;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -44,6 +52,22 @@ public class Gotchi {
 
     @Transient
 
+    static {
+        strongAgainst = new HashMap<>();
+        weakAgainst = new HashMap<>();
+
+        strongAgainst.put(AttackType.LIGHTNING, AttackType.PLANT);
+        strongAgainst.put(AttackType.PLANT, AttackType.EARTH);
+        strongAgainst.put(AttackType.EARTH, AttackType.LIGHTNING);
+        strongAgainst.put(AttackType.FIRE, AttackType.ICE);
+        strongAgainst.put(AttackType.ICE, AttackType.WATER);
+        strongAgainst.put(AttackType.WATER, AttackType.FIRE);
+        for (Map.Entry<AttackType, AttackType> entry : strongAgainst.entrySet()) {
+            AttackType strong = entry.getKey();
+            AttackType weak = entry.getValue();
+            weakAgainst.put(weak, strong);
+        }
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -130,6 +154,9 @@ public class Gotchi {
     }
 
     public void attack(Gotchi gotchi) {
-
+        AttackType opponentType = gotchi.getType();
+        if (opponentType == strongAgainst.get(this.type)) {
+            gotchi.setHealth(gotchi.getHealth() - attack);
+        }
     }
 }
