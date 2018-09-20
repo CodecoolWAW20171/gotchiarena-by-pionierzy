@@ -27,7 +27,7 @@ function connect() {
             console.log("-----------");
             console.log(log.body);
             console.log("-----------");
-            showLogs(JSON.parse(log.body).attack);
+            showLogs(JSON.parse(log.body).data);
         });
     });
 }
@@ -41,7 +41,7 @@ function disconnect() {
 }
 
 function sendAttack() {
-    stompClient.send("/app/attack", {}, JSON.stringify({'attack': $("#send").val()}));
+    stompClient.send("/app/attack", {}, JSON.stringify({'data': $("#send").val()}));
 }
 
 function showLogs(message) {

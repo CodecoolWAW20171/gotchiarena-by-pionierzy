@@ -24,11 +24,16 @@
             <!--</form>-->
         <!--</div>-->
         <div class="col-md-6">
-            <form class="form-inline">
-                <!--<input type="text" id="name" class="form-control" placeholder="Your name here...">-->
-                <button id="send" name="attack" class="btn btn-default" type="submit" value="attack1">Attack</button>
+            <div th:if="${principal}">
+                <form class="form-inline">
+                    <button id="send" name="attack" class="btn btn-default" type="submit"
+                            th:value="'attack: attack1, '+
+                                      'user: '+ ${principal}"
+                            th:text="${principal}+' ATTACK'">Attack</button>
 
-            </form>
+                </form>
+            </div>
+
         </div>
     </div>
 
