@@ -50,8 +50,8 @@ function setSecondarySelect(event) {
 
 
 
-function lockTypeSelect() {
-    document.getElementById("type").disabled = true;
-}
-
-document.getElementById("secondary").addEventListener("change", lockTypeSelect);
+// function lockTypeSelect() {
+//     document.getElementById("type").disabled = true;
+// }
+//
+// document.getElementById("secondary").addEventListener("change", lockTypeSelect);
