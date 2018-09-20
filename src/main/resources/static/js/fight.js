@@ -43,10 +43,11 @@ function sendAction(value) {
 }
 
 function showLogs(message) {
-    let content = $("#logs").html();
-    $("#logs").html("");
-    $("#logs").append("<tr><td>" + message + "</td></tr>");
-    $("#logs").append(content);
+    let logsDiv = $("#logs");
+    let content = logsDiv.html();
+    logsDiv.html("");
+    logsDiv.append("<tr><td>" + message + "</td></tr>");
+    logsDiv.append(content);
 }
 
 $(function () {
