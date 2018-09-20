@@ -13,8 +13,7 @@ public class FightController {
     @MessageMapping("/room/action/{roomId}")
     @SendTo("/topic/message/{roomId}")
     public String logs(String message, @DestinationVariable String roomId) throws Exception {
-        System.out.println("-----------------");
-        System.out.println(roomId);
+
         return message;
     }
 }
