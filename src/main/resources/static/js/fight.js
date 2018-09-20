@@ -43,7 +43,10 @@ function sendAction(value) {
 }
 
 function showLogs(message) {
+    let content = $("#logs").html();
+    $("#logs").html("");
     $("#logs").append("<tr><td>" + message + "</td></tr>");
+    $("#logs").append(content);
 }
 
 $(function () {
