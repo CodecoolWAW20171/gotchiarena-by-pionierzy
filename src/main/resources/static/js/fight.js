@@ -38,12 +38,15 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function sendAttack() {
-    stompClient.send("/app/room/action/"+roomId, {}, JSON.stringify({'data': $("#send").val()}));
+function sendAction(value) {
+    stompClient.send("/app/room/action/"+roomId, {}, JSON.stringify({'data': value }));
 }
 
 function showLogs(message) {
+    let content = $("#logs").html();
+    $("#logs").html("");
     $("#logs").append("<tr><td>" + message + "</td></tr>");
+    $("#logs").append(content);
 }
 
 $(function () {
@@ -53,6 +56,9 @@ $(function () {
     // $( "#connect" ).click(function() { connect(); });
     // $( "#disconnect" ).click(function() { disconnect(); });
     connect();
-    $( "#send" ).click(function() { sendAttack(); });
+    $( "#attack1" ).click(function() { sendAction($("#attack1").val()); });
+    $( "#attack2" ).click(function() { sendAction($("#attack2").val()); });
+    $( "#defend" ).click(function() { sendAction($("#defend").val()); });
+    $( "#evade" ).click(function() { sendAction($("#evade").val()); });
 });
 
