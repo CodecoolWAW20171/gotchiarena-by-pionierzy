@@ -25,6 +25,8 @@ function setSecondarySelect(event) {
     let wetFireTypes = Array.from(document.getElementsByClassName("cool"));
     let bushyLightningTypes = Array.from(document.getElementsByClassName("lame"));
     document.getElementById("secondary").hidden = false;
+    console.log(event.target.value);
+    console.log(event.target);
 
 
     if (["WATER","FIRE","ICE"].includes(event.target.value)) {

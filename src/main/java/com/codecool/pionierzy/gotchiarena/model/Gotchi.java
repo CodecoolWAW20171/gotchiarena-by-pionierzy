@@ -13,32 +13,32 @@ public class Gotchi {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "userId", updatable = false, unique = true, nullable = false)
+    @Column(name = "userId", updatable = false)
     private Long userId;
 
     @Column(name = "name", updatable = false, unique = true, nullable = false)
     @NotEmpty(message = "Please provide name")
     private String name;
 
-    @Column(name = "speed", updatable = false, unique = true, nullable = false)
+    @Column(name = "speed", updatable = false, nullable = false)
     private int speed;
 
-    @Column(name = "defence", updatable = false, unique = true, nullable = false)
+    @Column(name = "defence", updatable = false, nullable = false)
     private int defence;
 
-    @Column(name = "attack", updatable = false, unique = true, nullable = false)
+    @Column(name = "attack", updatable = false, nullable = false)
     private int attack;
 
-    @Column(name = "health", unique = true, nullable = false)
+    @Column(name = "health", nullable = false)
     private int health;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", updatable = false, unique = true, nullable = false)
-    private GotchiType type;
+//    @Enumerated(EnumType.STRING)
+    @Column(name = "type", updatable = false)
+    private String type;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "secondaryAttack", updatable = false, unique = true, nullable = false)
-    private GotchiType secondaryAttack;
+//    @Enumerated(EnumType.STRING)
+    @Column(name = "secondaryAttack", updatable = false)
+    private String secondaryAttack;
 
 
 
@@ -59,7 +59,10 @@ public class Gotchi {
         return Objects.hash(id, name);
     }
 
-
+    @Override
+    public String toString() {
+        return secondaryAttack + type;
+    }
 
     public Long getId() {
         return id;
@@ -113,19 +116,19 @@ public class Gotchi {
         this.health = health;
     }
 
-    public GotchiType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(GotchiType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public GotchiType getSecondaryAttack() {
+    public String getSecondaryAttack() {
         return secondaryAttack;
     }
 
-    public void setSecondaryAttack(GotchiType secondaryAttack) {
+    public void setSecondaryAttack(String secondaryAttack) {
         this.secondaryAttack = secondaryAttack;
     }
 }
