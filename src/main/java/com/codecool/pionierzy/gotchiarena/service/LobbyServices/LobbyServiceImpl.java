@@ -1,4 +1,4 @@
-package com.codecool.pionierzy.gotchiarena.service;
+package com.codecool.pionierzy.gotchiarena.service.LobbyServices;
 
 import com.codecool.pionierzy.gotchiarena.dao.RoomRepository;
 import com.codecool.pionierzy.gotchiarena.dao.UserRepository;

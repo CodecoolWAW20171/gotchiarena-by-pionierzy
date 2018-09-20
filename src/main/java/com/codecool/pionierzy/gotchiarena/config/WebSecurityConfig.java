@@ -1,6 +1,6 @@
 package com.codecool.pionierzy.gotchiarena.config;
 
-import com.codecool.pionierzy.gotchiarena.service.UserDetailsServiceImpl;
+import com.codecool.pionierzy.gotchiarena.service.UserServices.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
