@@ -13,23 +13,6 @@ public class FightServiceImpl implements FightService {
 
     private HashMap<Room, RoundMessage> roomRoundMessageMap;
 
-    public FightServiceImpl() {
-        strongAgainst = new HashMap<>();
-        weakAgainst = new HashMap<>();
-
-        strongAgainst.put(AttackType.LIGHTNING, AttackType.PLANT);
-        strongAgainst.put(AttackType.PLANT, AttackType.EARTH);
-        strongAgainst.put(AttackType.EARTH, AttackType.LIGHTNING);
-        strongAgainst.put(AttackType.FIRE, AttackType.ICE);
-        strongAgainst.put(AttackType.ICE, AttackType.WATER);
-        strongAgainst.put(AttackType.WATER, AttackType.FIRE);
-        for (Map.Entry<AttackType, AttackType> entry : strongAgainst.entrySet()) {
-            AttackType strong = entry.getKey();
-            AttackType weak = entry.getValue();
-            weakAgainst.put(weak, strong);
-        }
-    }
-
     @Override
     public void receiveAction(Room room, User user, RoundAction action) {
         RoundMessage roundMessage = this.roomRoundMessageMap.get(room);
@@ -46,6 +29,13 @@ public class FightServiceImpl implements FightService {
 
     @Override
     public void resolveRound(Room room, RoundMessage roundMessage) {
+        RoundAction ownerAction = roundMessage.getOwnerAction();
+        RoundAction opponentAction = roundMessage.getOpponentAction();
+        if (ownerAction == opponentAction) {
+            if (ownerAction == RoundAction.DEFEND) {
+
+            }
+        }
 
         //after round we want to get a clear round
         this.roomRoundMessageMap.put(room, new RoundMessage());
