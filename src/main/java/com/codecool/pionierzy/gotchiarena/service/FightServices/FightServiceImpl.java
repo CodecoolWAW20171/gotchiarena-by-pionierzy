@@ -40,14 +40,13 @@ public class FightServiceImpl implements FightService {
             roundMessage.setOpponentAction(action);
         }
         if (roundMessage.getOwnerAction() != null && roundMessage.getOpponentAction() != null) {
-            resolveRound(room);
+            resolveRound(room, roundMessage);
         }
     }
 
     @Override
-    public void resolveRound(Room room) {
+    public void resolveRound(Room room, RoundMessage roundMessage) {
 
-        RoundMessage roundMessage = this.roomRoundMessageMap.get(room);
         //after round we want to get a clear round
         this.roomRoundMessageMap.put(room, new RoundMessage());
     }

@@ -128,4 +128,8 @@ public class Gotchi {
     public void setSecondaryAttack(AttackType secondaryAttack) {
         this.secondaryAttack = secondaryAttack;
     }
+
+    public void attack(Gotchi gotchi) {
+
+    }
 }

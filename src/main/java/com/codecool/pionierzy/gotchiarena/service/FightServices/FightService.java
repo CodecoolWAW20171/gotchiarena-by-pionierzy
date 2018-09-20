@@ -7,7 +7,7 @@ public interface FightService {
 
     public void receiveAction(Room room, User user, RoundAction action);
 
-    public void resolveRound(Room room);
+    public void resolveRound(Room room, RoundMessage roundMessage);
 
     public RoundMessage sendResults(Room room);
 }
