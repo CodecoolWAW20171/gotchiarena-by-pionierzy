@@ -179,7 +179,7 @@ public class Gotchi {
 
     public void attackEvader(Gotchi gotchi, AttackType type) {
         if (this.speed * randomModifier() - gotchi.getSpeed() * randomModifier() > 0) {
-            attack(gotchi, type);
+            this.attack(gotchi, type);
         }
     }
 
