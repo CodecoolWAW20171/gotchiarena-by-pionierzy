@@ -38,7 +38,7 @@ public class Gotchi {
     private int attack;
 
     @Column(name = "health", unique = true, nullable = false)
-    private int health;
+    private double health;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", updatable = false, unique = true, nullable = false)
@@ -47,7 +47,6 @@ public class Gotchi {
     @Enumerated(EnumType.STRING)
     @Column(name = "secondaryAttack", updatable = false, unique = true, nullable = false)
     private AttackType secondaryAttack;
-
 
 
     static {
@@ -82,7 +81,6 @@ public class Gotchi {
     public int hashCode() {
         return Objects.hash(id, name);
     }
-
 
 
     public Long getId() {
@@ -129,11 +127,11 @@ public class Gotchi {
         this.attack = attack;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(double health) {
         this.health = health;
     }
 
@@ -156,7 +154,26 @@ public class Gotchi {
     public void attack(Gotchi gotchi) {
         AttackType opponentType = gotchi.getType();
         if (opponentType == strongAgainst.get(this.type)) {
+            gotchi.setHealth(gotchi.getHealth() - attack * STRONG_MODIFIER);
+        } else if (opponentType == weakAgainst.get(this.type)) {
+            gotchi.setHealth(gotchi.getHealth() - attack * WEAK_MODIFIER);
+        } else {
             gotchi.setHealth(gotchi.getHealth() - attack);
+        }
+    }
+
+    public void attackDefender(Gotchi gotchi) {
+        AttackType opponentType = gotchi.getType();
+        if (opponentType == strongAgainst.get(this.type)) {
+            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * STRONG_MODIFIER ) return;
+            gotchi.setHealth(gotchi.getHealth() - attack * STRONG_MODIFIER + (gotchi.getDefence() * 2));
+        }
+        else if (opponentType == weakAgainst.get(this.type)) {
+            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * WEAK_MODIFIER) return;
+            gotchi.setHealth(gotchi.getHealth() - attack * WEAK_MODIFIER + (gotchi.getDefence() * 2));
+        } else {
+            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack) return;
+            gotchi.setHealth(gotchi.getHealth() - attack + (gotchi.getDefence() * 2));
         }
     }
 }

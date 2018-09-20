@@ -20,13 +20,9 @@ public class FightServiceImpl implements FightService {
         RoundMessage roundMessage = this.roomRoundMessageMap.get(room);
         if (user.equals(room.getOwner())) {
             roundMessage.setOwnerAction(action);
-            System.out.println("set owner action");
-            System.out.println(roundMessage.getOwnerAction());
         }
         else {
             roundMessage.setOpponentAction(action);
-            System.out.println("set opp action");
-            System.out.println(roundMessage.getOpponentAction());
         }
         if (roundMessage.getOwnerAction() != null && roundMessage.getOpponentAction() != null) {
             resolveRound(room, roundMessage);
