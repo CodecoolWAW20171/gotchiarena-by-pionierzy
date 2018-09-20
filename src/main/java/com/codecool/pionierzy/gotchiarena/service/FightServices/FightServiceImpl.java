@@ -1,8 +1,8 @@
 package com.codecool.pionierzy.gotchiarena.service.FightServices;
 
 import com.codecool.pionierzy.gotchiarena.model.AttackType;
-import com.codecool.pionierzy.gotchiarena.model.Gotchi;
 import com.codecool.pionierzy.gotchiarena.model.Room;
+import com.codecool.pionierzy.gotchiarena.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,8 +31,17 @@ public class FightServiceImpl implements FightService {
     }
 
     @Override
-    public void receiveAction(Gotchi gotchi) {
-
+    public void receiveAction(Room room, User user, RoundAction action) {
+        RoundMessage roundMessage = this.roomRoundMessageMap.get(room);
+        if (user.equals(room.getOwner())) {
+            roundMessage.setOwnerAction(action);
+        }
+        else {
+            roundMessage.setOpponentAction(action);
+        }
+        if (roundMessage.getOwnerAction() != null && roundMessage.getOpponentAction() != null) {
+            resolveRound(room);
+        }
     }
 
     @Override

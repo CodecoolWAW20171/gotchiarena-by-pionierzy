@@ -87,4 +87,12 @@ public class Room {
     public String toString() {
         return String.format("Room: %s (%d/2). Owner: %s", name, getCount(), owner.getUsername());
     }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public User getOpponent() {
+        return opponent;
+    }
 }
