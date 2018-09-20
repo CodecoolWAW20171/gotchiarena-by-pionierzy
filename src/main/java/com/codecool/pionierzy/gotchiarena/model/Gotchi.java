@@ -152,35 +152,42 @@ public class Gotchi {
         this.secondaryAttack = secondaryAttack;
     }
 
-    public void attack(Gotchi gotchi, AttackType type) {
+    public double attack(Gotchi gotchi, AttackType type) {
         AttackType opponentType = gotchi.getType();
+        double healthLoss;
         if (opponentType == strongAgainst.get(type)) {
-            gotchi.setHealth(gotchi.getHealth() - attack * STRONG_MODIFIER);
+            healthLoss = attack * STRONG_MODIFIER;
         } else if (opponentType == weakAgainst.get(type)) {
-            gotchi.setHealth(gotchi.getHealth() - attack * WEAK_MODIFIER);
+            healthLoss = attack * WEAK_MODIFIER;
         } else {
-            gotchi.setHealth(gotchi.getHealth() - attack);
+            healthLoss = attack;
         }
+        gotchi.setHealth(gotchi.getHealth() - healthLoss);
+        return healthLoss;
     }
 
-    public void attackDefender(Gotchi gotchi, AttackType type) {
+    public double attackDefender(Gotchi gotchi, AttackType type) {
         AttackType opponentType = gotchi.getType();
+        double healthLoss;
         if (opponentType == strongAgainst.get(type)) {
-            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * STRONG_MODIFIER) return;
-            gotchi.setHealth(gotchi.getHealth() - attack * STRONG_MODIFIER + (gotchi.getDefence() * 2));
+            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * STRONG_MODIFIER) return 0;
+            healthLoss = attack * STRONG_MODIFIER - gotchi.getDefence() * 2;
         } else if (opponentType == weakAgainst.get(type)) {
-            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * WEAK_MODIFIER) return;
-            gotchi.setHealth(gotchi.getHealth() - attack * WEAK_MODIFIER + (gotchi.getDefence() * 2));
+            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * WEAK_MODIFIER) return 0;
+            healthLoss = attack * WEAK_MODIFIER - gotchi.getDefence() * 2;
         } else {
-            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack) return;
-            gotchi.setHealth(gotchi.getHealth() - attack + (gotchi.getDefence() * 2));
+            if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack) return 0;
+            healthLoss = attack - gotchi.getDefence() * 2;
         }
+        gotchi.setHealth(gotchi.getHealth() - healthLoss);
+        return healthLoss;
     }
 
-    public void attackEvader(Gotchi gotchi, AttackType type) {
+    public double attackEvader(Gotchi gotchi, AttackType type) {
         if (this.speed * randomModifier() - gotchi.getSpeed() * randomModifier() > 0) {
-            this.attack(gotchi, type);
+            return this.attack(gotchi, type);
         }
+        return 0;
     }
 
     private double randomModifier() {

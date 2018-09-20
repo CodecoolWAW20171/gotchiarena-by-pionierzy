@@ -26,10 +26,8 @@ public class FightServiceImpl implements FightService {
         }
         if (roundMessage.getOwnerAction() != null && roundMessage.getOpponentAction() != null) {
             resolveRound(room, roundMessage);
-            System.out.println("BOTH");
             return true;
         }
-        System.out.println("ONE");
         return false;
     }
 
@@ -39,6 +37,11 @@ public class FightServiceImpl implements FightService {
         RoundAction opponentAction = roundMessage.getOpponentAction();
         if (ownerAction == opponentAction) {
             if (ownerAction == RoundAction.DEFEND) {
+                roundMessage.setOwnerHPLoss(0);
+                roundMessage.setOpponentHPLoss(0);
+                return;
+            }
+            else if (ownerAction == RoundAction.PRIMARY_ATTACK) {
 
             }
         }
