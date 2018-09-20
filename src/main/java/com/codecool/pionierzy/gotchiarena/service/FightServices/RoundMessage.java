@@ -8,8 +8,8 @@ public class RoundMessage {
 
     private RoundAction opponentAction;
 
-    private int ownerHPLoss;
-    private int opponentHPLoss;
+    private double ownerHPLoss;
+    private double opponentHPLoss;
 
     public RoundMessage() {
         ownerAction = null;
@@ -32,7 +32,7 @@ public class RoundMessage {
         this.opponentAction = opponentAction;
     }
 
-    public int getOwnerHPLoss() {
+    public double getOwnerHPLoss() {
         return ownerHPLoss;
     }
 
@@ -40,7 +40,7 @@ public class RoundMessage {
         this.ownerHPLoss = ownerHPLoss;
     }
 
-    public int getOpponentHPLoss() {
+    public double getOpponentHPLoss() {
         return opponentHPLoss;
     }
 

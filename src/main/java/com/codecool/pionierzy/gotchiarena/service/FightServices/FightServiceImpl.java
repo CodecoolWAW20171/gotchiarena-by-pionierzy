@@ -35,6 +35,8 @@ public class FightServiceImpl implements FightService {
     public void resolveRound(Room room, RoundMessage roundMessage) {
         RoundAction ownerAction = roundMessage.getOwnerAction();
         RoundAction opponentAction = roundMessage.getOpponentAction();
+
+        room.getOpponent()
         if (ownerAction == opponentAction) {
             if (ownerAction == RoundAction.DEFEND) {
                 roundMessage.setOwnerHPLoss(0);
