@@ -38,16 +38,31 @@ function disconnect() {
 
 function sendAction(value) {
     stompClient.send("/app/room/action/"+roomId, {}, JSON.stringify({ value }));
+    $("#attack1").prop("disabled", true);
+    $("#attack2").prop("disabled", true);
+    $("#defend").prop("disabled", true);
+    $("#evade").prop("disabled", true);
+    waiting();
 }
 
 function showLogs(message) {
     if (message != null){
+        $("#wait").html("");
         let logsDiv = $("#logs");
         let content = logsDiv.html();
         logsDiv.html("");
         logsDiv.append("<tr><td>" + message + "</td></tr>");
         logsDiv.append(content);
+        $("#attack1").prop("disabled", false);
+        $("#attack2").prop("disabled", false);
+        $("#defend").prop("disabled", false);
+        $("#evade").prop("disabled", false);
     }
+}
+
+function waiting() {
+    let waitDiv = $("#wait");
+    waitDiv.html("Waiting for your opponent...");
 }
 
 function createMessage(message){

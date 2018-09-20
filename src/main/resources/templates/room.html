@@ -7,7 +7,6 @@
 </head>
 <body>
 <section>
-<p>OK</p>
     <p th:text=" 'Owner: ' + ${r.getOwnerName()}"></p>
     <p th:text=" 'Opponent: ' + ${r.getOpponentName()}"></p>
     <input id="roomId" th:value="${r.getId()}" style="display: none"></input>
@@ -66,6 +65,9 @@
                 <thead>
                 <tr>
                     <th>Logs:</th>
+                </tr>
+                <tr id="wait">
+
                 </tr>
                 </thead>
                 <tbody id="logs">
