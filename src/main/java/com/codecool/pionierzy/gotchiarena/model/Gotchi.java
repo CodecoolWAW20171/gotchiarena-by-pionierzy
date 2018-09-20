@@ -50,8 +50,6 @@ public class Gotchi {
 
 
 
-    @Transient
-
     static {
         strongAgainst = new HashMap<>();
         weakAgainst = new HashMap<>();
@@ -68,6 +66,8 @@ public class Gotchi {
             weakAgainst.put(weak, strong);
         }
     }
+
+    @Transient
 
     @Override
     public boolean equals(Object obj) {

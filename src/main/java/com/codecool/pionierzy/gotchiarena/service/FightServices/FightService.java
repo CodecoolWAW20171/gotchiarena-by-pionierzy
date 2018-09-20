@@ -10,4 +10,6 @@ public interface FightService {
     public void resolveRound(Room room, RoundMessage roundMessage);
 
     public RoundMessage sendResults(Room room);
+
+    public void startGame(Room room);
 }

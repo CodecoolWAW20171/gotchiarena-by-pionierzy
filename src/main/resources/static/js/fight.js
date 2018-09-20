@@ -19,13 +19,9 @@ function connect() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/message/'+roomId, function (log) {
-            console.log("log:");
-            console.log(log);
-            console.log("-----------");
-            console.log(log.body);
-            console.log("-----------");
-            showLogs(JSON.parse(log.body).data);
+        stompClient.subscribe('/topic/message/'+roomId, function (message) {
+            let log = createMessage(message);
+            showLogs(log);
         });
     });
 }
@@ -39,7 +35,7 @@ function disconnect() {
 }
 
 function sendAction(value) {
-    stompClient.send("/app/room/action/"+roomId, {}, JSON.stringify({'data': value }));
+    stompClient.send("/app/room/action/"+roomId, {}, JSON.stringify({ value }));
 }
 
 function showLogs(message) {
@@ -48,6 +44,20 @@ function showLogs(message) {
     logsDiv.html("");
     logsDiv.append("<tr><td>" + message + "</td></tr>");
     logsDiv.append(content);
+}
+
+function createMessage(message){
+    console.log("log:");
+    let log = JSON.parse(message.body);
+
+    let ownA = log.ownerAction;
+    let oppA = log.opponentAction;
+    let ownLoss = log.ownerHPLoss;
+    let oppLoss = log.opponentHPLoss;
+
+    let log1 = "Owner's Gotchi used " + ownA + " and lost " + ownLoss + " of its HP. ";
+    let log2 = "Opponent's Gotchi used " + oppA + " and lost " + oppLoss + " of its HP" ;
+    return log1 + log2;
 }
 
 $(function () {
