@@ -151,24 +151,24 @@ public class Gotchi {
         this.secondaryAttack = secondaryAttack;
     }
 
-    public void attack(Gotchi gotchi) {
+    public void attack(Gotchi gotchi, AttackType type) {
         AttackType opponentType = gotchi.getType();
-        if (opponentType == strongAgainst.get(this.type)) {
+        if (opponentType == strongAgainst.get(type)) {
             gotchi.setHealth(gotchi.getHealth() - attack * STRONG_MODIFIER);
-        } else if (opponentType == weakAgainst.get(this.type)) {
+        } else if (opponentType == weakAgainst.get(type)) {
             gotchi.setHealth(gotchi.getHealth() - attack * WEAK_MODIFIER);
         } else {
             gotchi.setHealth(gotchi.getHealth() - attack);
         }
     }
 
-    public void attackDefender(Gotchi gotchi) {
+    public void attackDefender(Gotchi gotchi, AttackType type) {
         AttackType opponentType = gotchi.getType();
-        if (opponentType == strongAgainst.get(this.type)) {
+        if (opponentType == strongAgainst.get(type)) {
             if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * STRONG_MODIFIER ) return;
             gotchi.setHealth(gotchi.getHealth() - attack * STRONG_MODIFIER + (gotchi.getDefence() * 2));
         }
-        else if (opponentType == weakAgainst.get(this.type)) {
+        else if (opponentType == weakAgainst.get(type)) {
             if (gotchi.getDefence() * 2 > gotchi.getHealth() - attack * WEAK_MODIFIER) return;
             gotchi.setHealth(gotchi.getHealth() - attack * WEAK_MODIFIER + (gotchi.getDefence() * 2));
         } else {
@@ -176,4 +176,5 @@ public class Gotchi {
             gotchi.setHealth(gotchi.getHealth() - attack + (gotchi.getDefence() * 2));
         }
     }
+    
 }
