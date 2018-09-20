@@ -61,23 +61,46 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <select name="type" th:field="*{type}"class="form-control" id="type" required >
-                        <option value="" disabled selected hidden>Choose type attack</option>
-                        <option th:each="primary : ${T(com.codecool.pionierzy.gotchiarena.model.GotchiType).values()}"
-                                th:value="${primary}"
-                                th:text="${primary}">
-                        </option>
+                <!--<div class="form-group">-->
+                    <!--<select name="type" th:field="*{type}"class="form-control" id="type" required >-->
+                        <!--<option value="" disabled selected hidden>Choose type attack</option>-->
+                        <!--<option th:each="primary : ${T(com.codecool.pionierzy.gotchiarena.model.GotchiType).values()}"-->
+                                <!--th:value="${primary}"-->
+                                <!--th:text="${primary}">-->
+                        <!--</option>-->
 
+                    <!--</select>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<select name="secondary" th:field="*{secondaryAttack}"class="form-control" id="secondary" required >-->
+                        <!--<option value="" disabled selected hidden>Choose secondary attack</option>-->
+                        <!--<option th:each="secondary : ${T(com.codecool.pionierzy.gotchiarena.model.GotchiType).values()}"-->
+                                <!--th:value="${secondary}"-->
+                                <!--th:text="${secondary}">-->
+                        <!--</option>-->
+
+                    <!--</select>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <select name="type" th:field="*{type}" class="form-control" id="type" required>
+                        <option class = "nameholder" value="" selected hidden>Choose Your Gotchi type</option>
+                        <option th:value="FIRE">FIRE</option>
+                        <option th:value="WATER">WATER</option>
+                        <option th:value="ICE">ICE</option>
+                        <option th:value="LIGHTNING">LIGHTNING</option>
+                        <option th:value="PLANT">PLANT</option>
+                        <option th:value="EARTH">EARTH</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <select name="secondary" th:field="*{secondaryAttack}"class="form-control" id="secondary" required >
-                        <option value="" disabled selected hidden>Choose secondary attack</option>
-                        <option th:each="secondary : ${T(com.codecool.pionierzy.gotchiarena.model.GotchiType).values()}"
-                                th:value="${secondary}"
-                                th:text="${secondary}">
-                        </option>
+                    <select name="secondary" th:field="*{secondaryAttack}" class="form-control" id="secondary" required hidden>
+                        <option class = "nameholder" value="" selected hidden>Choose secondary attack</option>
+                        <option class="cool" th:value="FIRE">FIRE</option>
+                        <option class="cool" th:value="WATER">WATER</option>
+                        <option class="cool" th:value="ICE">ICE</option>
+                        <option class="lame" th:value="LIGHTNING">LIGHTNING</option>
+                        <option class="lame" th:value="PLANT">PLANT</option>
+                        <option class="lame" th:value="EARTH">EARTH</option>
 
                     </select>
                 </div>

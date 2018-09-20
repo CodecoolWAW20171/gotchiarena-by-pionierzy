@@ -32,11 +32,9 @@ public class Gotchi {
     @Column(name = "health", nullable = false)
     private int health;
 
-//    @Enumerated(EnumType.STRING)
     @Column(name = "type", updatable = false)
     private String type;
 
-//    @Enumerated(EnumType.STRING)
     @Column(name = "secondaryAttack", updatable = false)
     private String secondaryAttack;
 
