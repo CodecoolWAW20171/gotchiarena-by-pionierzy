@@ -1,0 +1,61 @@
+// Colors
+$white: #fff;
+$green: #1eb980;
+$dark-green: #045d56;
+$orange: #ff6859;
+$yellow: #ffcf44;
+$purple: #b15dff;
+$cyan: #72deff;
+$red: #B00020;
+
+$l5: $white;
+$l3: #adadb1;
+$d2: #42424d;
+$d3: #373740;
+$d5: #27272f;
+$bg: #33333d;
+$bg2: #3C3C46;
+
+$colors: (
+        "dark-green": $dark-green,
+);
+
+$primary: $green;
+$secondary: $dark-green;
+$success: $purple;
+$info: $cyan;
+$inactive: $l3;
+
+$theme-colors: (
+        "inactive": $inactive,
+        "light-5": $l5,
+        "light-3": $l3,
+        "dark-2": $d2,
+        "dark-3": $d3,
+        "dark-5": $d5,
+        "bg": $bg,
+        "bg-2": $bg2,
+);
+
+$body-bg: $bg;
+$body-color: $l5;
+
+$border-color: $l3;
+
+$font-family-sans-serif: "Roboto", "Segoe UI", -apple-system, BlinkMacSystemFont, "sans-serif";
+
+$input-bg: transparent;
+$input-color: $l5;
+// custom
+$input-focus-color: $l5;
+$input-inactive-color: $inactive;
+$input-error-color: $orange;
+
+$modal-content-bg: $bg2;
+$modal-content-border-width: 0;
+
+$table-border-color: $border-color;
+
+$close-color: $l5;
+
+$btn-disabled-opacity: 0.6;

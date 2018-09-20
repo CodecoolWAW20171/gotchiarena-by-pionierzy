@@ -10,10 +10,11 @@
     <title th:replace="${title}">Gotchi Arena</title>
 
     <!--Common links-->
-    <link rel="stylesheet" type="text/css" th:href="@{/public/css/main.css}">
 
     <!--Per page placeholder for additional links-->
     <th:block th:replace="${links}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/public/css/main.css}">
 
 </head>
 <body>
@@ -33,7 +34,7 @@
 
     </div>
 
-    <div id="snackBar"></div>
+    <div id="snackBar" class="snackBar"></div>
 
     <footer th:fragment="footer">
         <p class="copyright">&copy; 2018 Pionierzy. All rights reserved.</p>

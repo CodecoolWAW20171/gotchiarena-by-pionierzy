@@ -1,101 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+@import "variables";
+
 @import "../bootstrap/scss/bootstrap";
-@import 'color-theme';
+
 @import 'mixins';
-@import 'others';
+@import 'color-theme';
+@import "general";
+@import "tables";
+@import "buttons";
 @import 'forms';
-
-// ----- Generic -----
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  min-width: 350px;
-  height: 100%;
-}
-
-body {
-  @extend %theme;
-  font: {
-    family: "Roboto", "sans-serif";
-    size: 16px;
-  }
-  line-height: 1.5;
-}
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 5px 5%;
-}
-
-.content {
-  flex: 1 0 auto;
-}
-
-
-
-// ----- Others -----
-
-.list {
-  overflow-x: auto;
-  padding: 12px 0;
-
-  table {
-    border-collapse: collapse;
-    font-size: 14px;
-    width: 100%;
-    line-height: 1;
-    background-color: $bg2;
-    display: none;
-  }
-
-  th {
-    font-weight: 400;
-    color: $inactive;
-    border-bottom: 1px solid $l3;
-
-  }
-
-  th, td {
-    padding: 12px 16px;
-    vertical-align: middle;
-  }
-
-
-  tbody tr {
-    border-top: 1px solid $l3;
-    border-bottom: 1px solid $l3;
-
-    &:hover {
-      @extend %hover;
-    }
-  }
-
-  thead, tbody {
-    td:first-child, th:first-child {
-      border-right: 1px solid $l3;
-    }
-    td:not(:first-child), th:not(:first-child) {
-      text-align: center;
-    }
-  }
-
-}
-
-
-
-footer {
-  border-top: 1px solid $d5;
-  margin-top: 24px;
-  font-size: 0.8em;
-  text-align: center;
-  padding: 4px 8px;
-  flex-shrink: 0;
-
-  .copyright {
-    margin: 0;
-  }
-}
+@import 'others';

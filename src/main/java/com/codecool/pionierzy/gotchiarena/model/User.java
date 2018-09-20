@@ -31,6 +31,9 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
+    @OneToOne
+    private User opponent;
+
     public User() {
     }
 
@@ -62,6 +65,18 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public User getOpponent() {
+        return opponent;
+    }
+
+    public void setOpponent(User opponent) {
+        this.opponent = opponent;
+    }
+
+    public boolean hasOpponent() {
+        return opponent != null;
     }
 
     @Override

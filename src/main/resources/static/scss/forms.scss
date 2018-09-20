@@ -1,12 +1,9 @@
-$input-focus: $active;
-$input-error: $orange;
-$input-inactive: $inactive;
-
+// Material styled inputs
 input {
   border: none;
-  background-color: transparent;
   outline: none;
-  color: $l5;
+  background-color: $input-bg;
+  color: $input-color;
 }
 
 .field-wrap {
@@ -27,7 +24,7 @@ input {
       }
     }
     &:focus ~ label {
-      color: $input-focus;
+      color: $input-focus-color;
     }
 
     &:focus ~ .input-bar::before,
@@ -38,11 +35,11 @@ input {
     &.inp-invalid {
       & ~ .input-bar::before,
       & ~ .input-bar::after {
-        background-color: $input-error;
+        background-color: $input-error-color;
       }
 
       & ~ label {
-        color: $input-error;
+        color: $input-error-color;
       }
     }
   }
@@ -54,14 +51,14 @@ input {
     margin-bottom: 0;
     transition: 0.2s ease;
     pointer-events: none;
-    color: $input-inactive;
+    color: $input-inactive-color;
   }
 
   .input-field {
     position: relative;
 
     &:hover {
-      background-color: $d2;
+      background-color: theme-color("dark-2");
     }
   }
 
@@ -70,13 +67,13 @@ input {
     width: 100%;
     height: 1px;
     text-align: center;
-    background-color: $input-inactive;
+    background-color: $input-inactive-color;
 
     &::before, &::after {
       position: absolute;
       width: 0;
       height: 2px;
-      background-color: $input-focus;
+      background-color: $input-focus-color;
       content: "";
       transition: 0.2s ease;
     }
@@ -101,56 +98,5 @@ input {
 }
 
 .error {
-  color: $orange;
-}
-
-button {
-  @extend %theme-b1;
-  border: none;
-  border-radius: 2px;
-  display: inline-block;
-  vertical-align: middle;
-  overflow: hidden;
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: 0.1s;
-  outline: none;
-  padding: 8px 16px;
-
-  &:hover {
-    @extend %theme-b2;
-  }
-
-  &:disabled {
-    @extend %disabled;
-    cursor: default;
-  }
-
-  &.btn-submit {
-    float: right;
-  }
-
-  &.btn-flat {
-    @extend %flat;
-    padding: 8px;
-
-    &:hover {
-      @extend %flat-hover;
-    }
-
-    &:disabled {
-      @extend %flat-disabled;
-    }
-  }
-
-  &.btn-nopad {
-    padding: 0;
-  }
-
-  &.btn-full {
-    width: 100%;
-  }
-
+  color: $input-error-color;
 }

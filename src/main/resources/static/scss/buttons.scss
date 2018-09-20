@@ -1,0 +1,39 @@
+.btn {
+  text-transform: uppercase;
+
+  &:disabled {
+    pointer-events: none;
+  }
+}
+
+.btn-submit {
+  float: right;
+  background-color: theme-color("primary");
+  color: gray("900");
+
+  &:hover {
+    background-color: theme-color("secondary");
+    color: theme-color("light-5");
+  }
+
+}
+
+.btn-flat {
+  padding: 8px;
+  background-color: transparent;
+  color: theme-color("primary");
+
+}
+
+.btn-add{
+  width: 100%;
+  padding: 6px;
+  background-color: rgba(theme-color("dark-2"), 0.6);
+  color: theme-color("primary");
+
+  &:hover {
+    background-color: theme-color("dark-2");
+    color: color("blue");
+  }
+}
+

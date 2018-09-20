@@ -1,9 +1,9 @@
 // Spinner
 .spinner {
   margin: 50px auto;
-  border: 8px solid $bg2;
-  border-top: 8px solid $green;
-  border-bottom: 8px solid $dark-green;
+  border: 8px solid theme-color("bg-2");
+  border-top: 8px solid color("green");
+  border-bottom: 8px solid color("dark-green");
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -29,19 +29,17 @@
   }
 }
 
-
-// Snackbar
-
+// SnackBar
 $snack-bottom: 50px;
 $snack-timeout: 2.5s;
 
-#snackbar {
+.snackBar {
   display: none;
   visibility: hidden;
   min-width: 250px;
   margin-left: -125px;
-  background-color: $d5;
-  color: #fff;
+  background-color: theme-color("dark-5");
+  color: theme-color("light-5");
   text-align: center;
   border-radius: 2px;
   padding: 12px 16px;
@@ -49,39 +47,67 @@ $snack-timeout: 2.5s;
   z-index: 1;
   left: 50%;
   bottom: $snack-bottom;
+
+  &.show {
+    visibility: visible;
+
+    /* Add animation: Take 0.5 seconds to fade in and out the snackBar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s $snack-timeout;
+    animation: fadein 0.5s, fadeout 0.5s $snack-timeout;
+  }
 }
 
-#snackbar.show {
-  visibility: visible; /* Show the snackbar */
-
-  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-  However, delay the fade out process for 2.5 seconds */
-  -webkit-animation: fadein 0.5s, fadeout 0.5s $snack-timeout;
-  animation: fadein 0.5s, fadeout 0.5s $snack-timeout;
-}
-
-/* Animations to fade the snackbar in and out */
 @-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: $snack-bottom; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: $snack-bottom;
+    opacity: 1;
+  }
 }
 
 @keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: $snack-bottom; opacity: 1;}
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: $snack-bottom;
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeout {
-  from {bottom: $snack-bottom; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: $snack-bottom;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 @keyframes fadeout {
-  from {bottom: $snack-bottom; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
+  from {
+    bottom: $snack-bottom;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
 }
 
 // Utils
 .hidden {
   display: none;
+}
+
+// Modal
+.modal-body {
+  padding: $modal-inner-padding 2rem;
 }

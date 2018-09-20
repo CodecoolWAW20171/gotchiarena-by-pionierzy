@@ -1,13 +1,13 @@
 package com.codecool.pionierzy.gotchiarena.web;
 
 import com.codecool.pionierzy.gotchiarena.model.Room;
+import com.codecool.pionierzy.gotchiarena.model.User;
+import com.codecool.pionierzy.gotchiarena.service.UserService;
 import com.codecool.pionierzy.gotchiarena.service.message.RoomByIdRequest;
 import com.codecool.pionierzy.gotchiarena.service.message.RoomByNameRequest;
 import com.codecool.pionierzy.gotchiarena.service.LobbyService;
+import com.codecool.pionierzy.gotchiarena.service.message.RoomByNameResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.codecool.pionierzy.gotchiarena.service.LobbyServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
@@ -19,10 +19,12 @@ import java.util.List;
 public class LobbyController {
 
     private final LobbyService lobbyService;
+    private final UserService userService;
 
     @Autowired
-    public LobbyController(LobbyService lobbyService) {
+    public LobbyController(LobbyService lobbyService, UserService userService) {
         this.lobbyService = lobbyService;
+        this.userService = userService;
         lobbyService.deleteAllRooms();
     }
 

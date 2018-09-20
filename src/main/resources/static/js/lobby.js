@@ -76,19 +76,25 @@ let lobbyService = {
 let lobbyDisplay = {
     table: document.getElementById("rooms"),
     tbody: document.getElementById("rooms-list"),
+    addBtn: document.getElementById("addRoom"),
+    modal: $("#modalAdd"),
     spinner: new Spinner("spinner"),
     init() {
         document.querySelectorAll("form").forEach(elem =>
             elem.addEventListener("submit", evt => evt.preventDefault()));
 
-        document.getElementById("addRoom").addEventListener("click", () => {
-            let room = {name: "Adding test..."};
-            lobbyService.addRoom(room);
+        this.addBtn.addEventListener("click", () => this.modal.modal());
+
+        document.getElementById("requestRoom").addEventListener("click", () => {
+            let roomName = document.getElementById("room-name").value;
+            lobbyService.addRoom({name: roomName});
+
         });
     },
     showRooms(rooms) {
         rooms.forEach(this.addRoomToList, this);
         this.spinner.hide();
+        this.addBtn.style.display = "inline-block";
         this.table.style.display = "table";
     },
     generateRow(room) {
@@ -100,7 +106,7 @@ let lobbyDisplay = {
             `<td>${room.ownerName}</td>`,
             `<td>vs</td>`,
             `<td>${room.opponentName ? room.opponentName : "-"}</td>`,
-            `<td><button id="join-${room.id}" class="btn-flat" ${isDisabled ? "disabled" : ""}>+</button></td>`
+            `<td><button id="join-${room.id}" class="btn btn-add" ${isDisabled ? "disabled" : ""}>+</button></td>`
         ].join("");
     },
     addRoomToList(room) {
@@ -120,6 +126,12 @@ let lobbyDisplay = {
                 lobbyService.joinRoom({"id": room.id});
             });
         }
+    },
+    disableAll() {
+        this.addBtn.disabled = true;
+        this.tbody.querySelectorAll("tr").forEach(tr => {
+            tr.getElementsByTagName("button")[0].disabled = true;
+        });
     }
 };
 
@@ -132,6 +144,9 @@ let lobbyDisplay = {
         lobbyDisplay.showRooms(rooms);
         lobbyService.fetchNewRoom().then(function (room) {
             lobbyDisplay.addRoomToList(room);
+            lobbyDisplay.disableAll();
+            lobbyDisplay.modal.modal("hide");
+            utils.showSnackBar("Room " + room.name + " has been created.");
         });
         lobbyService.fetchRoomUpdate().then(function (room) {
             lobbyDisplay.updateRoomInList(room);
