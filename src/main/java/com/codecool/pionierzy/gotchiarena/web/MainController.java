@@ -52,16 +52,15 @@ public class MainController {
         Gotchi gotchi = new Gotchi();
         model.addAttribute("gotchi", gotchi);
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute("userId", user.getId());
-
         return "create_gotchi";
     }
 
     @RequestMapping(value = "/create_gotchi", method = RequestMethod.POST)
     public String createNewGotchi(@Valid Gotchi gotchi, Principal principal) {
-        System.out.println(gotchi);
-        gotchiService.save(gotchi);
         User user = userService.findByUsername(principal.getName());
+        gotchi.setUserId(user.getId());
+        System.out.println(gotchi.getUserId());
+        gotchiService.save(gotchi);
         user.addToGotchiList(gotchi.getId());
         return "redirect:/lobby";
     }

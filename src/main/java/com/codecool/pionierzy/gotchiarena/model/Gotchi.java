@@ -53,9 +53,9 @@ public class Gotchi {
         strongAgainst = new HashMap<>();
         weakAgainst = new HashMap<>();
 
-        strongAgainst.put(AttackType.LIGHTNING, AttackType.PLANT);
+        strongAgainst.put(AttackType.ELECTRIC, AttackType.PLANT);
         strongAgainst.put(AttackType.PLANT, AttackType.EARTH);
-        strongAgainst.put(AttackType.EARTH, AttackType.LIGHTNING);
+        strongAgainst.put(AttackType.EARTH, AttackType.ELECTRIC);
         strongAgainst.put(AttackType.FIRE, AttackType.ICE);
         strongAgainst.put(AttackType.ICE, AttackType.WATER);
         strongAgainst.put(AttackType.WATER, AttackType.FIRE);

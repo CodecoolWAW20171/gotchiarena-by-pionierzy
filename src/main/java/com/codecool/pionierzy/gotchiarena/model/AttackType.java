@@ -4,7 +4,7 @@ public enum AttackType {
     FIRE("wetFire"),
     WATER("wetFire"),
     ICE("wetFire"),
-    LIGHTNING("bushyLightning"),
+    ELECTRIC("bushyLightning"),
     PLANT("bushyLightning"),
     EARTH("bushyLightning");
 
