@@ -68,7 +68,7 @@ public class FightController {
 
         }
 
-        Room room = lobbyService.getOneRoom(roomId);
+        Room room = lobbyService.getRoom(Long.parseLong(roomId));
         User user = userService.findByUsername(principal.getName());
         if (fightService.receiveAction(room, user, action)){
             RoundMessage msg = fightService.sendResults(room);
@@ -81,7 +81,7 @@ public class FightController {
     @MessageMapping("/room/action/{roomId}/start")
     public void startMessage(String message,
                              @DestinationVariable String roomId) throws Exception {
-        Room room = lobbyService.getOneRoom(roomId);
+        Room room = lobbyService.getRoom(Long.parseLong(roomId));
         if (fightService.getMap().get(room) == null){
             fightService.startGame(room);
             System.out.println("Connect first user");

@@ -109,6 +109,11 @@ let lobbyDisplay = {
                 lobbyService.leaveRoom(room.id);
             }
         });
+        let fightPage = $("#fightPage").attr("action");
+        $("#fightPage").attr("action", fightPage + room.id);
+        $("#begin").click(() => {
+            $("#fightPage").submit();
+        });
         this.modal.modal({
             backdrop: "static",
             keyboard: false

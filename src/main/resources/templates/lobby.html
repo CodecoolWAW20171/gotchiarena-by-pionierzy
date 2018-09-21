@@ -16,7 +16,7 @@
         </div>
 
         <!--Create new Gotchi button-->
-        <form class="mb-4 clearfix" >
+        <form class="mb-4 clearfix">
             <a href="/create_gotchi" id="addGotchi" class="btn-submit" role="button">
                 + New Gotchi
             </a>
@@ -58,7 +58,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="leave" class="btn btn-flat" data-dismiss="modal">Leave room</button>
-                    <button type="button" id="begin" class="btn btn-submit">Ready!</button>
+                    <form id="fightPage" th:action="@{/room/}" method="get">
+                        <button type="submit" id="begin" class="btn btn-submit">Ready!</button>
+                    </form>
                 </div>
             </div>
         </div>
