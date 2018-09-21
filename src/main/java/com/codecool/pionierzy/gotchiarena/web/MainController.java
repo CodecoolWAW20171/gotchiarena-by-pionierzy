@@ -30,6 +30,8 @@ public class MainController {
 
     @RequestMapping("/login")
     public String login(Principal principal, WebRequest request, Model model) {
+//        addTestUser("user");
+//        addTestUser("user2");
         User user = new User();
         model.addAttribute("user", user);
         return principal != null ? "redirect:/lobby" : "login";

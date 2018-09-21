@@ -1,74 +1,42 @@
-/** Wrapper class to create Stomp over SockJS client */
-class WrappedSocket {
-    /**
-     * Create new client
-     * @param url server endpoint prefix
-     */
-    constructor(url) {
-        this.client = Stomp.over(new SockJS(url));
-    }
-
-    connect() {
-        return new Promise((resolve, reject) => {
-            if (!this.client) {
-                reject("Client not created.");
-            } else {
-                this.client.connect({}, function (frame) {
-                    resolve(frame);
-                }, function (error) {
-                    reject("Connection error." + error);
-                });
-            }
-        });
-    }
-
-    disconnect() {
-        this.client.disconnect();
-    }
-
-    subscribe(destination) {
-        return new Promise((resolve, reject) => {
-            if (!this.client) {
-                reject("Client not created.");
-            } else {
-                this.client.subscribe(destination, function (message) {
-                    resolve(JSON.parse(message.body));
-                });
-            }
-        });
-    }
-
-    send(destination, object, headers) {
-        this.client.send(destination, headers, object);
-    }
-}
-
 /** Service object for connecting to server endpoints */
 let lobbyService = {
     client: new WrappedSocket("/lobby"),
     username: null,
+    userRoomId: null,
     connect() {
         return this.client.connect().then(function (frame) {
             return frame.headers["user-name"];
         });
     },
-    loadRooms() {
-        return this.client.subscribe("/app/rooms");
+    fetchNotifications() {
+        return this.client.subscribe("/user/queue/notify");
     },
-    addRoom(room) {
-        return this.client.send("/app/add-room", JSON.stringify(room));
+    fetchErrors() {
+        return this.client.subscribe("/user/queue/errors");
+    },
+    loadRooms() {
+        return this.client.subscribeSingle("/app/rooms");
+    },
+    addRoom() {
+        return this.client.send("/app/add-room");
     },
     fetchNewRoom() {
         return this.client.subscribe("/topic/add-room");
     },
-    joinRoom(room) {
-        return this.client.send("/app/update-room", JSON.stringify(room));
-    },
     fetchRoomUpdate() {
         return this.client.subscribe("/topic/update-room");
     },
-    getGotchis() {
-        return this.client.subscribe("/app/gotchis");
+    joinRoom(id) {
+        return this.client.send("/app/update-room", JSON.stringify({"id": id, "action": "JOIN"}));
+    },
+    leaveRoom(id) {
+        return this.client.send("/app/update-room", JSON.stringify({"id": id, "action": "LEAVE"}));
+    },
+    deleteRoom(id) {
+        return this.client.send("/app/delete-room", JSON.stringify({"id": id}));
+    },
+    fetchRoomDelete() {
+        return this.client.subscribe("/topic/delete-room");
     }
 };
 
@@ -77,19 +45,15 @@ let lobbyDisplay = {
     table: document.getElementById("rooms"),
     tbody: document.getElementById("rooms-list"),
     addBtn: document.getElementById("addRoom"),
-    modal: $("#modalAdd"),
+    modal: $("#modal"),
     spinner: new Spinner("spinner"),
     init() {
         document.querySelectorAll("form").forEach(elem =>
             elem.addEventListener("submit", evt => evt.preventDefault()));
 
-        this.addBtn.addEventListener("click", () => this.modal.modal());
+        this.addBtn.addEventListener("click", () => lobbyService.addRoom());
+        if (lobbyService.userRoomId != null) this.addBtn.disabled = true;
 
-        document.getElementById("requestRoom").addEventListener("click", () => {
-            let roomName = document.getElementById("room-name").value;
-            lobbyService.addRoom({name: roomName});
-
-        });
     },
     showRooms(rooms) {
         rooms.forEach(this.addRoomToList, this);
@@ -98,17 +62,15 @@ let lobbyDisplay = {
         this.table.style.display = "table";
     },
     generateRow(room) {
-        let isDisabled = (room.count > 1) ||
-            (room.ownerName === lobbyService.username) || (room.opponentName === lobbyService.username);
         return [
-            `<td>${room.name}</td>`,
+            `<td>${room.ownerName}'s room</td>`,
             `<td>${room.count}/2</td>`,
             `<td>${room.ownerName}</td>`,
             `<td>vs</td>`,
             `<td>${room.opponentName ? room.opponentName : "-"}</td>`,
-            `<td><button id="join-${room.id}" class="btn btn-add" ${isDisabled ? "disabled" : ""}>+</button></td>`
-            `<td><button id="join-${room.id}" class="btn-flat" ${isDisabled ? "disabled" : ""}>+</button></td>`,
-            `<td><a href="/room/${room.id}">TEST VIEW</a> </td>`
+            `<td><button id="join-${room.id}" class="btn btn-add" `,
+            `${(lobbyService.userRoomId != null || room.count > 1) ? "disabled" : ""}>`,
+            `<i class="material-icons">add</i></button></td>`
         ].join("");
     },
     addRoomToList(room) {
@@ -116,23 +78,40 @@ let lobbyDisplay = {
         tr.setAttribute("id", "room-" + room.id);
         tr.innerHTML = this.generateRow(room);
         tr.getElementsByTagName("button")[0].addEventListener("click", () => {
-            lobbyService.joinRoom({"id": room.id});
+            lobbyService.joinRoom(room.id);
         });
         this.tbody.appendChild(tr);
+        if (room.id === lobbyService.userRoomId) {
+            this.showRoomModal(room);
+        }
     },
     updateRoomInList(room) {
         let tr = document.getElementById("room-" + room.id);
         if (tr) {
             tr.innerHTML = this.generateRow(room);
             tr.getElementsByTagName("button")[0].addEventListener("click", () => {
-                lobbyService.joinRoom({"id": room.id});
+                lobbyService.joinRoom(room.id);
             });
+            if (!(this.modal.data("bs.modal") || {})._isShown && room.id === lobbyService.userRoomId) {
+                this.showRoomModal(room);
+            }
         }
     },
-    disableAll() {
-        this.addBtn.disabled = true;
-        this.tbody.querySelectorAll("tr").forEach(tr => {
-            tr.getElementsByTagName("button")[0].disabled = true;
+    deleteRoomFromList(id) {
+        document.getElementById("room-" + id).remove();
+    },
+    showRoomModal(room) {
+        $("#modalTitle").text(room.ownerName + "'s room");
+        $("#leave").click(() => {
+            if (lobbyService.username === room.ownerName) {
+                lobbyService.deleteRoom(room.id);
+            } else {
+                lobbyService.leaveRoom(room.id);
+            }
+        });
+        this.modal.modal({
+            backdrop: "static",
+            keyboard: false
         });
     }
 };
@@ -141,18 +120,27 @@ let lobbyDisplay = {
     lobbyService.connect().then(function (username) {
         lobbyService.username = username;
         return lobbyService.loadRooms();
-    }).then(function (rooms) {
+    }).then(function (response) {
+        lobbyService.userRoomId = response.userRoomId;
+        lobbyService.fetchNotifications().then(null, null, msg => {
+            if (typeof msg.userRoomId !== "undefined") {
+                if (msg.userRoomId === null) {
+                    lobbyDisplay.addBtn.disabled = false;
+                    lobbyDisplay.modal.modal("hide");
+                } else {
+                    lobbyDisplay.addBtn.disabled = true;
+                }
+                lobbyService.userRoomId = msg.userRoomId;
+            }
+            utils.showSnackBar(msg.msg);
+        });
+        lobbyService.fetchErrors().then(null, null, error => utils.showSnackBar(error.msg));
+        lobbyService.fetchNewRoom().then(null, null, room => lobbyDisplay.addRoomToList(room));
+        lobbyService.fetchRoomUpdate().then(null, null, room => lobbyDisplay.updateRoomInList(room));
+        lobbyService.fetchRoomDelete().then(null, null, id => lobbyDisplay.deleteRoomFromList(id));
+
         lobbyDisplay.init();
-        lobbyDisplay.showRooms(rooms);
-        lobbyService.fetchNewRoom().then(function (room) {
-            lobbyDisplay.addRoomToList(room);
-            lobbyDisplay.disableAll();
-            lobbyDisplay.modal.modal("hide");
-            utils.showSnackBar("Room " + room.name + " has been created.");
-        });
-        lobbyService.fetchRoomUpdate().then(function (room) {
-            lobbyDisplay.updateRoomInList(room);
-        });
+        lobbyDisplay.showRooms(response.rooms);
     }, function () {
         utils.showSnackBar("Could not connect to server.");
     });

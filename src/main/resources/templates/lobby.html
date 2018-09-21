@@ -16,11 +16,11 @@
         </div>
 
         <!--Create new Gotchi button-->
-        <div class="mb-4 clearfix" >
+        <form class="mb-4 clearfix" >
             <a href="/create_gotchi" id="addGotchi" class="btn-submit" role="button">
                 + New Gotchi
             </a>
-        </div>
+        </form>
 
         <!--New room button-->
         <form class="mb-4 clearfix">
@@ -47,66 +47,23 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="addRoomModal" aria-hidden="true">
+    <div class="modal" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addRoomModal">Add new room</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="modalTitle"></h5>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="field-wrap">
-                            <div class="input-field">
-                                <input type="text" class="" placeholder="room name"
-                                       id="room-name" name="room-name">
-                                <label for="room-name">room name</label>
-                                <div class="input-bar"></div>
-                            </div>
-                            <div class="helper"></div>
-                        </div>
-                    </form>
+                <div class="modal-body" id="modalContent">
+                    <p class="text-info">Press "Ready" when you are ready to fight.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-flat" data-dismiss="modal">Cancel</button>
-                    <button type="button" id="requestRoom" class="btn btn-submit">Create room</button>
+                    <button type="button" id="leave" class="btn btn-flat" data-dismiss="modal">Leave room</button>
+                    <button type="button" id="begin" class="btn btn-submit">Ready!</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="addRoomModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addRoomModal">Add new room</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="field-wrap">
-                            <div class="input-field">
-                                <input type="text" class="" placeholder="room name"
-                                       id="room-name" name="room-name">
-                                <label for="room-name">room name</label>
-                                <div class="input-bar"></div>
-                            </div>
-                            <div class="helper"></div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-flat" data-dismiss="modal">Cancel</button>
-                    <button type="button" id="requestRoom" class="btn btn-submit">Create room</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </section>
 
@@ -114,7 +71,7 @@
 <!--<script src="/webjars/jquery/jquery.min.js" defer></script>-->
 <script src="/webjars/sockjs-client/sockjs.min.js" defer></script>
 <script src="/webjars/stomp-websocket/stomp.min.js" defer></script>
-<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+<script src="/webjars/jquery/jquery.min.js" defer></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js" defer></script>
 
 

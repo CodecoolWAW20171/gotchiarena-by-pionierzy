@@ -1,7 +1,11 @@
 package com.codecool.pionierzy.gotchiarena.service.message;
 
+import com.codecool.pionierzy.gotchiarena.service.LobbyServices.RoomAction;
+
 public class RoomByIdRequest {
     private Long id;
+
+    private RoomAction action;
 
     public Long getId() {
         return id;
@@ -11,8 +15,11 @@ public class RoomByIdRequest {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Joining room (id): " + id;
+    public RoomAction getAction() {
+        return action;
+    }
+
+    public void setAction(RoomAction action) {
+        this.action = action;
     }
 }
