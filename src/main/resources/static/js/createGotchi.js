@@ -19,37 +19,35 @@ function updatePointsLeft() {
     document.getElementById("pointsLeft").innerText = pointsLeft > 0 ? pointsLeft : "no";
 }
 
-document.getElementById("type").addEventListener("change", setSecondarySelect);
+///////////////////////// selects ////////////////////////////////
 
-function setSecondarySelect(event) {
-    let wetFireTypes = Array.from(document.getElementsByClassName("cool"));
-    let bushyLightningTypes = Array.from(document.getElementsByClassName("lame"));
+document.getElementById("type").children[0].selected = true;
+document.getElementById("secondary").children[0].selected = true;
+
+document.getElementById("type").addEventListener("change", limitOtherSelect);
+
+function limitOtherSelect(event) {
+    let wetFireSecondary = document.querySelectorAll("#secondary .wetFire");
+    let bushyLightningSecondary = document.querySelectorAll("#secondary .bushyLightning");
+
     document.getElementById("secondary").hidden = false;
-
-
-    if (["WATER","FIRE","ICE"].includes(event.target.value)) {
-        wetFireTypes.forEach(e => {
+    console.log(event.target.children[event.target.selectedIndex]);
+    console.log(event.target.selectedIndex);
+    if (event.target.children[event.target.selectedIndex].className === "wetFire") {
+        console.log("wetfire");
+        Array.from(event.target.children).forEach(e => {
+            if (e.className === "bushyLightning") e.disabled = true;
+        });
+        wetFireSecondary.forEach(e => {
             e.disabled = true;
         });
-        bushyLightningTypes.forEach(e => {
-            e.disabled = false;
-        });
-
     } else {
-        wetFireTypes.forEach(e => {
-            e.disabled = false;
+        console.log("bushyLifghtning");
+        Array.from(event.target.children).forEach(e => {
+            if (e.className === "wetFire") e.disabled = true;
         });
-        bushyLightningTypes.forEach(e => {
+        bushyLightningSecondary.forEach(e => {
             e.disabled = true;
         });
     }
 }
-
-
-
-
-function lockTypeSelect() {
-    document.getElementById("type").disabled = true;
-}
-
-document.getElementById("secondary").addEventListener("change", lockTypeSelect);

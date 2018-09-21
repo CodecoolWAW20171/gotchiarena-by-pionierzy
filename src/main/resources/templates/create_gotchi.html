@@ -18,24 +18,25 @@
         <div class="col"></div>
         <div class="col-md-5">
 
-            <form class="form-group login" method="post">
+            <form class="form-group login" th:object="${gotchi}" method="post" th:action="@{/create_gotchi}">
 
 
                 <h3 class="my-4">Create your Gotchi!</h3>
 
                 <div class="field-wrap">
                     <div class="input-field">
-                        <input type="text" th:class="${param.error}? 'inp-invalid'" placeholder="Gotchi name"
-                               id="gotchiName" name="gotchiName" autocomplete="off" required autofocus>
-                        <label for="gotchiName">Gotchi name</label>
+                        <input type="text" th:field="*{name}" th:class="${param.error}? 'inp-invalid'"
+                               placeholder="Gotchi name"
+                               id="name" name="name" autocomplete="off" required autofocus minlength="3" maxlength="10">
+                        <label for="name">Gotchi name</label>
                         <div class="input-bar"></div>
                     </div>
                     <br>
                 </div>
-                <h5 >You have <span id = "pointsLeft" >200</span> points left.</h5>
+                <h5>You have <span id="pointsLeft">200</span> points left.</h5>
                 <div class="field-wrap">
                     <div class="input-field">
-                        <input type="number" th:class="${param.error}? 'inp-invalid'"
+                        <input type="number" th:field="*{speed}" th:class="${param.error}? 'inp-invalid'"
                                id="speed" name="speed" autocomplete="off" required autofocus
                                value="0" min="0">
                         <label for="speed">Speed</label>
@@ -44,46 +45,47 @@
                 </div>
                 <div class="field-wrap">
                     <div class="input-field">
-                        <input type="number" th:class="${param.error}? 'inp-invalid'"
+                        <input type="number" th:field="*{attack}" th:class="${param.error}? 'inp-invalid'"
                                id="attack" name="attack" autocomplete="off" required autofocus
-                               value="0" min="0"  >
+                               value="0" min="0">
                         <label for="attack">Attack</label>
                         <div class="input-bar"></div>
                     </div>
                 </div>
                 <div class="field-wrap">
                     <div class="input-field">
-                        <input type="number" th:class="${param.error}? 'inp-invalid'"
+                        <input type="number" th:field="*{defence}" th:class="${param.error}? 'inp-invalid'"
                                id="defence" name="defence" autocomplete="off" required autofocus
                                value="0" min="0">
                         <label for="defence">Defence</label>
                         <div class="input-bar"></div>
                     </div>
                 </div>
+
+
                 <div class="form-group">
-                    <select name="type" class="form-control" id="type" required>
-                        <option value="" disabled selected hidden>Choose Your Gotchi type</option>
-                        <option>FIRE</option>
-                        <option>WATER</option>
-                        <option>ICE</option>
-                        <option>LIGHTNING</option>
-                        <option>PLANT</option>
-                        <option>EARTH</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select name="secondary" class="form-control" id="secondary" required hidden>
-                        <option value="" disabled selected hidden>Choose secondary attack</option>
-                        <option class="cool">FIRE</option>
-                        <option class="cool">WATER</option>
-                        <option class="cool">ICE</option>
-                        <option class="lame">LIGHTNING</option>
-                        <option class="lame">PLANT</option>
-                        <option class="lame">EARTH</option>
+                    <select name="type" th:field="*{type}" class="form-control" id="type" required>
+                        <option class = "description" value="" disabled selected hidden>Choose type attack</option>
+                        <option th:each="primary : ${T(com.codecool.pionierzy.gotchiarena.model.AttackType).values()}"
+                                th:value="${primary}"
+                                th:text="${primary}"
+                                th:class="${primary.groupType}">
+                        </option>
 
                     </select>
                 </div>
+                <div class="form-group">
+                    <select name="secondary" th:field="*{secondaryAttack}" class="form-control" id="secondary" required hidden>
+                        <option class = "description" value="" disabled selected hidden>Choose secondary attack</option>
+                        <option th:each="secondary : ${T(com.codecool.pionierzy.gotchiarena.model.AttackType).values()}"
+                                th:value="${secondary}"
+                                th:text="${secondary}"
+                                th:class="${secondary.groupType}">
+                        </option>
 
+                    </select>
+                </div>
+                
 
                 <button class="btn-submit" type="submit">Create</button>
 

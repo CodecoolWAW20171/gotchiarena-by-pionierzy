@@ -20,8 +20,15 @@ public class Room {
     @OneToOne(fetch = FetchType.EAGER)
     private User opponent;
 
-    public Room() {
-    }
+    @JoinColumn(name = "ownerGotchi")
+    @OneToOne(fetch = FetchType.EAGER)
+    private Gotchi ownerGotchi;
+
+    @JoinColumn(name = "opponentGotchi")
+    @OneToOne(fetch = FetchType.EAGER)
+    private Gotchi opponentGotchi;
+
+    public Room() {}
 
     public Room(User owner) {
         this.owner = owner;
@@ -67,5 +74,13 @@ public class Room {
     @Override
     public String toString() {
         return String.format("Room: %d (%d/2). Owner: %s", id, getCount(), owner.getUsername());
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public User getOpponent() {
+        return opponent;
     }
 }

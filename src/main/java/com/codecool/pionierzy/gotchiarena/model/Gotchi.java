@@ -2,45 +2,70 @@ package com.codecool.pionierzy.gotchiarena.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity
 @Table(name = "gotchi")
 public class Gotchi {
 
+    private static Map<AttackType, AttackType> strongAgainst;
+    private static Map<AttackType, AttackType> weakAgainst;
+
+    private static final double STRONG_MODIFIER = 1.25;
+    private static final double WEAK_MODIFIER = 0.75;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "userId", updatable = false, unique = true, nullable = false)
+    @Column(name = "userId", updatable = false, unique = true)
     private Long userId;
 
     @Column(name = "name", updatable = false, unique = true, nullable = false)
     @NotEmpty(message = "Please provide name")
     private String name;
 
-    @Column(name = "speed", updatable = false, unique = true, nullable = false)
+    @Column(name = "speed", updatable = false, nullable = false)
     private int speed;
 
-    @Column(name = "defence", updatable = false, unique = true, nullable = false)
+    @Column(name = "defence", updatable = false, nullable = false)
     private int defence;
 
-    @Column(name = "attack", updatable = false, unique = true, nullable = false)
+    @Column(name = "attack", updatable = false, nullable = false)
     private int attack;
 
-    @Column(name = "health", unique = true, nullable = false)
+    @Column(name = "health", nullable = false)
     private int health;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", updatable = false, unique = true, nullable = false)
-    private GotchiType type;
+    @Column(name = "type", updatable = false, nullable = false)
+    private AttackType type;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "secondaryAttack", updatable = false, unique = true, nullable = false)
-    private GotchiType secondaryAttack;
+    @Column(name = "secondaryAttack", updatable = false, nullable = false)
+    private AttackType secondaryAttack;
 
 
+
+    static {
+        strongAgainst = new HashMap<>();
+        weakAgainst = new HashMap<>();
+
+        strongAgainst.put(AttackType.LIGHTNING, AttackType.PLANT);
+        strongAgainst.put(AttackType.PLANT, AttackType.EARTH);
+        strongAgainst.put(AttackType.EARTH, AttackType.LIGHTNING);
+        strongAgainst.put(AttackType.FIRE, AttackType.ICE);
+        strongAgainst.put(AttackType.ICE, AttackType.WATER);
+        strongAgainst.put(AttackType.WATER, AttackType.FIRE);
+        for (Map.Entry<AttackType, AttackType> entry : strongAgainst.entrySet()) {
+            AttackType strong = entry.getKey();
+            AttackType weak = entry.getValue();
+            weakAgainst.put(weak, strong);
+        }
+    }
 
     @Transient
 
@@ -113,19 +138,26 @@ public class Gotchi {
         this.health = health;
     }
 
-    public GotchiType getType() {
+    public AttackType getType() {
         return type;
     }
 
-    public void setType(GotchiType type) {
+    public void setType(AttackType type) {
         this.type = type;
     }
 
-    public GotchiType getSecondaryAttack() {
+    public AttackType getSecondaryAttack() {
         return secondaryAttack;
     }
 
-    public void setSecondaryAttack(GotchiType secondaryAttack) {
+    public void setSecondaryAttack(AttackType secondaryAttack) {
         this.secondaryAttack = secondaryAttack;
+    }
+
+    public void attack(Gotchi gotchi) {
+        AttackType opponentType = gotchi.getType();
+        if (opponentType == strongAgainst.get(this.type)) {
+            gotchi.setHealth(gotchi.getHealth() - attack);
+        }
     }
 }
