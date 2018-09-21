@@ -1,6 +1,6 @@
 package com.codecool.pionierzy.gotchiarena.model;
 
-public enum GotchiType {
+public enum AttackType {
     FIRE("wetFire"),
     WATER("wetFire"),
     ICE("wetFire"),
@@ -10,7 +10,7 @@ public enum GotchiType {
 
     private final String groupType;
 
-    GotchiType(String groupType) {
+    AttackType(String groupType) {
         this.groupType = groupType;
     }
 

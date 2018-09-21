@@ -66,7 +66,7 @@
                 <div class="form-group">
                     <select name="type" th:field="*{type}" class="form-control" id="type" required>
                         <option class = "description" value="" disabled selected hidden>Choose type attack</option>
-                        <option th:each="primary : ${T(com.codecool.pionierzy.gotchiarena.model.GotchiType).values()}"
+                        <option th:each="primary : ${T(com.codecool.pionierzy.gotchiarena.model.AttackType).values()}"
                                 th:value="${primary}"
                                 th:text="${primary}"
                                 th:class="${primary.groupType}">
@@ -77,7 +77,7 @@
                 <div class="form-group">
                     <select name="secondary" th:field="*{secondaryAttack}" class="form-control" id="secondary" required hidden>
                         <option class = "description" value="" disabled selected hidden>Choose secondary attack</option>
-                        <option th:each="secondary : ${T(com.codecool.pionierzy.gotchiarena.model.GotchiType).values()}"
+                        <option th:each="secondary : ${T(com.codecool.pionierzy.gotchiarena.model.AttackType).values()}"
                                 th:value="${secondary}"
                                 th:text="${secondary}"
                                 th:class="${secondary.groupType}">

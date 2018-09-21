@@ -7,9 +7,9 @@
 </head>
 <body>
 <section>
-<p>OK</p>
     <p th:text=" 'Owner: ' + ${r.getOwnerName()}"></p>
     <p th:text=" 'Opponent: ' + ${r.getOpponentName()}"></p>
+    <input id="roomId" th:value="${r.getId()}" style="display: none"></input>
 
     <div>
         <!--CONNECT AND DISCONNECT BUTTONS: -->
@@ -23,17 +23,39 @@
                 <!--</div>-->
             <!--</form>-->
         <!--</div>-->
-        <div class="col-md-6">
-            <div th:if="${principal}">
-                <form class="form-inline">
-                    <button id="send" name="attack" class="btn btn-default" type="submit"
-                            th:value="'attack: attack1, '+
-                                      'user: '+ ${principal}"
-                            th:text="${principal}+' ATTACK'">Attack</button>
+        <div th:if="${principal}">
+        <table class="col-md-6">
+            <tr>
+                <!--Attack should have names i.e. ICE ATTACK as text in html-->
+                <td>
+                    <form class="form-inline">
+                        <button id="attack1" class="btn btn-default" type="submit"
+                                value="attack1">Attack1</button>
+                    </form>
+                </td>
 
-                </form>
-            </div>
+                <td>
+                    <form class="form-inline">
+                        <button id="attack2" class="btn btn-default" type="submit"
+                                value="attack2">Attack2</button>
+                    </form>
+                </td>
 
+                <td>
+                    <form class="form-inline">
+                        <button id="defend" class="btn btn-default" type="submit"
+                                value="defend">Defend</button>
+                    </form>
+                </td>
+
+                <td>
+                    <form class="form-inline">
+                        <button id="evade" class="btn btn-default" type="submit"
+                                value="evade">Evade</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
         </div>
     </div>
 
@@ -43,6 +65,9 @@
                 <thead>
                 <tr>
                     <th>Logs:</th>
+                </tr>
+                <tr id="wait">
+
                 </tr>
                 </thead>
                 <tbody id="logs">
