@@ -18,7 +18,7 @@ public class Gotchi {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
     private Long id;
 
     @Column(name = "userId", updatable = false, unique = true)
@@ -28,24 +28,24 @@ public class Gotchi {
     @NotEmpty(message = "Please provide name")
     private String name;
 
-    @Column(name = "speed", updatable = false, unique = true, nullable = false)
+    @Column(name = "speed", updatable = false, nullable = false)
     private int speed;
 
-    @Column(name = "defence", updatable = false, unique = true, nullable = false)
+    @Column(name = "defence", updatable = false, nullable = false)
     private int defence;
 
-    @Column(name = "attack", updatable = false, unique = true, nullable = false)
+    @Column(name = "attack", updatable = false, nullable = false)
     private int attack;
 
-    @Column(name = "health", unique = true, nullable = false)
+    @Column(name = "health", nullable = false)
     private int health;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", updatable = false, unique = true, nullable = false)
+    @Column(name = "type", updatable = false, nullable = false)
     private AttackType type;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "secondaryAttack", updatable = false, unique = true, nullable = false)
+    @Column(name = "secondaryAttack", updatable = false, nullable = false)
     private AttackType secondaryAttack;
 
 
