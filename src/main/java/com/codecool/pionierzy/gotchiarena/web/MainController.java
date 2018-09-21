@@ -51,6 +51,8 @@ public class MainController {
     public String create_gotchi(Model model) {
         Gotchi gotchi = new Gotchi();
         model.addAttribute("gotchi", gotchi);
+        //User user =
+        //model.addAttribute("user_id"; );
         return "create_gotchi";
     }
 

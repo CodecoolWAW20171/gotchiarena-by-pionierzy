@@ -28,6 +28,8 @@ public class User implements UserDetails {
     @Length(min = 5, message = "Your password should be at least 5 characters long")
     private String password;
 
+
+
     @Transient
     private String confirmPassword;
 

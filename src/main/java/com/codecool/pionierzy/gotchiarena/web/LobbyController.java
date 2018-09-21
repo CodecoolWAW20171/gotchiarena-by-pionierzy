@@ -1,5 +1,6 @@
 package com.codecool.pionierzy.gotchiarena.web;
 
+import com.codecool.pionierzy.gotchiarena.model.Gotchi;
 import com.codecool.pionierzy.gotchiarena.model.Room;
 import com.codecool.pionierzy.gotchiarena.service.LobbyServices.LobbyService;
 import com.codecool.pionierzy.gotchiarena.service.message.RoomByIdRequest;
@@ -66,6 +67,7 @@ public class LobbyController {
     public String room(@PathVariable Long roomId, Principal principal, Model model) {
         Room room = lobbyService.getRoom(roomId);
         model.addAttribute("r", room);
+        //Gotchi gotchi = room.getOwner().
         System.out.println("request to the room/" + roomId);
         if (principal.getName().equals(room.getOwnerName())) {
             model.addAttribute("principal", room.getOwnerName());

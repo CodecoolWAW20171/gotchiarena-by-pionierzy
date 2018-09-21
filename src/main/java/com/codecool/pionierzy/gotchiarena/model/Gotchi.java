@@ -48,6 +48,9 @@ public class Gotchi {
     @Column(name = "secondaryAttack", updatable = false, nullable = false)
     private AttackType secondaryAttack;
 
+    @Column(name = "user_id", nullable = true)
+    private long userId;
+
 
 
     static {
@@ -84,7 +87,9 @@ public class Gotchi {
         return Objects.hash(id, name);
     }
 
-
+    public Long getUserId(){
+        return userId;
+    }
 
     public Long getId() {
         return id;
