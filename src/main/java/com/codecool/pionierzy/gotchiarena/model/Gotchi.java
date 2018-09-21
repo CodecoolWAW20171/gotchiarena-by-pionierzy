@@ -21,9 +21,6 @@ public class Gotchi {
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private Long id;
 
-//    @Column(name = "userId", updatable = false, unique = true)
-//    private Long userId;
-
     @Column(name = "name", updatable = false, unique = true, nullable = false)
     @NotEmpty(message = "Please provide name")
     private String name;
@@ -48,10 +45,15 @@ public class Gotchi {
     @Column(name = "secondaryAttack", updatable = false, nullable = false)
     private AttackType secondaryAttack;
 
+<<<<<<< Updated upstream
     @Column(name = "user_id", nullable = true)
     private long userId;
 
 
+=======
+//    @Column(name = "userId", updatable = false, unique = true)
+//    private Long userId;
+>>>>>>> Stashed changes
 
     static {
         strongAgainst = new HashMap<>();

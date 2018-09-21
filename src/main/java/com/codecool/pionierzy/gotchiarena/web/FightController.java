@@ -45,28 +45,7 @@ public class FightController {
                 .readerFor(ParseMessage.class)
                 .readValue(message);
 
-        switch (parser.getValue()){
-            case "attack1":
-                action = RoundAction.PRIMARY_ATTACK;
-                System.out.println("1");
-                break;
-            case "attack2":
-                action = RoundAction.SECONDARY_ATTACK;
-                System.out.println("2");
-                break;
-            case "defend":
-                action = RoundAction.DEFEND;
-                System.out.println("3");
-                break;
-            case "evade":
-                action = RoundAction.EVADE;
-                System.out.println("4");
-                break;
-            default:
-                action = RoundAction.PRIMARY_ATTACK;
-                System.out.println("WRONG");
-
-        }
+        action = RoundAction.valueOf(parser.getValue());
 
         Room room = lobbyService.getRoom(Long.parseLong(roomId));
         User user = userService.findByUsername(principal.getName());
