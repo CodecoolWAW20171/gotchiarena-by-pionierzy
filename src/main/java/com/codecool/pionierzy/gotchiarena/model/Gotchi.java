@@ -45,15 +45,9 @@ public class Gotchi {
     @Column(name = "secondaryAttack", updatable = false, nullable = false)
     private AttackType secondaryAttack;
 
-<<<<<<< Updated upstream
-    @Column(name = "user_id", nullable = true)
+    @Column(name = "userId", nullable = true)
     private long userId;
 
-
-=======
-//    @Column(name = "userId", updatable = false, unique = true)
-//    private Long userId;
->>>>>>> Stashed changes
 
     static {
         strongAgainst = new HashMap<>();
@@ -105,13 +99,9 @@ public class Gotchi {
         this.name = name;
     }
 
-//    public Long getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Long userId) {
-//        this.userId = userId;
-//    }
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public int getSpeed() {
         return speed;

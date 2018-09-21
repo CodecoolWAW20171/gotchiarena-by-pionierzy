@@ -48,18 +48,21 @@ public class MainController {
     }
 
     @GetMapping("/create_gotchi")
-    public String create_gotchi(Model model) {
+    public String create_gotchi(Model model, Principal principal) {
         Gotchi gotchi = new Gotchi();
         model.addAttribute("gotchi", gotchi);
-        //User user =
-        //model.addAttribute("user_id"; );
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("userId", user.getId());
+
         return "create_gotchi";
     }
 
     @RequestMapping(value = "/create_gotchi", method = RequestMethod.POST)
-    public String createNewGotchi(@Valid Gotchi gotchi) {
+    public String createNewGotchi(@Valid Gotchi gotchi, Principal principal) {
         System.out.println(gotchi);
         gotchiService.save(gotchi);
+        User user = userService.findByUsername(principal.getName());
+        user.addToGotchiList(gotchi.getId());
         return "redirect:/lobby";
     }
 

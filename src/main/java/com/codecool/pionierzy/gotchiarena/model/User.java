@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -25,10 +26,11 @@ public class User implements UserDetails {
     private String username;
 
     @Column(name = "password")
-    @Length(min = 5, message = "Your password should be at least 5 characters long")
+    @Length(min = 1, message = "Your password should be at least 1 characters long")
     private String password;
 
-
+    @Column(name = "gotchi_list")
+    private ArrayList<Long> gotchiList = new ArrayList<>();
 
     @Transient
     private String confirmPassword;
@@ -104,5 +106,13 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id, username);
+    }
+
+    public ArrayList<Long> getGotchiList() {
+        return gotchiList;
+    }
+
+    public void addToGotchiList(Long gotchiId) {
+        this.gotchiList.add(gotchiId);
     }
 }
