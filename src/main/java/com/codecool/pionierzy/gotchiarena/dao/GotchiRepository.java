@@ -8,7 +8,7 @@ public interface GotchiRepository extends JpaRepository<Gotchi, Long> {
 
     Gotchi findGotchiById(Long id);
 
-    Gotchi findGotchiByUserId(Long id);
+//    Gotchi findGotchiByUserId(Long id);
 
 
 

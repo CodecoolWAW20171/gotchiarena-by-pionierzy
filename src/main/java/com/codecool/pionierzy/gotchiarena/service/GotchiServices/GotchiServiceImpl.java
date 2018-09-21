@@ -15,10 +15,10 @@ public class GotchiServiceImpl implements GotchiService {
         this.gotchiRepository = gotchiRepository;
     }
 
-    @Override
-    public Gotchi findByUserId(Long userId) {
-        return gotchiRepository.findGotchiByUserId(userId);
-    }
+//    @Override
+//    public Gotchi findByUserId(Long userId) {
+//        return gotchiRepository.findGotchiByUserId(userId);
+//    }
 
     @Override
     public Gotchi findById(Long id) {

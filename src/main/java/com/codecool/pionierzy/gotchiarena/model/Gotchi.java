@@ -21,8 +21,8 @@ public class Gotchi {
     @Column(name = "id", updatable = false, nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "userId", updatable = false, unique = true)
-    private Long userId;
+//    @Column(name = "userId", updatable = false, unique = true)
+//    private Long userId;
 
     @Column(name = "name", updatable = false, unique = true, nullable = false)
     @NotEmpty(message = "Please provide name")
@@ -98,13 +98,13 @@ public class Gotchi {
         this.name = name;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+//    public Long getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Long userId) {
+//        this.userId = userId;
+//    }
 
     public int getSpeed() {
         return speed;

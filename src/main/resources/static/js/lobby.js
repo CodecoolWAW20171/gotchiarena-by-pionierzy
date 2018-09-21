@@ -48,7 +48,7 @@ let lobbyDisplay = {
     modal: $("#modal"),
     spinner: new Spinner("spinner"),
     init() {
-        document.querySelectorAll("form").forEach(elem =>
+        document.querySelectorAll("form:not([data-sub])").forEach(elem =>
             elem.addEventListener("submit", evt => evt.preventDefault()));
 
         this.addBtn.addEventListener("click", () => lobbyService.addRoom());
@@ -58,10 +58,13 @@ let lobbyDisplay = {
     showRooms(rooms) {
         rooms.forEach(this.addRoomToList, this);
         this.spinner.hide();
-        this.addBtn.style.display = "inline-block";
+        document.getElementById("creator").style.display = "block";
         this.table.style.display = "table";
     },
     generateRow(room) {
+        let isDisabled = (lobbyService.username === room.ownerName) ||
+            (lobbyService.username === room.opponentName) ||
+            (room.count > 1);
         return [
             `<td>${room.ownerName}'s room</td>`,
             `<td>${room.count}/2</td>`,
@@ -69,7 +72,7 @@ let lobbyDisplay = {
             `<td>vs</td>`,
             `<td>${room.opponentName ? room.opponentName : "-"}</td>`,
             `<td><button id="join-${room.id}" class="btn btn-add" `,
-            `${(lobbyService.userRoomId != null || room.count > 1) ? "disabled" : ""}>`,
+            `${isDisabled ? "disabled" : ""}>`,
             `<i class="material-icons">add</i></button></td>`
         ].join("");
     },
@@ -81,7 +84,8 @@ let lobbyDisplay = {
             lobbyService.joinRoom(room.id);
         });
         this.tbody.appendChild(tr);
-        if (room.id === lobbyService.userRoomId) {
+        if (lobbyService.username === room.ownerName || lobbyService.username === room.opponentName) {
+            this.addBtn.disabled = true;
             this.showRoomModal(room);
         }
     },
@@ -92,7 +96,9 @@ let lobbyDisplay = {
             tr.getElementsByTagName("button")[0].addEventListener("click", () => {
                 lobbyService.joinRoom(room.id);
             });
-            if (!(this.modal.data("bs.modal") || {})._isShown && room.id === lobbyService.userRoomId) {
+            if (!(this.modal.data("bs.modal") || {})._isShown &&
+                (lobbyService.username === room.ownerName || lobbyService.username === room.opponentName)) {
+                this.addBtn.disabled = true;
                 this.showRoomModal(room);
             }
         }
@@ -109,8 +115,7 @@ let lobbyDisplay = {
                 lobbyService.leaveRoom(room.id);
             }
         });
-        let fightPage = $("#fightPage").attr("action");
-        $("#fightPage").attr("action", fightPage + room.id);
+        $("#fightPage").attr("action", "/room/" + room.id);
         $("#begin").click(() => {
             $("#fightPage").submit();
         });
@@ -128,6 +133,7 @@ let lobbyDisplay = {
     }).then(function (response) {
         lobbyService.userRoomId = response.userRoomId;
         lobbyService.fetchNotifications().then(null, null, msg => {
+            utils.showSnackBar(msg.msg);
             if (typeof msg.userRoomId !== "undefined") {
                 if (msg.userRoomId === null) {
                     lobbyDisplay.addBtn.disabled = false;
@@ -137,7 +143,6 @@ let lobbyDisplay = {
                 }
                 lobbyService.userRoomId = msg.userRoomId;
             }
-            utils.showSnackBar(msg.msg);
         });
         lobbyService.fetchErrors().then(null, null, error => utils.showSnackBar(error.msg));
         lobbyService.fetchNewRoom().then(null, null, room => lobbyDisplay.addRoomToList(room));

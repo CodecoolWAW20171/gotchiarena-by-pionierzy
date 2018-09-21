@@ -31,9 +31,11 @@
                         <label for="name">Gotchi name</label>
                         <div class="input-bar"></div>
                     </div>
-                    <br>
+                    <div class="helper"></div>
                 </div>
-                <h5>You have <span id="pointsLeft">200</span> points left.</h5>
+
+                <h5 class="my-4">You have <span id="pointsLeft">200</span> points left.</h5>
+
                 <div class="field-wrap">
                     <div class="input-field">
                         <input type="number" th:field="*{speed}" th:class="${param.error}? 'inp-invalid'"
@@ -42,7 +44,9 @@
                         <label for="speed">Speed</label>
                         <div class="input-bar"></div>
                     </div>
+                    <div class="helper"></div>
                 </div>
+
                 <div class="field-wrap">
                     <div class="input-field">
                         <input type="number" th:field="*{attack}" th:class="${param.error}? 'inp-invalid'"
@@ -51,7 +55,9 @@
                         <label for="attack">Attack</label>
                         <div class="input-bar"></div>
                     </div>
+                    <div class="helper"></div>
                 </div>
+
                 <div class="field-wrap">
                     <div class="input-field">
                         <input type="number" th:field="*{defence}" th:class="${param.error}? 'inp-invalid'"
@@ -60,6 +66,7 @@
                         <label for="defence">Defence</label>
                         <div class="input-bar"></div>
                     </div>
+                    <div class="helper"></div>
                 </div>
 
 
@@ -87,7 +94,7 @@
                 </div>
                 
 
-                <button class="btn-submit" type="submit">Create</button>
+                <button class="btn btn-submit" type="submit">Create</button>
 
             </form>
         </div>
