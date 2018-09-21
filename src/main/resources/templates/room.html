@@ -26,17 +26,17 @@
         <div th:if="${principal}">
         <table class="col-md-6">
             <tr>
-                <!--Attack should have names i.e. ICE ATTACK as text in html-->
+                Attack should have names i.e. ICE ATTACK as text in html
                 <td>
                     <form class="form-inline">
-                        <button id="attack1" class="btn btn-default" type="submit"
+                        <button id="attack1" class="btn btn-default" type="submit" th:text="${gotchi.type}"
                                 value="PRIMARY_ATTACK">Attack1</button>
                     </form>
                 </td>
 
                 <td>
                     <form class="form-inline">
-                        <button id="attack2" class="btn btn-default" type="submit"
+                        <button id="attack2" class="btn btn-default" type="submit" th:text="${gotchi.secondaryAttack}"
                                 value="SECONDARY_ATTACK">Attack2</button>
                     </form>
                 </td>

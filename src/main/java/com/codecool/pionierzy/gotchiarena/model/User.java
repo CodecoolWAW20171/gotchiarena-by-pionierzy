@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private String password;
 
     @Column(name = "gotchi_list")
-    private ArrayList<Long> gotchiList = new ArrayList<>();
+    private ArrayList<Long> gotchiList;
 
     @Transient
     private String confirmPassword;
@@ -113,6 +113,10 @@ public class User implements UserDetails {
     }
 
     public void addToGotchiList(Long gotchiId) {
-        this.gotchiList.add(gotchiId);
+        if (gotchiList == null){
+            gotchiList = new ArrayList<>();
+        }
+        this.gotchiList.add(0, gotchiId);
+        System.out.println(gotchiList);
     }
 }

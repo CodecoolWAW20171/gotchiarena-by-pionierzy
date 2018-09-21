@@ -28,6 +28,8 @@ public class Room {
     @OneToOne(fetch = FetchType.EAGER)
     private Gotchi opponentGotchi;
 
+
+
     public Room() {}
 
     public Room(User owner) {
@@ -36,6 +38,22 @@ public class Room {
 
     public Long getId() {
         return id;
+    }
+
+    public Gotchi getOwnerGotchi() {
+        return ownerGotchi;
+    }
+
+    public Gotchi getOpponentGotchi() {
+        return opponentGotchi;
+    }
+
+    public void setOwnerGotchi(Gotchi ownerGotchi) {
+        this.ownerGotchi = ownerGotchi;
+    }
+
+    public void setOpponentGotchi(Gotchi opponentGotchi) {
+        this.opponentGotchi = opponentGotchi;
     }
 
     public String getOwnerName() {
