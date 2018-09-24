@@ -14,6 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 
 @Controller
 public class MainController {
@@ -43,7 +44,9 @@ public class MainController {
     }
 
     @RequestMapping("/lobby")
-    public String lobby() {
+    public String lobby(Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        System.out.println(user.getGotchiList());
         return "lobby";
     }
 
@@ -61,7 +64,12 @@ public class MainController {
         gotchi.setUserId(user.getId());
         System.out.println(gotchi.getUserId());
         gotchiService.save(gotchi);
-        user.addToGotchiList(gotchi.getId());
+        System.out.println(user.getGotchiList());
+        ArrayList<Long> tempList = user.getGotchiList();
+        tempList.add(gotchi.getId());
+        user.setGotchiList(tempList);
+        System.out.println(user.getGotchiList());
+        userService.save(user);
         return "redirect:/lobby";
     }
 

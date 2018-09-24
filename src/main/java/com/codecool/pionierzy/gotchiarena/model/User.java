@@ -1,5 +1,6 @@
 package com.codecool.pionierzy.gotchiarena.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,8 +30,8 @@ public class User implements UserDetails {
     @Length(min = 1, message = "Your password should be at least 1 characters long")
     private String password;
 
-    @Column(name = "gotchi_list")
-    private ArrayList<Long> gotchiList;
+    @Column(name = "gotchi_list", columnDefinition = "VARCHAR(255)")
+    private String gotchiList;
 
     @Transient
     private String confirmPassword;
@@ -109,14 +110,17 @@ public class User implements UserDetails {
     }
 
     public ArrayList<Long> getGotchiList() {
-        return gotchiList;
+        if (StringUtils.isBlank(gotchiList))
+            return new ArrayList<>();
+        ArrayList<Long> result = new ArrayList<Long>();
+        //System.out.println();
+        for (String s : gotchiList.split(",")) {
+            result.add(Long.valueOf(s));
+        }
+        return result;
     }
 
-    public void addToGotchiList(Long gotchiId) {
-        if (gotchiList == null){
-            gotchiList = new ArrayList<>();
-        }
-        this.gotchiList.add(0, gotchiId);
-        System.out.println(gotchiList);
+    public void setGotchiList(ArrayList<Long> gotchiList) {
+        this.gotchiList = StringUtils.join(gotchiList, ",");
     }
 }
