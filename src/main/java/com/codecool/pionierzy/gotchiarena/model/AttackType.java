@@ -1,12 +1,14 @@
 package com.codecool.pionierzy.gotchiarena.model;
 
 public enum AttackType {
-    FIRE("wetFire"),
-    WATER("wetFire"),
-    ICE("wetFire"),
-    ELECTRIC("bushyLightning"),
-    PLANT("bushyLightning"),
-    EARTH("bushyLightning");
+    FIRE("fire"),
+    WATER("water"),
+    ICE("ice"),
+    ELECTRIC("electric"),
+    PLANT("plant"),
+    GROUND("ground"),
+    MAGIC("magic"),
+    NORMAL("normal");
 
     private final String groupType;
 

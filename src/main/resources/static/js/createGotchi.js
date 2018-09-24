@@ -27,27 +27,139 @@ document.getElementById("secondary").children[0].selected = true;
 document.getElementById("type").addEventListener("change", limitOtherSelect);
 
 function limitOtherSelect(event) {
-    let wetFireSecondary = document.querySelectorAll("#secondary .wetFire");
-    let bushyLightningSecondary = document.querySelectorAll("#secondary .bushyLightning");
+    let fire = document.querySelectorAll("#secondary .fire");
+    let water = document.querySelectorAll("#secondary .water");
+    let plant = document.querySelectorAll("#secondary .plant");
+    let electric = document.querySelectorAll("#secondary .electric");
+    let ice = document.querySelectorAll("#secondary .ice");
+    let ground = document.querySelectorAll("#secondary .ground");
+    let magic = document.querySelectorAll("#secondary .magic");
+    let normal = document.querySelectorAll("#secondary .normal");
+
 
     document.getElementById("secondary").hidden = false;
     console.log(event.target.children[event.target.selectedIndex]);
     console.log(event.target.selectedIndex);
-    if (event.target.children[event.target.selectedIndex].className === "wetFire") {
-        console.log("wetfire");
-        Array.from(event.target.children).forEach(e => {
-            if (e.className === "bushyLightning") e.disabled = true;
-        });
-        wetFireSecondary.forEach(e => {
-            e.disabled = true;
-        });
-    } else {
-        console.log("bushyLifghtning");
-        Array.from(event.target.children).forEach(e => {
-            if (e.className === "wetFire") e.disabled = true;
-        });
-        bushyLightningSecondary.forEach(e => {
-            e.disabled = true;
-        });
+    switch (event.target.children[event.target.selectedIndex].className) {
+        case "fire":
+            console.log("fire");
+            Array.from(event.target.children).forEach(e => {
+                e.disabled = true;
+            });
+            water.forEach(e => {
+                e.disabled = true;
+            });
+            ice.forEach(e => {
+                e.disabled = true;
+            });
+            plant.forEach(e => {
+                e.disabled = true;
+            });
+            break;
+        case "water":
+            console.log("water");
+            Array.from(event.target.children).forEach(e => {
+                e.disabled = true;
+            });
+            fire.forEach(e => {
+                e.disabled = true;
+            });
+            ice.forEach(e => {
+                e.disabled = true;
+            });
+            break;
+        case "plant":
+            console.log("plant");
+            Array.from(event.target.children).forEach(e => {
+                e.disabled = true;
+            });
+            fire.forEach(e => {
+                e.disabled = true;
+            });
+            ice.forEach(e => {
+                e.disabled = true;
+            });
+            electric.forEach(e => {
+                e.disabled = true;
+            });
+            break;
+        case "electric":
+            console.log("electric");
+            Array.from(event.target.children).forEach(e => {
+                e.disabled = true;
+            });
+            ground.forEach(e => {
+                e.disabled = true;
+            });
+            ice.forEach(e => {
+                e.disabled = true;
+            });
+            water.forEach(e => {
+                e.disabled = true;
+            });
+            magic.forEach(e => {
+                e.disabled = true;
+            });
+            break;
+        case "ice":
+            console.log("ice");
+            Array.from(event.target.children).forEach(e => {
+                e.disabled = true;
+            });
+            fire.forEach(e => {
+                e.disabled = true;
+            });
+            plant.forEach(e => {
+                e.disabled = true;
+            });
+            electric.forEach(e => {
+                e.disabled = true;
+            });
+            break;
+        case "ground":
+            console.log("ground");
+            Array.from(event.target.children).forEach(e => {
+                e.disabled = true;
+            });
+            electric.forEach(e => {
+                e.disabled = true;
+            });
+            water.forEach(e => {
+                e.disabled = true;
+            });
+            break;
+        case "magic":
+            console.log("magic");
+            Array.from(event.target.children).forEach(e => {
+                e.disabled = true;
+            });
+            break;
+        case "normal":
+            console.log("normal");
+            Array.from(event.target.children).forEach(e => {
+                e.disabled = true;
+            });
+            ground.forEach(e => {
+                e.disabled = true;
+            });
+            ice.forEach(e => {
+                e.disabled = true;
+            });
+            water.forEach(e => {
+                e.disabled = true;
+            });
+            fire.forEach(e => {
+                e.disabled = true;
+            });
+            electric.forEach(e => {
+                e.disabled = true;
+            });
+            plant.forEach(e => {
+                e.disabled = true;
+            });
+            break;
+        default:
+            console.log("WRONG");
+
     }
 }

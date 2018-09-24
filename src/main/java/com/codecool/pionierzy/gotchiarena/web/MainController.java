@@ -69,7 +69,7 @@ public class MainController {
         tempList.add(gotchi.getId());
         user.setGotchiList(tempList);
         System.out.println(user.getGotchiList());
-        userService.save(user);
+        userService.update(user);
         return "redirect:/lobby";
     }
 
