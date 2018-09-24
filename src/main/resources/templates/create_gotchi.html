@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <select name="secondary" th:field="*{secondaryAttack}" class="form-control" id="secondary" required hidden>
-                        <option class = "description" value="" disabled selected hidden>Choose secondary attack</option>
+                        <option id="option2" class = "description" value="" disabled selected hidden>Choose secondary attack</option>
                         <option th:each="secondary : ${T(com.codecool.pionierzy.gotchiarena.model.AttackType).values()}"
                                 th:value="${secondary}"
                                 th:text="${secondary}"
@@ -45,6 +45,7 @@
 
                     </select>
                 </div>
+
 
                 <div class="field-wrap">
                     <div class="input-field">
@@ -55,6 +56,9 @@
                         <div class="input-bar"></div>
                     </div>
                     <div class="helper"></div>
+                </div>
+                <div>
+                    <button class="btn btn-submit" type="reset" id="reset">Reset</button>
                 </div>
 
                 <h5 class="my-4">You have <span id="pointsLeft">200</span> points left.</h5>
@@ -98,7 +102,7 @@
         </div>
         <div class="col"></div>
     </div>
-    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" defer></script>-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" defer></script>
     <script src="/public/js/createGotchi.js" defer></script>
 </section>
 
