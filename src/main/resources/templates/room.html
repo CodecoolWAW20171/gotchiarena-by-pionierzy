@@ -10,7 +10,9 @@
     <p>
         <span id="owner" th:text="${r.getOwnerName()} "></span>
         <span>: </span>
-        <span id="ownerGotchi" th:text="${r.getOwnerGotchi().getName()}"> </span>
+        <span id="ownerGotchi" th:text="${r.getOwnerGotchi().getName()}+',  '+
+                                          ${r.getOwnerGotchi().getType()}+' / '+
+                                            ${r.getOwnerGotchi().getSecondaryAttack()}+', '"> </span>
         <span>HP: </span>
         <span id="ownerHP" th:text="${r.getOwnerGotchi().getHealth()}"></span>
     </p>

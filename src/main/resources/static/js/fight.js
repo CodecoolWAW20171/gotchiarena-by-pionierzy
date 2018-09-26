@@ -1,6 +1,8 @@
 var stompClient = null;
 var roomId = $("#roomId").val();
 var socket;
+var ownerGotchiName;
+var opponentGotchiName;
 
 function setConnected(connected) {
     // $("#connect").prop("disabled", connected);
@@ -39,9 +41,12 @@ function showOpponent(data) {
     let hp = $("#opponentHP");
 
     nameSpan.html(data.opponent.username+": ");
-    gotchiSpan.html(data.opponentGotchi.name + ", Type: " + data.opponentGotchi.type + ", Secondary Attack: "
-                    + data.opponentGotchi.secondaryAttack);
-    hp.html(", HP: "+data.opponentGotchi.health);
+    gotchiSpan.html(data.opponentGotchi.name + ",  " + data.opponentGotchi.type + " / "
+                    + data.opponentGotchi.secondaryAttack + ", ");
+    hp.html("HP: "+data.opponentGotchi.health);
+
+    ownerGotchiName = data.ownerGotchi.name;
+    opponentGotchiName = data.opponentGotchi.name;
 }
 
 function disconnect() {
@@ -91,8 +96,8 @@ function createMessage(message){
         let ownLoss = log.ownerHPLoss;
         let oppLoss = log.opponentHPLoss;
 
-        let log1 = "Owner's Gotchi used " + ownA + " and lost " + ownLoss + " of its HP. ";
-        let log2 = "Opponent's Gotchi used " + oppA + " and lost " + oppLoss + " of its HP" ;
+        let log1 = ownerGotchiName + " used " + ownA + " and lost " + ownLoss + " of its HP. ";
+        let log2 = opponentGotchiName + " used " + oppA + " and lost " + oppLoss + " of its HP" ;
         return log1 + log2;
     }
     return null
