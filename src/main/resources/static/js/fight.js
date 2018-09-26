@@ -3,6 +3,8 @@ var roomId = $("#roomId").val();
 var socket;
 var ownerGotchiName;
 var opponentGotchiName;
+var ownerHP;
+var opponentHP;
 
 function setConnected(connected) {
     // $("#connect").prop("disabled", connected);
@@ -47,6 +49,8 @@ function showOpponent(data) {
 
     ownerGotchiName = data.ownerGotchi.name;
     opponentGotchiName = data.opponentGotchi.name;
+    ownerHP = parseFloat(data.ownerGotchi.health);
+    opponentHP = parseFloat(data.opponentGotchi.health);
 }
 
 function disconnect() {
@@ -95,9 +99,13 @@ function createMessage(message){
         let oppA = log.opponentActionType;
         let ownLoss = log.ownerHPLoss;
         let oppLoss = log.opponentHPLoss;
+        ownerHP = ownerHP - parseFloat(ownLoss);
+        opponentHP = opponentHP - parseFloat(oppLoss);
 
         let log1 = ownerGotchiName + " used " + ownA + " and lost " + ownLoss + " of its HP. ";
-        let log2 = opponentGotchiName + " used " + oppA + " and lost " + oppLoss + " of its HP" ;
+        let log2 = opponentGotchiName + " used " + oppA + " and lost " + oppLoss + " of its HP";
+        $("#ownerHP").html(ownerHP);
+        $("#opponentHP").html(opponentHP);
         return log1 + log2;
     }
     return null
