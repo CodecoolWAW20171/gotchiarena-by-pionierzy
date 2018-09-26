@@ -19,12 +19,12 @@ public class FightServiceImpl implements FightService {
     public boolean receiveAction(Room room, User user, RoundAction action) {
         RoundMessage roundMessage = this.roomRoundMessageMap.get(room);
         if (user.equals(room.getOwner())) {
-            roundMessage.setOwnerAction(action);
+            roundMessage.setOwnerAction(action, room.getOwnerGotchi());
             System.out.println("set owner action");
             System.out.println(roundMessage.getOwnerAction());
         }
         else {
-            roundMessage.setOpponentAction(action);
+            roundMessage.setOpponentAction(action, room.getOpponentGotchi());
             System.out.println("set opp action");
             System.out.println(roundMessage.getOpponentAction());
         }
@@ -53,7 +53,9 @@ public class FightServiceImpl implements FightService {
     public RoundMessage sendResults(Room room) {
         System.out.println("Preparing message...");
         System.out.println(roomRoundMessageMap.get(room).getOwnerAction());
+        System.out.println(roomRoundMessageMap.get(room).getOwnerActionType());
         System.out.println(roomRoundMessageMap.get(room).getOpponentAction());
+        System.out.println(roomRoundMessageMap.get(room).getOpponentActionType());
         return roomRoundMessageMap.get(room);
     }
 

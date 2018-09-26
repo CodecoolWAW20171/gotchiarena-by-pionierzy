@@ -15,10 +15,8 @@
         <span id="ownerHP" th:text="${r.getOwnerGotchi().getHealth()}"></span>
     </p>
     <p>
-        <span id="opponent"></span>
-        <span>: </span>
+        <span id="opponent">waiting for opponent...</span>
         <span id="opponentGotchi"> </span>
-        <span>HP: </span>
         <span id="opponentHP"></span>
     </p>
     <input id="roomId" th:value="${r.getId()}" style="display: none">

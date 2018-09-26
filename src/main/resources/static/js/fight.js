@@ -38,9 +38,10 @@ function showOpponent(data) {
     let gotchiSpan = $("#opponentGotchi");
     let hp = $("#opponentHP");
 
-    nameSpan.html(data.opponent.username);
-    gotchiSpan.html(data.opponentGotchi.name);
-    hp.html(data.opponentGotchi.health);
+    nameSpan.html(data.opponent.username+": ");
+    gotchiSpan.html(data.opponentGotchi.name + ", Type: " + data.opponentGotchi.type + ", Secondary Attack: "
+                    + data.opponentGotchi.secondaryAttack);
+    hp.html(", HP: "+data.opponentGotchi.health);
 }
 
 function disconnect() {
@@ -85,8 +86,8 @@ function createMessage(message){
         console.log("log:");
         let log = JSON.parse(message.body);
 
-        let ownA = log.ownerAction;
-        let oppA = log.opponentAction;
+        let ownA = log.ownerActionType;
+        let oppA = log.opponentActionType;
         let ownLoss = log.ownerHPLoss;
         let oppLoss = log.opponentHPLoss;
 
