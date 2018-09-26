@@ -1,11 +1,15 @@
 package com.codecool.pionierzy.gotchiarena.service.LobbyServices;
 
+import com.codecool.pionierzy.gotchiarena.dao.UserRepository;
 import com.codecool.pionierzy.gotchiarena.model.Room;
+import com.codecool.pionierzy.gotchiarena.service.UserServices.UserService;
 
 import java.util.List;
 
 
 public interface LobbyService {
+
+    UserRepository getUserRepository();
 
     List<Room> getRooms();
 
@@ -20,6 +24,8 @@ public interface LobbyService {
     Room leaveRoom(Long id, String username);
 
     Long deleteRoom(Long id, String username);
+
+    void saveRoom(Room room);
 
     void deleteAllRooms();
 }

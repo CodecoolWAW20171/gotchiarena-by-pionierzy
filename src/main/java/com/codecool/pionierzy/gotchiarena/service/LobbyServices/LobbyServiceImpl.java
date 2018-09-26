@@ -4,6 +4,7 @@ import com.codecool.pionierzy.gotchiarena.dao.RoomRepository;
 import com.codecool.pionierzy.gotchiarena.dao.UserRepository;
 import com.codecool.pionierzy.gotchiarena.model.Room;
 import com.codecool.pionierzy.gotchiarena.model.User;
+import com.codecool.pionierzy.gotchiarena.service.UserServices.UserService;
 import com.codecool.pionierzy.gotchiarena.service.message.Notification;
 import com.codecool.pionierzy.gotchiarena.web.LobbyController;
 import org.aspectj.weaver.ast.Not;
@@ -26,10 +27,16 @@ public class LobbyServiceImpl implements LobbyService {
     private final SimpMessageSendingOperations messagingTemplate;
 
     @Autowired
-    public LobbyServiceImpl(UserRepository userRepository, RoomRepository roomRepository, SimpMessageSendingOperations messagingTemplate) {
+    public LobbyServiceImpl(UserRepository userRepository,
+                            RoomRepository roomRepository,
+                            SimpMessageSendingOperations messagingTemplate) {
         this.userRepository = userRepository;
         this.roomRepository = roomRepository;
         this.messagingTemplate = messagingTemplate;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
     }
 
     @Override
@@ -135,5 +142,10 @@ public class LobbyServiceImpl implements LobbyService {
         Notification notification = new Notification(msg);
         notification.setUserRoomId(roomId);
         sendNotificationToUser(username, notification);
+    }
+
+    @Override
+    public void saveRoom(Room room) {
+        roomRepository.save(room);
     }
 }

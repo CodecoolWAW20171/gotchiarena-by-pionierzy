@@ -10,3 +10,12 @@ body {
 #rooms th {
     color: white !important;
 }
+#gotchistable{
+    border-collapse: collapse !important;
+}
+#gotchistable th, #gotchistable td {
+    border: 1px solid whitesmoke !important;
+}
+#gotchistable td {
+    text-align: center !important;
+}

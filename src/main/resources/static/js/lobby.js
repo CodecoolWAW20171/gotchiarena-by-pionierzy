@@ -37,7 +37,14 @@ let lobbyService = {
     },
     fetchRoomDelete() {
         return this.client.subscribe("/topic/delete-room");
+    },
+    askForGotchiList(){
+        this.client.send("/app/room/gotchi/" + this.username);
+    },
+    fetchGotchiList(){
+        return this.client.subscribe("/topic/getGotchi/" + this.username);
     }
+
 };
 
 /** Object for updating display */
@@ -53,7 +60,7 @@ let lobbyDisplay = {
 
         this.addBtn.addEventListener("click", () => lobbyService.addRoom());
         if (lobbyService.userRoomId != null) this.addBtn.disabled = true;
-
+        //lobbyService.fetchGotchiList();
     },
     showRooms(rooms) {
         rooms.forEach(this.addRoomToList, this);
@@ -107,6 +114,7 @@ let lobbyDisplay = {
         document.getElementById("room-" + id).remove();
     },
     showRoomModal(room) {
+        lobbyService.askForGotchiList();
         $("#modalTitle").text(room.ownerName + "'s room");
         $("#leave").click(() => {
             if (lobbyService.username === room.ownerName) {
@@ -123,7 +131,34 @@ let lobbyDisplay = {
             backdrop: "static",
             keyboard: false
         });
-    }
+    },
+    generateModalRow(gotchi, i){
+        return [
+            `<td>${gotchi.name}</td>`,
+            `<td>${gotchi.type}</td>`,
+            `<td>${gotchi.secondaryAttack}</td>`,
+            `<td>${gotchi.speed} / ${gotchi.attack} / ${gotchi.defence}</td>`,
+            `<td><input type="radio" name="gotchiNumber" value="${i}"> </td>`
+        ].join("");
+    },
+    createRadio(message){
+        console.log("INFO>>>>>>>>,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+        console.log(message);
+        let spinner = document.getElementById("sp");
+        document.getElementById("modalContent").removeChild(spinner);
+        let contentDiv = document.getElementById("t");
+        let th = "<table id='gotchistable'><tr><td>Name</td><td>Type</td><td>Second</td><td>Spd/Att/Def</td><td></td></tr></table>";
+        contentDiv.innerHTML = th;
+        let gotchisTable = document.getElementById("gotchistable");
+        contentDiv.appendChild(gotchisTable);
+        for(let i=0; i<message.length; i++){
+            let tr = document.createElement("tr");
+            tr.innerHTML = this.generateModalRow(message[i], i);
+            console.log(tr);
+            console.log(gotchisTable);
+            gotchisTable.appendChild(tr);
+        }
+    },
 };
 
 (function () {
@@ -148,7 +183,7 @@ let lobbyDisplay = {
         lobbyService.fetchNewRoom().then(null, null, room => lobbyDisplay.addRoomToList(room));
         lobbyService.fetchRoomUpdate().then(null, null, room => lobbyDisplay.updateRoomInList(room));
         lobbyService.fetchRoomDelete().then(null, null, id => lobbyDisplay.deleteRoomFromList(id));
-
+        lobbyService.fetchGotchiList().then(null, null, message => lobbyDisplay.createRadio(message));
         lobbyDisplay.init();
         lobbyDisplay.showRooms(response.rooms);
     }, function () {

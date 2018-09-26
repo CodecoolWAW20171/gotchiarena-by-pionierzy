@@ -7,26 +7,26 @@
 </head>
 <body>
 <section>
-    <p th:text=" 'Owner: ' + ${r.getOwnerName()}"></p>
-    <p th:text=" 'Opponent: ' + ${r.getOpponentName()}"></p>
-    <input id="roomId" th:value="${r.getId()}" style="display: none"></input>
+    <p>
+        <span id="owner" th:text="${r.getOwnerName()} "></span>
+        <span>: </span>
+        <span id="ownerGotchi" th:text="${r.getOwnerGotchi().getName()}"> </span>
+        <span>HP: </span>
+        <span id="ownerHP" th:text="${r.getOwnerGotchi().getHealth()}"></span>
+    </p>
+    <p>
+        <span id="opponent"></span>
+        <span>: </span>
+        <span id="opponentGotchi"> </span>
+        <span>HP: </span>
+        <span id="opponentHP"></span>
+    </p>
+    <input id="roomId" th:value="${r.getId()}" style="display: none">
 
     <div>
-        <!--CONNECT AND DISCONNECT BUTTONS: -->
-        <!--<div class="col-md-6">-->
-            <!--<form class="form-inline">-->
-                <!--<div class="form-group">-->
-                    <!--<label for="connect">WebSocket connection:</label>-->
-                    <!--<button id="connect" class="btn btn-default" type="submit">Connect</button>-->
-                    <!--<button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect-->
-                    <!--</button>-->
-                <!--</div>-->
-            <!--</form>-->
-        <!--</div>-->
         <div th:if="${principal}">
         <table class="col-md-6">
             <tr>
-                Attack should have names i.e. ICE ATTACK as text in html
                 <td>
                     <form class="form-inline">
                         <button id="attack1" class="btn btn-default" type="submit" th:text="${gotchi.type}"

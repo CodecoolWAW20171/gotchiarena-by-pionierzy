@@ -157,4 +157,9 @@ public class Gotchi {
             gotchi.setHealth(gotchi.getHealth() - attack);
         }
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

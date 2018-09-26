@@ -1,31 +1,46 @@
 var stompClient = null;
 var roomId = $("#roomId").val();
+var socket;
 
 function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
+    // $("#connect").prop("disabled", connected);
+    // $("#disconnect").prop("disabled", !connected);
     if (connected) {
         $("#conversation").show();
     }
     else {
         $("#conversation").hide();
     }
+    console.log("OPEN");
     $("#logs").html("");
     stompClient.send("/app/room/action/"+roomId+"/start", {}, JSON.stringify({ "data":"start" }));
 }
 
 function connect() {
-    var socket = new SockJS('/room/info');
+    socket = new SockJS('/room/info');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        setConnected(true);
         console.log('Connected: ' + frame);
+        setConnected(true);
+        stompClient.subscribe('/topic/room/action/'+roomId+'/setopponent', function (message) {
+            let data = JSON.parse(message.body);
+            showOpponent(data);
+        });
         stompClient.subscribe('/topic/message/'+roomId, function (message) {
             let log = createMessage(message);
             showLogs(log);
         });
     });
+}
 
+function showOpponent(data) {
+    let nameSpan = $("#opponent");
+    let gotchiSpan = $("#opponentGotchi");
+    let hp = $("#opponentHP");
+
+    nameSpan.html(data.opponent.username);
+    gotchiSpan.html(data.opponentGotchi.name);
+    hp.html(data.opponentGotchi.health);
 }
 
 function disconnect() {
@@ -83,12 +98,13 @@ function createMessage(message){
 }
 
 $(function () {
+    connect();
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
     // $( "#connect" ).click(function() { connect(); });
     // $( "#disconnect" ).click(function() { disconnect(); });
-    connect();
+
     $( "#attack1" ).click(function() { sendAction($("#attack1").val()); });
     $( "#attack2" ).click(function() { sendAction($("#attack2").val()); });
     $( "#defend" ).click(function() { sendAction($("#defend").val()); });
