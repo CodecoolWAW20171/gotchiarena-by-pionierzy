@@ -17,6 +17,8 @@ public class RoundMessage {
     public RoundMessage() {
         ownerAction = null;
         opponentAction = null;
+        ownerHPLoss = 0;
+        opponentHPLoss = 0;
     }
 
     public String getOwnerActionType() {

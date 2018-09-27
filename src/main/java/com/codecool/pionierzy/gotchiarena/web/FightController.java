@@ -105,11 +105,14 @@ public class FightController {
         if (fightService.getMap().get(room) == null){
             fightService.startGame(room);
             System.out.println("Connect first user");
+            room.getOwnerGotchi().setHealth(100);
+            gotchiService.save(room.getOwnerGotchi());
             return null;
         }
         else {
             System.out.println("Connect second user");
-
+            room.getOpponentGotchi().setHealth(100);
+            gotchiService.save(room.getOpponentGotchi());
             return room;
         }
 

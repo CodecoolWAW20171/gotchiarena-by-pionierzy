@@ -102,8 +102,8 @@ function createMessage(message){
         ownerHP = ownerHP - parseFloat(ownLoss);
         opponentHP = opponentHP - parseFloat(oppLoss);
 
-        let log1 = ownerGotchiName + " used " + ownA + " and lost " + ownLoss + " of its HP. ";
-        let log2 = opponentGotchiName + " used " + oppA + " and lost " + oppLoss + " of its HP";
+        let log1 = ownerGotchiName +" used " + ownA + " and took away " + oppLoss + " of "+ opponentGotchiName +" HP. ";
+        let log2 = opponentGotchiName +" used " + oppA + " and took away " + ownLoss + " of "+ ownerGotchiName +" HP.";
         $("#ownerHP").html(ownerHP);
         $("#opponentHP").html(opponentHP);
         return log1 + log2;
