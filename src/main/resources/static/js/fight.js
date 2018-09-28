@@ -33,6 +33,7 @@ function connect() {
         stompClient.subscribe('/topic/message/'+roomId, function (message) {
             let log = createMessage(message);
             showLogs(log);
+            checkEndGame();
         });
     });
 }
@@ -63,10 +64,7 @@ function disconnect() {
 
 function sendAction(value) {
     stompClient.send("/app/room/action/"+roomId, {}, JSON.stringify({ value }));
-    $("#attack1").prop("disabled", true);
-    $("#attack2").prop("disabled", true);
-    $("#defend").prop("disabled", true);
-    $("#evade").prop("disabled", true);
+    disableButtons(true);
     waiting();
 }
 
@@ -78,10 +76,7 @@ function showLogs(message) {
         logsDiv.html("");
         logsDiv.append("<tr><td>" + message + "</td></tr>");
         logsDiv.append(content);
-        $("#attack1").prop("disabled", false);
-        $("#attack2").prop("disabled", false);
-        $("#defend").prop("disabled", false);
-        $("#evade").prop("disabled", false);
+        disableButtons(false);
     }
 }
 
@@ -96,19 +91,50 @@ function createMessage(message){
         let log = JSON.parse(message.body);
 
         let ownA = log.ownerActionType;
+        let ownInfo = log.ownerActionInfo;
         let oppA = log.opponentActionType;
+        let oppInfo = log.oppActionInfo;
         let ownLoss = log.ownerHPLoss;
         let oppLoss = log.opponentHPLoss;
         ownerHP = ownerHP - parseFloat(ownLoss);
         opponentHP = opponentHP - parseFloat(oppLoss);
 
-        let log1 = ownerGotchiName +" used " + ownA + " and took away " + oppLoss + " of "+ opponentGotchiName +" HP. ";
-        let log2 = opponentGotchiName +" used " + oppA + " and took away " + ownLoss + " of "+ ownerGotchiName +" HP.";
+        if (ownerHP < 0){
+            ownerHP = 0;
+        }
+        if (opponentHP < 0){
+            opponentHP = 0;
+        }
+
+        let log1 = ownerGotchiName+" used " +ownA+ownInfo+ " and took away "+oppLoss+ " of "+opponentGotchiName+" HP. ";
+        let log2 = opponentGotchiName+" used " +oppA+oppInfo+ " and took away "+ownLoss+ " of "+ownerGotchiName+" HP.";
         $("#ownerHP").html(ownerHP);
-        $("#opponentHP").html(opponentHP);
+        $("#opponentHP").html("HP: "+opponentHP);
         return log1 + log2;
     }
     return null
+}
+
+function checkEndGame(){
+    if (ownerHP === opponentHP && ownerHP === 0){
+        showLogs("DRAW! Congratulations!");
+        disableButtons(true);
+    }
+    else if (ownerHP === 0){
+        showLogs(opponentGotchiName+" WON!");
+        disableButtons(true);
+    }
+    else if (opponentHP === 0){
+        showLogs(ownerGotchiName+" WON!");
+        disableButtons(true);
+    }
+}
+
+function disableButtons(bool){
+    $("#attack1").prop("disabled", bool);
+    $("#attack2").prop("disabled", bool);
+    $("#defend").prop("disabled", bool);
+    $("#evade").prop("disabled", bool);
 }
 
 $(function () {

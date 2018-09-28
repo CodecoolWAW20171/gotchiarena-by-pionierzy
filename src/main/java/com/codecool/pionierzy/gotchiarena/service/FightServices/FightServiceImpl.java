@@ -18,6 +18,7 @@ public class FightServiceImpl implements FightService {
     private HashMap<AttackType, ArrayList<AttackType>> weakAgainst;
     private HashMap<RoundAction, Double> actionModifier;
     private HashMap<RoundAction, Double> defenceModifier;
+    private HashMap<Double, String> effectiveAttackInfo;
 
     @Autowired
     public FightServiceImpl(GotchiService gotchiService) {
@@ -82,7 +83,15 @@ public class FightServiceImpl implements FightService {
         weakAgainst.get(AttackType.GROUND).add(AttackType.MAGIC);
 
         weakAgainst.get(AttackType.NORMAL).add(AttackType.MAGIC);
+
+
+        effectiveAttackInfo = new HashMap<>();
+        effectiveAttackInfo.put(0.0, "");
+        effectiveAttackInfo.put(1.0, " (normal damage)");
+        effectiveAttackInfo.put(2.0, " (SUPER EFFECTIVE)");
+        effectiveAttackInfo.put(0.75, " (NOT VERY EFFECTIVE)");
     }
+
 
     @Override
     public boolean receiveAction(Room room, User user, RoundAction action) {
@@ -116,64 +125,94 @@ public class FightServiceImpl implements FightService {
 
         double hit;
         double defence;
-        double defModifier;
+        double strongWeak;
         int ownerHpLoss = 0;
         int oppHpLoss = 0;
 
         //Attacking or defending:
         if (ownerAction != RoundAction.EVADE && opponentAction != RoundAction.EVADE) {
-            //owner attack:
-            hit = ownGotchi.getAttack() * actionModifier.get(ownerAction) *
-                    strongOrWeakModifier(ownerAction, ownGotchi, oppGotchi.getType());
-            defence = oppGotchi.getDefence() * defenceModifier.get(opponentAction);
-            oppHpLoss = calculateHpLoss(hit, defence);
+            //owner attack / defend:
+            if (ownerAction == RoundAction.DEFEND){
+                oppHpLoss = 0;
+            } else {
+                strongWeak = strongOrWeakModifier(ownerAction, ownGotchi, oppGotchi.getType());
+                hit = ownGotchi.getAttack() * actionModifier.get(ownerAction) * strongWeak;
+                defence = oppGotchi.getDefence() * defenceModifier.get(opponentAction);
+                oppHpLoss = calculateHpLoss(hit, defence);
+                roundMessage.addToOwnerActionInfo(effectiveAttackInfo.get(strongWeak));
+            }
 
-            //opponentAttack:
-            hit = oppGotchi.getAttack() * actionModifier.get(opponentAction) *
-                    strongOrWeakModifier(opponentAction, oppGotchi, ownGotchi.getType());
-            defence = ownGotchi.getDefence() * defenceModifier.get(ownerAction);
-            ownerHpLoss = calculateHpLoss(hit, defence);
+            //opponentAttack / defend:
+            if (opponentAction == RoundAction.DEFEND){
+                ownerHpLoss = 0;
+            } else {
+                strongWeak = strongOrWeakModifier(opponentAction, oppGotchi, ownGotchi.getType());
+                hit = oppGotchi.getAttack() * actionModifier.get(opponentAction) * strongWeak;
+                defence = ownGotchi.getDefence() * defenceModifier.get(ownerAction);
+                ownerHpLoss = calculateHpLoss(hit, defence);
+                roundMessage.addToOppActionInfo(effectiveAttackInfo.get(strongWeak));
+            }
             System.out.println("attacking or defending");
         }
 
         //one evading:
         else if (ownerAction == RoundAction.EVADE ^ opponentAction == RoundAction.EVADE){
+            //owner:
             if (ownerAction == RoundAction.EVADE){
+                //if success:
                 if (succesOfEvade(ownGotchi.getSpeed(), oppGotchi.getSpeed())){
                     RoundAction randomAction = chooseRandomAction();
-                    hit = ownGotchi.getAttack() * actionModifier.get(randomAction) *
-                            strongOrWeakModifier(randomAction, ownGotchi, oppGotchi.getType());
-                    defence = oppGotchi.getDefence() * oppGotchi.getSpeed()/200;
+                    strongWeak = strongOrWeakModifier(randomAction, ownGotchi, oppGotchi.getType());
+                    hit = ownGotchi.getAttack() * actionModifier.get(randomAction) * strongWeak;
+                    defence = oppGotchi.getDefence() * oppGotchi.getSpeed() / 200;
                     oppHpLoss = calculateHpLoss(hit, defence);
+                    roundMessage.addToOwnerActionInfo(" and as a contrattack used " + randomAction + " ");
+                    roundMessage.addToOwnerActionInfo(effectiveAttackInfo.get(strongWeak));
                     System.out.println("succes of owner evade");
                 }
+                //not success:
                 else {
-                    hit = oppGotchi.getAttack() * actionModifier.get(opponentAction) *
-                            strongOrWeakModifier(opponentAction, oppGotchi, ownGotchi.getType());
-                    defence = ownGotchi.getDefence() * defenceModifier.get(ownerAction);
-                    ownerHpLoss = calculateHpLoss(hit, defence);
-                    System.out.println("failure of owner evade");
+                    if (opponentAction == RoundAction.DEFEND){
+                        ownerHpLoss = 0;
+                    } else {
+                        strongWeak = strongOrWeakModifier(opponentAction, oppGotchi, ownGotchi.getType());
+                        hit = oppGotchi.getAttack() * actionModifier.get(opponentAction) * strongWeak;
+                        defence = ownGotchi.getDefence() * defenceModifier.get(ownerAction);
+                        ownerHpLoss = calculateHpLoss(hit, defence);
+                        roundMessage.addToOwnerActionInfo(" but failed ");
+                        roundMessage.addToOppActionInfo(effectiveAttackInfo.get(strongWeak));
+                        System.out.println("failure of owner evade");
+                    }
                 }
             }
-            else {
+            else {//opponent:
+                //success:
                 if (succesOfEvade(oppGotchi.getSpeed(), ownGotchi.getSpeed())){
                     RoundAction randomAction = chooseRandomAction();
-                    hit = oppGotchi.getAttack() * actionModifier.get(randomAction) *
-                            strongOrWeakModifier(randomAction, oppGotchi, ownGotchi.getType());
+                    strongWeak = strongOrWeakModifier(randomAction, oppGotchi, ownGotchi.getType());
+                    hit = oppGotchi.getAttack() * actionModifier.get(randomAction) * strongWeak;
                     defence = ownGotchi.getDefence() * ownGotchi.getSpeed()/200;
                     ownerHpLoss = calculateHpLoss(hit, defence);
+                    roundMessage.addToOppActionInfo(" and as a contrattack used " + randomAction + " ");
+                    roundMessage.addToOppActionInfo(effectiveAttackInfo.get(strongWeak));
                     System.out.println("succes of opp evade");
                 }
+                // not success:
                 else {
-                    hit = ownGotchi.getAttack() * actionModifier.get(ownerAction) *
-                            strongOrWeakModifier(ownerAction, ownGotchi, oppGotchi.getType());
-                    defence = oppGotchi.getDefence() * defenceModifier.get(opponentAction);
-                    oppHpLoss = calculateHpLoss(hit, defence);
-                    System.out.println("failure of opp evade");
+                    if (ownerAction == RoundAction.DEFEND){
+                        oppHpLoss = 0;
+                    } else {
+                        strongWeak = strongOrWeakModifier(ownerAction, ownGotchi, oppGotchi.getType());
+                        hit = ownGotchi.getAttack() * actionModifier.get(ownerAction) * strongWeak;
+                        defence = oppGotchi.getDefence() * defenceModifier.get(opponentAction);
+                        oppHpLoss = calculateHpLoss(hit, defence);
+                        roundMessage.addToOppActionInfo(" but failed ");
+                        roundMessage.addToOwnerActionInfo(effectiveAttackInfo.get(strongWeak));
+                        System.out.println("failure of opp evade");
+                    }
                 }
             }
         }
-        System.out.println("defending or evading both");
 
         roundMessage.setOwnerHPLoss(ownerHpLoss);
         roundMessage.setOpponentHPLoss(oppHpLoss);
@@ -186,7 +225,8 @@ public class FightServiceImpl implements FightService {
 
     }
 
-    private double strongOrWeakModifier(RoundAction attackerAction, Gotchi gotchi, AttackType defenderGotchiType){
+    private double strongOrWeakModifier(RoundAction attackerAction, Gotchi gotchi,
+                                        AttackType defenderGotchiType){
         AttackType attackerAttackType = null;
         if (attackerAction == RoundAction.PRIMARY_ATTACK){
             attackerAttackType = gotchi.getType();
@@ -254,18 +294,12 @@ public class FightServiceImpl implements FightService {
         return hpLossDouble.intValue();
     }
 
-    private double calculateHit(){
-
-        return 0;
-    }
-
     @Override
     public RoundMessage sendResults(Room room) {
         System.out.println("Preparing message...");
-        System.out.println(roomRoundMessageMap.get(room).getOwnerAction());
-        System.out.println(roomRoundMessageMap.get(room).getOwnerActionType());
-        System.out.println(roomRoundMessageMap.get(room).getOpponentAction());
-        System.out.println(roomRoundMessageMap.get(room).getOpponentActionType());
+        System.out.println(roomRoundMessageMap.get(room).getOwnerActionInfo());
+        System.out.println(roomRoundMessageMap.get(room).getOppActionInfo());
+
         return roomRoundMessageMap.get(room);
     }
 

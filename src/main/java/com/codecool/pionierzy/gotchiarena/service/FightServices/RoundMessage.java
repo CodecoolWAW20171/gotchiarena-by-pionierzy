@@ -8,8 +8,11 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 public class RoundMessage {
     private RoundAction ownerAction;
     private RoundAction opponentAction;
+
     private String ownerActionType;
+    private StringBuilder ownerActionInfo;
     private String opponentActionType;
+    private StringBuilder oppActionInfo;
 
     private int ownerHPLoss;
     private int opponentHPLoss;
@@ -19,6 +22,8 @@ public class RoundMessage {
         opponentAction = null;
         ownerHPLoss = 0;
         opponentHPLoss = 0;
+        ownerActionInfo = new StringBuilder(" ");
+        oppActionInfo = new StringBuilder(" ");
     }
 
     public String getOwnerActionType() {
@@ -59,6 +64,14 @@ public class RoundMessage {
         }
     }
 
+    public void addToOwnerActionInfo(String ownerActionInfo) {
+        this.ownerActionInfo.append(ownerActionInfo) ;
+    }
+
+    public void addToOppActionInfo(String oppActionInfo) {
+        this.oppActionInfo.append(oppActionInfo);
+    }
+
     public int getOwnerHPLoss() {
         return ownerHPLoss;
     }
@@ -73,5 +86,13 @@ public class RoundMessage {
 
     public void setOpponentHPLoss(int opponentHPLoss) {
         this.opponentHPLoss = opponentHPLoss;
+    }
+
+    public StringBuilder getOwnerActionInfo() {
+        return ownerActionInfo;
+    }
+
+    public StringBuilder getOppActionInfo() {
+        return oppActionInfo;
     }
 }

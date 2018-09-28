@@ -73,14 +73,14 @@ let lobbyDisplay = {
             (lobbyService.username === room.opponentName) ||
             (room.count > 1);
         return [
+            `<td><button id="join-${room.id}" class="btn btn-add" `,
+            `${isDisabled ? "disabled" : ""}>`,
+            `<i class="material-icons">add</i></button></td>`,
             `<td>${room.ownerName}'s room</td>`,
             `<td>${room.count}/2</td>`,
             `<td>${room.ownerName}</td>`,
             `<td>vs</td>`,
-            `<td>${room.opponentName ? room.opponentName : "-"}</td>`,
-            `<td><button id="join-${room.id}" class="btn btn-add" `,
-            `${isDisabled ? "disabled" : ""}>`,
-            `<i class="material-icons">add</i></button></td>`
+            `<td>${room.opponentName ? room.opponentName : "-"}</td>`
         ].join("");
     },
     addRoomToList(room) {
