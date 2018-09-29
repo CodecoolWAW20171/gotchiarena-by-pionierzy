@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
@@ -56,6 +57,22 @@ public class MainController {
         model.addAttribute("gotchi", gotchi);
         User user = userService.findByUsername(principal.getName());
         return "create_gotchi";
+    }
+
+    @GetMapping("/user/{userName}")
+    public String userPage(Model model, @PathVariable String userName){
+        User user = userService.findByUsername(userName);
+        model.addAttribute("userName", userName);
+        model.addAttribute("list", user.getGotchiList());
+        return "userPage";
+    }
+
+    @GetMapping("/user")
+    public String yourPage(Model model, Principal principal){
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("list", user.getGotchiList());
+        return "userPage";
     }
 
     @RequestMapping(value = "/create_gotchi", method = RequestMethod.POST)
