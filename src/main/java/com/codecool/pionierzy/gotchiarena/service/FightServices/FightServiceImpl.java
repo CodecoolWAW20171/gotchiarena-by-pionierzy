@@ -61,6 +61,7 @@ public class FightServiceImpl implements FightService {
         strongAgainst.get(AttackType.GROUND).add(AttackType.ELECTRIC);
 
         strongAgainst.get(AttackType.MAGIC).add(AttackType.NORMAL);
+        strongAgainst.get(AttackType.MAGIC).add(AttackType.MAGIC);
 
 
         weakAgainst = new HashMap<>();

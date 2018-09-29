@@ -7,21 +7,32 @@
 </head>
 <body>
 <section>
-    <p>
+    <div id="users">
+        <p></p>
         <span id="owner" th:text="${r.getOwnerName()} "></span>
         <span>: </span>
-        <span id="ownerGotchi" th:text="${r.getOwnerGotchi().getName()}+',  '+
-                                          ${r.getOwnerGotchi().getType()}+' / '+
-                                            ${r.getOwnerGotchi().getSecondaryAttack()}+', '"> </span>
+        <span id="ownerGotchi" th:text="${r.getOwnerGotchi().getName()}"></span>
+        <span>
+            <i id="owntype" th:value="${r.getOwnerGotchi().getType()}" class="fas"></i>
+            <i> / </i>
+            <i id="owntype2" th:value="${r.getOwnerGotchi().getSecondaryAttack()}" class="fas"></i>
+        </span>
         <span>HP: </span>
         <span id="ownerHP">100</span>
-    </p>
-    <p>
+        </p>
+        <p>
         <span id="opponent">waiting for opponent...</span>
         <span id="opponentGotchi"> </span>
+        <span>
+            <i id="opptype" class="fas"></i>
+            <i> / </i>
+            <i id="opptype2" class="fas"></i>
+        </span>
         <span id="opponentHP"></span>
-    </p>
-    <input id="roomId" th:value="${r.getId()}" style="display: none">
+        </p>
+        <input id="roomId" th:value="${r.getId()}" style="display: none">
+    </div>
+
 
     <div>
         <div th:if="${principal}">
@@ -29,14 +40,16 @@
             <tr>
                 <td>
                     <form class="form-inline">
-                        <button id="attack1" class="btn btn-default" type="submit" th:text="${gotchi.type}"
+                        <button id="attack1" class="btn btn-default" type="submit"
+                                th:text="${gotchi.type}+' ('+${attack}+')'"
                                 value="PRIMARY_ATTACK">Attack1</button>
                     </form>
                 </td>
 
                 <td>
                     <form class="form-inline">
-                        <button id="attack2" class="btn btn-default" type="submit" th:text="${gotchi.secondaryAttack}"
+                        <button id="attack2" class="btn btn-default" type="submit"
+                                th:text="${gotchi.secondaryAttack}+' ('+${attack*0.9}+')' "
                                 value="SECONDARY_ATTACK">Attack2</button>
                     </form>
                 </td>
@@ -44,6 +57,7 @@
                 <td>
                     <form class="form-inline">
                         <button id="defend" class="btn btn-default" type="submit"
+                                th:text="'DEFEND ('+${defence}+')'"
                                 value="DEFEND">Defend</button>
                     </form>
                 </td>
@@ -51,6 +65,7 @@
                 <td>
                     <form class="form-inline">
                         <button id="evade" class="btn btn-default" type="submit"
+                                th:text="'EVADE ('+${speed}+')'"
                                 value="EVADE">Evade</button>
                     </form>
                 </td>

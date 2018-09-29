@@ -70,6 +70,9 @@ public class FightController {
         lobbyService.saveRoom(room);
         model.addAttribute("gotchi", gotchi);
         model.addAttribute("r", room);
+        model.addAttribute("attack", gotchi.getAttack());
+        model.addAttribute("defence", gotchi.getDefence());
+        model.addAttribute("speed", gotchi.getSpeed());
         return "room";
     }
 

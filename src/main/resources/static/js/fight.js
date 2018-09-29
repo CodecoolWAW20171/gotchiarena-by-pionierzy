@@ -38,15 +38,52 @@ function connect() {
     });
 }
 
+function iconService(type){
+    switch (type) {
+        case 'FIRE':
+            return "fa-fire";
+        case 'WATER':
+            return "fa-tint";
+        case 'PLANT':
+            return "fa-leaf";
+        case 'ELECTRIC':
+            return "fa-bolt";
+        case 'ICE':
+            return "fa-snowflake";
+        case 'GROUND':
+            return "fa-gem";
+        case 'MAGIC':
+            return "fa-star";
+        case 'NORMAL':
+            return "fa-hand-rock"
+    }
+
+
+}
+
 function showOpponent(data) {
     let nameSpan = $("#opponent");
     let gotchiSpan = $("#opponentGotchi");
     let hp = $("#opponentHP");
+    let spanownType1 = document.getElementById("owntype");
+    let spanownType2 = document.getElementById("owntype2");
+    let spanoppType1 = document.getElementById("opptype");
+    let spanoppType2 = document.getElementById("opptype2");
+    let owntype1 = data.ownerGotchi.type;
+    let owntype2 = data.ownerGotchi.secondaryAttack;
+    let opptype1 = data.opponentGotchi.type;
+    let opptype2 = data.opponentGotchi.secondaryAttack;
+
 
     nameSpan.html(data.opponent.username+": ");
-    gotchiSpan.html(data.opponentGotchi.name + ",  " + data.opponentGotchi.type + " / "
-                    + data.opponentGotchi.secondaryAttack + ", ");
+    gotchiSpan.html(data.opponentGotchi.name + ",  ");
     hp.html("HP: "+data.opponentGotchi.health);
+
+    spanownType1.classList.toggle(iconService(owntype1), true);
+    spanownType2.classList.toggle(iconService(owntype2), true);
+    spanoppType1.classList.toggle(iconService(opptype1), true);
+    spanoppType2.classList.toggle(iconService(opptype2), true);
+
 
     ownerGotchiName = data.ownerGotchi.name;
     opponentGotchiName = data.opponentGotchi.name;
