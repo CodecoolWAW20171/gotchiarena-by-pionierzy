@@ -266,8 +266,9 @@ public class FightServiceImpl implements FightService {
     }
 
     private boolean succesOfEvade(int evaderSpeed, int attackerSpeed){
-        double DOWN_LIMIT = 0.75;
-        double UPPER_LIMIT = 1.25;
+        // randomness is larger when downLimit is lower and upper is higher
+        double DOWN_LIMIT = 0.4;
+        double UPPER_LIMIT = 1.8;
         UtilRandom r = new UtilRandom();
         if (evaderSpeed*r.doubleFromRange(DOWN_LIMIT, UPPER_LIMIT)
                 > attackerSpeed*r.doubleFromRange(DOWN_LIMIT, UPPER_LIMIT)){
