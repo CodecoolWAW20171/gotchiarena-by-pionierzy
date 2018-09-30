@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 @Controller
 public class MainController {
@@ -63,7 +64,12 @@ public class MainController {
     public String userPage(Model model, @PathVariable String userName){
         User user = userService.findByUsername(userName);
         model.addAttribute("userName", userName);
-        model.addAttribute("list", user.getGotchiList());
+        LinkedList<Gotchi> gotchiList = new LinkedList();
+        for (long id : user.getGotchiList()){
+            Gotchi gotchi = gotchiService.findById(id);
+            gotchiList.add(gotchi);
+        }
+        model.addAttribute("list", gotchiList);
         return "userPage";
     }
 
@@ -71,7 +77,12 @@ public class MainController {
     public String yourPage(Model model, Principal principal){
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("userName", user.getUsername());
-        model.addAttribute("list", user.getGotchiList());
+        LinkedList<Gotchi> gotchiList = new LinkedList();
+        for (long id : user.getGotchiList()){
+            Gotchi gotchi = gotchiService.findById(id);
+            gotchiList.add(gotchi);
+        }
+        model.addAttribute("list", gotchiList);
         return "userPage";
     }
 

@@ -15,6 +15,7 @@ body {
 }
 #gotchistable th, #gotchistable td {
     border: 1px solid whitesmoke !important;
+    padding: 2%;
 }
 #gotchistable td {
     text-align: center !important;
@@ -27,7 +28,7 @@ body {
     color: red;
 }
 .fa-tint{
-    color: #007bff;
+    color: deepskyblue;
 }
 .fa-leaf{
     color: lightgreen;
@@ -42,7 +43,7 @@ body {
     color: burlywood;
 }
 .fa-star{
-    color: mediumpurple;
+    color: #b15dff;
 }
 .fa-hand-rock{
     color: lightpink;

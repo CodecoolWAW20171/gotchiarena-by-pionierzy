@@ -57,8 +57,6 @@ function iconService(type){
         case 'NORMAL':
             return "fa-hand-rock"
     }
-
-
 }
 
 function showOpponent(data) {

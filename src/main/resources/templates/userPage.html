@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html th:replace="~{base :: layout(~{::title}, _, ~{::section}, ~{}, ~{::script})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Gotchi Trainer '+${userName}">User</title>
+</head>
+<body>
+<section>
+    <table th:if="${list.size() > 0}" id="gotchistable">
+        <thead>
+        <tr><th>Name</th><th>Type</th><th>Second Power</th><th>Attack</th><th>Speed</th><th>Defence</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="gotchi : ${list}" >
+            <td th:text="${gotchi.name}"></td>
+            <td th:value="${gotchi.type}">
+                <i class="fas" th:value="${gotchi.type}"></i>
+            </td>
+            <td th:value="${gotchi.secondaryAttack}">
+                <i class="fas" th:value="${gotchi.secondaryAttack}"></i>
+            </td>
+            <td th:text="${gotchi.attack}"></td>
+            <td th:text="${gotchi.speed}"></td>
+            <td th:text="${gotchi.defence}"></td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <p th:unless="${list.size() > 0}">
+        <span>You have no Gotchi yet.</span>
+    <form action="/create_gotchi" method="get" data-sub="true">
+        <button type="submit" id="addGotchi" class="btn btn-submit">
+            + Create Gotchi
+        </button>
+    </form>
+    </p>
+
+</section>
+<script src="/public/js/userPage.js"></script>
+</body>
+</html>
