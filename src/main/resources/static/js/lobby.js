@@ -116,7 +116,7 @@ let lobbyDisplay = {
     showRoomModal(room) {
         lobbyService.askForGotchiList();
         $("#modalTitle").text(room.ownerName + "'s room");
-        $("#leave").click(() => {
+        $("#leave").click( ()=> {
             if (lobbyService.username === room.ownerName) {
                 lobbyService.deleteRoom(room.id);
             } else {

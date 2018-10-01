@@ -28,7 +28,7 @@ function connect() {
         setConnected(true);
         stompClient.subscribe('/topic/room/action/'+roomId+'/setopponent', function (message) {
             let data = JSON.parse(message.body);
-            showOpponent(data);
+            showUsersData(data);
         });
         stompClient.subscribe('/topic/message/'+roomId, function (message) {
             let log = createMessage(message);
@@ -59,7 +59,7 @@ function iconService(type){
     }
 }
 
-function showOpponent(data) {
+function showUsersData(data) {
     let nameSpan = $("#opponent");
     let gotchiSpan = $("#opponentGotchi");
     let hp = $("#opponentHP");
@@ -89,14 +89,6 @@ function showOpponent(data) {
     opponentHP = parseFloat(data.opponentGotchi.health);
 }
 
-function disconnect() {
-    if (stompClient !== null) {
-        stompClient.disconnect();
-    }
-    setConnected(false);
-    console.log("Disconnected");
-}
-
 function sendAction(value) {
     stompClient.send("/app/room/action/"+roomId, {}, JSON.stringify({ value }));
     disableButtons(true);
@@ -108,9 +100,14 @@ function showLogs(message) {
         $("#wait").html("");
         let logsDiv = $("#logs");
         let content = logsDiv.html();
+        let newTr = document.createElement("tr");
+        newTr.innerHTML = "<td>" + message + "</td>";
+        newTr.style.display = "none";
         logsDiv.html("");
-        logsDiv.append("<tr><td>" + message + "</td></tr>");
+        logsDiv.append(newTr);
         logsDiv.append(content);
+        console.log(logsDiv.find(">:first-child"));
+        logsDiv.find(">:first-child").show(1000);
         disableButtons(false);
     }
 }
@@ -152,17 +149,26 @@ function createMessage(message){
 
 function checkEndGame(){
     if (ownerHP === opponentHP && ownerHP === 0){
-        showLogs("DRAW! Congratulations!");
+        disableButtons(true);
+        setTimeout(function(){ showLogs("DRAW! Congratulations!"); }, 1000);
         disableButtons(true);
     }
     else if (ownerHP === 0){
-        showLogs(opponentGotchiName+" WON!");
+        disableButtons(true);
+        setTimeout(function(){ showLogs(opponentGotchiName+" WON!"); }, 1000);
         disableButtons(true);
     }
     else if (opponentHP === 0){
-        showLogs(ownerGotchiName+" WON!");
+        disableButtons(true);
+        setTimeout(function(){ showLogs(ownerGotchiName+" WON!"); }, 1000);
         disableButtons(true);
     }
+}
+
+function showEndButton() {
+    $("#leave").show(500);
+    // $("#leave").click();
+
 }
 
 function disableButtons(bool){
@@ -170,6 +176,14 @@ function disableButtons(bool){
     $("#attack2").prop("disabled", bool);
     $("#defend").prop("disabled", bool);
     $("#evade").prop("disabled", bool);
+}
+
+function disconnect() {
+    if (stompClient !== null) {
+        stompClient.disconnect();
+    }
+    setConnected(false);
+    console.log("Disconnected");
 }
 
 $(function () {

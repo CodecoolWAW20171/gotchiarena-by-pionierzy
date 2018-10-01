@@ -98,7 +98,7 @@ public class MainController {
         user.setGotchiList(tempList);
         System.out.println(user.getGotchiList());
         userService.update(user);
-        return "redirect:/lobby";
+        return "redirect:/user";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

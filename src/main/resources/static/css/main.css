@@ -10,15 +10,19 @@ body {
 #rooms th {
     color: white !important;
 }
-#gotchistable{
+#gotchistable, #gotchistable1{
     border-collapse: collapse !important;
 }
-#gotchistable th, #gotchistable td {
+#gotchistable th, #gotchistable td, #gotchistable1 th, #gotchistable1 td {
     border: 1px solid whitesmoke !important;
     padding: 2%;
 }
-#gotchistable td {
+#gotchistable td, #gotchistable1 {
     text-align: center !important;
+}
+
+#gotchistable1 th{
+    color: black !important;
 }
 #users{
     font-size: 120%;
@@ -43,8 +47,11 @@ body {
     color: burlywood;
 }
 .fa-star{
-    color: #b15dff;
+    color: #ddb9ff;
 }
 .fa-hand-rock{
     color: lightpink;
+}
+.fas{
+    font-size: 150%;
 }
