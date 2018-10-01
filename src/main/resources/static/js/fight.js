@@ -11,6 +11,7 @@ function setConnected(connected) {
     // $("#disconnect").prop("disabled", !connected);
     if (connected) {
         $("#conversation").show();
+        $("#wait").hide();
     }
     else {
         $("#conversation").hide();
@@ -74,7 +75,7 @@ function showUsersData(data) {
 
 
     nameSpan.html(data.opponent.username+": ");
-    gotchiSpan.html(data.opponentGotchi.name + ",  ");
+    gotchiSpan.html(data.opponentGotchi.name + "  ");
     hp.html("HP: "+data.opponentGotchi.health);
 
     spanownType1.classList.toggle(iconService(owntype1), true);
@@ -97,6 +98,7 @@ function sendAction(value) {
 
 function showLogs(message) {
     if (message != null){
+        $("#wait").hide(500);
         $("#wait").html("");
         let logsDiv = $("#logs");
         let content = logsDiv.html();
@@ -115,6 +117,7 @@ function showLogs(message) {
 function waiting() {
     let waitDiv = $("#wait");
     waitDiv.html("Waiting for your opponent...");
+    waitDiv.show(500);
 }
 
 function createMessage(message){
