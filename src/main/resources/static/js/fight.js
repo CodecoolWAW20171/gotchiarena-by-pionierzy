@@ -149,19 +149,16 @@ function createMessage(message){
 
 function checkEndGame(){
     if (ownerHP === opponentHP && ownerHP === 0){
-        disableButtons(true);
-        setTimeout(function(){ showLogs("DRAW! Congratulations!"); }, 1000);
-        disableButtons(true);
+        setTimeout(function(){ showLogs("DRAW! Congratulations!");
+            disableButtons(true);}, 1000);
     }
     else if (ownerHP === 0){
-        disableButtons(true);
-        setTimeout(function(){ showLogs(opponentGotchiName+" WON!"); }, 1000);
-        disableButtons(true);
+        setTimeout(function(){ showLogs(opponentGotchiName+" WON!");
+            disableButtons(true);}, 1000);
     }
     else if (opponentHP === 0){
-        disableButtons(true);
-        setTimeout(function(){ showLogs(ownerGotchiName+" WON!"); }, 1000);
-        disableButtons(true);
+        setTimeout(function(){ showLogs(ownerGotchiName+" WON!");
+            disableButtons(true);}, 1000);
     }
 }
 
