@@ -16,6 +16,8 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 import java.util.*;
@@ -66,6 +68,18 @@ public class LobbyController {
     @MessageMapping("/delete-room")
     public Long deleteRoom(RoomByIdRequest roomByIdRequest, Principal principal) {
         return lobbyService.deleteRoom(roomByIdRequest.getId(), principal.getName());
+    }
+
+    @PostMapping("/quitgame/{roomId}")
+    public String quitGame(@PathVariable String roomId, Principal principal){
+        User user = lobbyService.getUserRepository().findByUsername(principal.getName());
+        Long id = Long.valueOf(roomId);
+        Room room = lobbyService.getRoom(id);
+        if (room != null){
+            lobbyService.deleteRoom(id, room.getOwner().getUsername());
+        }
+
+        return "redirect:/lobby";
     }
 
     @SendTo("/topic/getGotchi/{userName}")

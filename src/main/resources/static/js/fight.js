@@ -151,24 +151,34 @@ function createMessage(message){
 }
 
 function checkEndGame(){
-    if (ownerHP === opponentHP && ownerHP === 0){
+    if (opponentHP === 0 && ownerHP === 0){
         setTimeout(function(){ showLogs("DRAW! Congratulations!");
-            disableButtons(true);}, 1000);
+            disableButtons(true);
+            showEndButton()}, 1000);
     }
     else if (ownerHP === 0){
         setTimeout(function(){ showLogs(opponentGotchiName+" WON!");
-            disableButtons(true);}, 1000);
+            disableButtons(true);
+            showEndButton()}, 1000);
     }
     else if (opponentHP === 0){
         setTimeout(function(){ showLogs(ownerGotchiName+" WON!");
-            disableButtons(true);}, 1000);
+            disableButtons(true);
+            showEndButton()}, 1000);
     }
 }
 
-function showEndButton() {
-    $("#leave").show(500);
-    // $("#leave").click();
+function leaveRoom(id) {
+    return stompClient.send("/app/update-room", JSON.stringify({"id": id, "action": "LEAVE"}));
+}
 
+function deleteRoom(id) {
+    return stompClient.send("/app/delete-room", JSON.stringify({"id": id}));
+}
+
+function showEndButton() {
+    let quit = $("#quit");
+    quit.show(500);
 }
 
 function disableButtons(bool){
@@ -188,12 +198,9 @@ function disconnect() {
 
 $(function () {
     connect();
-    $("form").on('submit', function (e) {
+    $(".form-inline").on('submit', function (e) {
         e.preventDefault();
     });
-    // $( "#connect" ).click(function() { connect(); });
-    // $( "#disconnect" ).click(function() { disconnect(); });
-
     $( "#attack1" ).click(function() { sendAction($("#attack1").val()); });
     $( "#attack2" ).click(function() { sendAction($("#attack2").val()); });
     $( "#defend" ).click(function() { sendAction($("#defend").val()); });

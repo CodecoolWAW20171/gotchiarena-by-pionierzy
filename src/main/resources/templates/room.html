@@ -17,8 +17,7 @@
             <i> / </i>
             <i id="owntype2" th:value="${r.getOwnerGotchi().getSecondaryAttack()}" class="fas"></i>
         </span>
-        <span>HP: </span>
-        <span id="ownerHP">100</span>
+        <span id="ownerHP">HP: 100</span>
         </p>
         <p>
         <span id="opponent">waiting for opponent...</span>
@@ -72,8 +71,8 @@
             </tr>
             <tr>
                 <td>
-                <form action="/lobby" method="get" data-sub="true">
-                <button type="submit"  style="display: none" id="quit">Quit</button>
+                <form th:action="@{/quitgame/{roomId} (roomId= ${r.getId()} )}" method="post">
+                    <button style="display: none" type="submit" id="quit" class="btn btn-default">Quit</button>
                 </form>
                 </td>
             </tr>
@@ -86,9 +85,7 @@
             <table id="conversation" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Logs:</th>
-                </tr>
-                <tr id="wait">
+                    <th>Logs:</th><th id="wait"></th>
                 </tr>
                 </thead>
                 <tbody id="logs">
