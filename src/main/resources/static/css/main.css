@@ -19,11 +19,12 @@ body {
 }
 #gotchistable td, #gotchistable1 {
     text-align: center !important;
+    color: mintcream;
 }
 
-#gotchistable1 th{
-    color: black !important;
-}
+/*#gotchistable1 th{*/
+    /*color: black !important;*/
+/*}*/
 #users{
     font-size: 120%;
 }
@@ -41,16 +42,16 @@ body {
     color: yellow;
 }
 .fa-snowflake{
-    color: #bff0ff;
+    color: #e3f8ff;
 }
 .fa-gem{
     color: burlywood;
 }
 .fa-star{
-    color: #ddb9ff;
+    color: #ca90ff;
 }
 .fa-hand-rock{
-    color: lightpink;
+    color: #efccd2;
 }
 .fas{
     font-size: 150%;

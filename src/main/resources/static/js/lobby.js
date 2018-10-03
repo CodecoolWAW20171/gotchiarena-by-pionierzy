@@ -147,7 +147,7 @@ let lobbyDisplay = {
         let spinner = document.getElementById("sp");
         document.getElementById("modalContent").removeChild(spinner);
         let contentDiv = document.getElementById("t");
-        let th = "<table id='gotchistable'><tr><td>Name</td><td>Type</td><td>Second</td><td>Spd/Att/Def</td><td></td></tr></table>";
+        let th = "<table id='gotchistable' class='table table-responsive-md table-dark'><tr><td>Name</td><td>Type</td><td>Second</td><td>Spd/Att/Def</td><td>Check</td></tr></table>";
         contentDiv.innerHTML = th;
         let gotchisTable = document.getElementById("gotchistable");
         contentDiv.appendChild(gotchisTable);
