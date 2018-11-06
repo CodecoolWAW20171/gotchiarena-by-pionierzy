@@ -20,4 +20,5 @@ ALTER TABLE ONLY pokemon
 ALTER TABLE ONLY pokemon
   ADD CONSTRAINT fk_account_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE;
 
+-- user
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public to "GotchiArena_user";
