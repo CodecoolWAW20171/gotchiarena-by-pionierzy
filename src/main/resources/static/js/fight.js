@@ -74,7 +74,7 @@ function showUsersData(data) {
     let opptype2 = data.opponentGotchi.secondaryAttack;
 
 
-    nameSpan.html(data.opponent.username+": ");
+    nameSpan.html(data.opponent.username);
     gotchiSpan.html(data.opponentGotchi.name + "  ");
     hp.html("HP: "+data.opponentGotchi.health);
 
@@ -143,8 +143,8 @@ function createMessage(message){
 
         let log1 = ownerGotchiName+" used " +ownA+ownInfo+ " and took away "+oppLoss+ " of "+opponentGotchiName+" HP. ";
         let log2 = opponentGotchiName+" used " +oppA+oppInfo+ " and took away "+ownLoss+ " of "+ownerGotchiName+" HP.";
-        $("#ownerHP").html(ownerHP);
-        $("#opponentHP").html("HP: "+opponentHP);
+        $("#ownerHP").html("HP: " + ownerHP);
+        $("#opponentHP").html("HP: " + opponentHP);
         return log1 + log2;
     }
     return null

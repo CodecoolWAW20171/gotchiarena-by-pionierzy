@@ -94,7 +94,7 @@ public class FightController {
         User user = userService.findByUsername(principal.getName());
         if (fightService.receiveAction(room, user, action)){
             RoundMessage msg = fightService.sendResults(room);
-            fightService.getMap().put(room, new RoundMessage());
+            fightService.getRoundMessageMap().put(room, new RoundMessage());
             return msg;
         }
         return null;
@@ -105,7 +105,7 @@ public class FightController {
     public Room startMessage(String message,
                              @DestinationVariable String roomId) throws Exception {
         Room room = lobbyService.getRoom(Long.parseLong(roomId));
-        if (fightService.getMap().get(room) == null){
+        if (fightService.getRoundMessageMap().get(room) == null){
             fightService.startGame(room);
             System.out.println("Connect first user");
             room.getOwnerGotchi().setHealth(100);

@@ -15,5 +15,5 @@ public interface FightService {
 
     public void startGame(Room room);
 
-    public HashMap getMap();
+    public HashMap getRoundMessageMap();
 }

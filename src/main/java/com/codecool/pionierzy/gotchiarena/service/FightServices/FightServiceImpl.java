@@ -3,12 +3,14 @@ package com.codecool.pionierzy.gotchiarena.service.FightServices;
 import com.codecool.pionierzy.gotchiarena.model.*;
 import com.codecool.pionierzy.gotchiarena.service.GotchiServices.GotchiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class FightServiceImpl implements FightService {
@@ -139,7 +141,7 @@ public class FightServiceImpl implements FightService {
                 strongWeak = strongOrWeakModifier(ownerAction, ownGotchi, oppGotchi.getType());
                 hit = ownGotchi.getAttack() * actionModifier.get(ownerAction) * strongWeak;
                 defence = oppGotchi.getDefence() * defenceModifier.get(opponentAction);
-                oppHpLoss = calculateHpLoss(hit, defence);
+                oppHpLoss = hpLoss(ownerAction, ownGotchi, strongWeak, oppGotchi, opponentAction, false);
                 roundMessage.addToOwnerActionInfo(effectiveAttackInfo.get(strongWeak));
             }
 
@@ -165,7 +167,7 @@ public class FightServiceImpl implements FightService {
                     RoundAction randomAction = chooseRandomAction();
                     strongWeak = strongOrWeakModifier(randomAction, ownGotchi, oppGotchi.getType());
                     hit = ownGotchi.getAttack() * actionModifier.get(randomAction) * strongWeak;
-                    defence = oppGotchi.getDefence() * oppGotchi.getSpeed() / 200;
+                    defence = oppGotchi.getDefence() * (oppGotchi.getSpeed() + oppGotchi.getDefence()) / 200;///
                     oppHpLoss = calculateHpLoss(hit, defence);
                     roundMessage.addToOwnerActionInfo(" and as a contrattack used " + randomAction + " ");
                     roundMessage.addToOwnerActionInfo(effectiveAttackInfo.get(strongWeak));
@@ -192,7 +194,7 @@ public class FightServiceImpl implements FightService {
                     RoundAction randomAction = chooseRandomAction();
                     strongWeak = strongOrWeakModifier(randomAction, oppGotchi, ownGotchi.getType());
                     hit = oppGotchi.getAttack() * actionModifier.get(randomAction) * strongWeak;
-                    defence = ownGotchi.getDefence() * ownGotchi.getSpeed()/200;
+                    defence = ownGotchi.getDefence() * (ownGotchi.getSpeed() + ownGotchi.getDefence()) /200;
                     ownerHpLoss = calculateHpLoss(hit, defence);
                     roundMessage.addToOppActionInfo(" and as a contrattack used " + randomAction + " ");
                     roundMessage.addToOppActionInfo(effectiveAttackInfo.get(strongWeak));
@@ -224,6 +226,24 @@ public class FightServiceImpl implements FightService {
         oppGotchi.setHealth(oppGotchi.getHealth() - oppHpLoss);
         gotchiService.save(oppGotchi);
 
+    }
+
+    private int hpLoss(RoundAction attackerAction,
+                       Gotchi attackerGotchi,
+                       double strongWeak,
+                       Gotchi defenderGotchi,
+                       RoundAction defenderAction,
+                       boolean evading){
+
+        double hit = attackerGotchi.getAttack() * actionModifier.get(attackerAction) * strongWeak;
+        double defence;
+        if (evading){
+            defence = defenderGotchi.getDefence() * (defenderGotchi.getSpeed() + defenderGotchi.getDefence()) /200;
+        }else {
+            defence = defenderGotchi.getDefence() * defenceModifier.get(defenderAction);
+        }
+
+        return calculateHpLoss(hit, defence);
     }
 
     private double strongOrWeakModifier(RoundAction attackerAction, Gotchi gotchi,
@@ -266,9 +286,9 @@ public class FightServiceImpl implements FightService {
     }
 
     private boolean succesOfEvade(int evaderSpeed, int attackerSpeed){
-        // randomness is larger when downLimit is lower and upper is higher
-        double DOWN_LIMIT = 0.4;
-        double UPPER_LIMIT = 1.8;
+        // randomness is larger when downLimit is lower and upperLimit is higher
+        double DOWN_LIMIT = 0.3;
+        double UPPER_LIMIT = 2;
         UtilRandom r = new UtilRandom();
         if (evaderSpeed*r.doubleFromRange(DOWN_LIMIT, UPPER_LIMIT)
                 > attackerSpeed*r.doubleFromRange(DOWN_LIMIT, UPPER_LIMIT)){
@@ -279,7 +299,8 @@ public class FightServiceImpl implements FightService {
 
     private int calculateHpLoss(double hit, double defence){
         int UPPER_RANGE = 20;
-        int LOWER_RANGE = 20;
+        int LOWER_RANGE = 40;
+        int MAX_LOWER_RANGE = 80;
         double modifier;
         if (hit > defence + UPPER_RANGE){
             modifier = 0.5;
@@ -288,10 +309,13 @@ public class FightServiceImpl implements FightService {
             return 10;
         }
         else if (hit >= defence - LOWER_RANGE){
-            return 5;
+            return ThreadLocalRandom.current().nextInt(5, 9 + 1);
+        }
+        else if (hit >= defence - MAX_LOWER_RANGE){
+            return ThreadLocalRandom.current().nextInt(0, 6 + 1);
         }
         else modifier = 0;
-        Double hpLossDouble = new  Double(modifier * (hit - defence));
+        Double hpLossDouble = modifier * (hit - defence);
 
         return hpLossDouble.intValue();
     }
@@ -312,7 +336,7 @@ public class FightServiceImpl implements FightService {
     }
 
     @Override
-    public HashMap<Room, RoundMessage> getMap(){
+    public HashMap<Room, RoundMessage> getRoundMessageMap(){
         return roomRoundMessageMap;
     }
 }
